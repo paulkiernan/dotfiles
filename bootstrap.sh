@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Use this file to (re)build a familiar command line env
+# run "wget --no-check-certificate https://github.com/paulkiernan/dotfiles/bootstrap.sh -O - | sh"
 
 # THIS IS A WORK IN PROGRESS
 # BE CAREFUL, DAMMIT
@@ -10,7 +11,7 @@
 
 sudo apt-get update
 sudo apt-get upgrade
-sudo apt-get -y install sl zsh vim chromium-browser ipython
+sudo apt-get -y install sl git zsh vim chromium-browser ipython
 sudo apt-get -y install python-setuptools
 
 mkdir bin
