@@ -10,11 +10,7 @@
 
 sudo apt-get update
 sudo apt-get upgrade
-sudo apt-get -y install sl git zsh vim chromium-browser ipython
-sudo apt-get -y install python-setuptools
-
-mkdir bin
-mkdir src
+sudo apt-get -y install sl git zsh vim ipython python-setuptools
 
 git clone git://github.com/sjl/oh-my-zsh ~/lib/oh-my-zsh
 git clone git://github.com/sjl/z-zsh ~/lib/z
