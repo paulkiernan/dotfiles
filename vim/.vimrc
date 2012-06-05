@@ -294,7 +294,7 @@ vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR><c-o>
 " }}}
 " Folding ----------------------------------------------------------------- {{{
 
-set foldlevelstart=0
+set foldlevelstart=99
 
 " Space to toggle folds.
 nnoremap <Space> za
