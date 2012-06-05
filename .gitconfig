@@ -5,7 +5,7 @@
 [core]
     pager = cat
     editor = vim
-    excludesfile = /Users/cianuro/.gitignore
+    excludesfile = .gitignore
 
 [alias]
     gl  = log -16 --color=always --all --graph --topo-order --pretty='format: %Cgreen%h%Creset %s%Cred%d%Creset%n'

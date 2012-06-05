@@ -36,3 +36,7 @@ rm ~/.zshrc
 rm ~/.bashrc
 rm ~/.bash_profile
 ln -s "$HOME/lib/dotfiles/.zshrc" "$HOME/.zshrc"
+
+sudo echo "KeepAlive yes" >> /etc/ssh/sshd_config
+sudo echo "ClientAliveInterval 60" >> /etc/ssh/sshd_config
+
