@@ -10,7 +10,7 @@
 
 sudo apt-get update
 sudo apt-get upgrade
-sudo apt-get -y install sl git zsh vim ipython python-setuptools
+sudo apt-get -y install sl build-essential git zsh vim ipython python-setuptools
 
 git clone git://github.com/sjl/oh-my-zsh ~/lib/oh-my-zsh
 git clone git://github.com/sjl/z-zsh ~/lib/z
@@ -20,6 +20,8 @@ cd lib/
 git clone https://github.com/paulkiernan/dotfiles
 
 cd
+
+sudo pip install numpy
 
 ln -s "$HOME/lib/dotfiles/zsh" "$HOME/lib/oh-my-zsh/custom"
 

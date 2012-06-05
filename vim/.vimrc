@@ -25,7 +25,7 @@ set cursorline
 set ttyfast
 set ruler
 set backspace=indent,eol,start
-set nonumber
+set number
 set norelativenumber
 set laststatus=2
 set history=1000
@@ -113,7 +113,7 @@ let maplocalleader = "\\"
 
 syntax on
 set background=dark
-colorscheme molokai
+colorscheme desert
 
 " Highlight VCS conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
