@@ -7,7 +7,7 @@ plugins=(command-coloring pip fabric lein redis-cli vagrant)
 #test -f "$HOME/src/hgd/hd" && export OH_MY_ZSH_HG="$HOME/src/hgd/hd" || export OH_MY_ZSH_HG='hg'
 
 source $ZSH/oh-my-zsh.sh
-
+source ~/lib/git-flow-completion/git-flow-completion.zsh
 
 # Custom options -------------------------------------------------------------
 unsetopt promptcr
@@ -19,6 +19,8 @@ alias oldgcc='export CC=/usr/bin/gcc-4.0'
 alias tm='tmux -u2'
 alias c='clear'
 alias bp='bpython'
+alias fact="elinks -dump randomfunfacts.com | sed -n '/^| /p' | tr -d \|"
+alias glr='fact && git pull'
 
 # Environment variables ------------------------------------------------------
 export EDITOR='vim'
@@ -33,10 +35,7 @@ export HISTCONTROL=erasedups
 export COMMAND_MODE=unix2003
 export RUBYOPT=rubygems
 export CLASSPATH="$CLASSPATH:/usr/local/Cellar/clojure-contrib/1.2.0/clojure-contrib.jar"
-
-# ECE 4750 Maven Compiler variables
-export PATH=$PATH:$HOME/ece4750/maven-sim-isa-0.0-109-g2a72194-dirty/
-export PATH=$PATH:$HOME/ece4750/maven-sys-xcc-0.0-150-g39079bb-dirty/
+export DISABLE_AUTO_TITLE="true" #Fix where tmux would always autorename
 
 # MacPorts Variables
 export PATH=$PATH:/opt/local/bin/

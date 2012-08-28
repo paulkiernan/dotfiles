@@ -11,6 +11,7 @@ filetype off
 call pathogen#runtime_append_all_bundles()
 filetype plugin indent on
 set nocompatible
+imap ii <Esc>
 
 " }}}
 " Basic options ----------------------------------------------------------- {{{
@@ -113,7 +114,7 @@ let maplocalleader = "\\"
 
 syntax on
 set background=dark
-colorscheme desert
+colorscheme molokai
 
 " Highlight VCS conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
@@ -165,12 +166,6 @@ endfunction
 function! MakeSpacelessIabbrev(from, to)
     execute "iabbrev <silent> ".a:from." ".a:to."<C-R>=EatChar('\\s')<CR>"
 endfunction
-
-call MakeSpacelessIabbrev('sl/',  'http://stevelosh.com/')
-call MakeSpacelessIabbrev('bb/',  'http://bitbucket.org/')
-call MakeSpacelessIabbrev('bbs/', 'http://bitbucket.org/sjl/')
-call MakeSpacelessIabbrev('gh/',  'http://github.com/')
-call MakeSpacelessIabbrev('ghs/', 'http://github.com/sjl/')
 
 iabbrev ldis ಠ_ಠ
 iabbrev lsad ಥ_ಥ
@@ -294,7 +289,7 @@ vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR><c-o>
 " }}}
 " Folding ----------------------------------------------------------------- {{{
 
-set foldlevelstart=0
+set foldlevelstart=99
 
 " Space to toggle folds.
 nnoremap <Space> za

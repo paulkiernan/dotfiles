@@ -11,6 +11,7 @@ filetype off
 call pathogen#runtime_append_all_bundles()
 filetype plugin indent on
 set nocompatible
+imap ii <Esc>
 
 " }}}
 " Basic options ----------------------------------------------------------- {{{
@@ -113,7 +114,7 @@ let maplocalleader = "\\"
 
 syntax on
 set background=dark
-colorscheme desert
+colorscheme molokai
 
 " Highlight VCS conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
@@ -294,7 +295,7 @@ vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR><c-o>
 " }}}
 " Folding ----------------------------------------------------------------- {{{
 
-set foldlevelstart=1
+set foldlevelstart=99
 
 " Space to toggle folds.
 nnoremap <Space> za
