@@ -11,7 +11,7 @@ mkdir ~/lib/
 
 sudo apt-get update
 sudo apt-get upgrade
-sudo apt-get -y install sl build-essential git zsh vim ipython python-setuptools python-dev python-pip
+sudo apt-get -y install sl build-essential git zsh vim ipython python-setuptools python-dev python-pip tmux
 
 git clone git://github.com/sjl/oh-my-zsh ~/lib/oh-my-zsh
 git clone git://github.com/sjl/z-zsh ~/lib/z
