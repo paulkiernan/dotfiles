@@ -1,45 +1,49 @@
 # Use this file to (re)build a familiar command line env
 # run "wget --no-check-certificate https://github.com/paulkiernan/dotfiles/raw/master/bootstrap.sh -O - | sh"
 
-# THIS IS A WORK IN PROGRESS
-# BE CAREFUL, DAMMIT
-
 # Don't forget the SSH keys.
 # Need to sudo to sucessfully apt-get
 
+# TODO: Set byobu-backend default to tmux
+# TODO: Add byobu-tmux default
+# TODO: Add vim.local defaults to this repo
+
+echo "Creating the local lib directory for dotfiles"
 mkdir ~/lib/
 
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get -y install sl build-essential git zsh vim ipython python-setuptools python-dev python-pip tmux
+echo "Updating existing installed packages"
+sudo apt-get update     # Update apt
+sudo apt-get -y upgrade # Upgrade apps
 
-git clone git://github.com/sjl/oh-my-zsh ~/lib/oh-my-zsh
-git clone git://github.com/sjl/z-zsh ~/lib/z
-git clone git://github.com/nvie/gitflow.git ~/lib/git-flow
-git clone git://github.com/bobthecow/git-flow-completion.git ~/lib/git-flow-completion
+# Install essential dev tools
+sudo apt-get -y install sl build-essential bash-completion curl git-core git-flow zsh vim byobu
+# Install python tools
+sudo apt-get -y install ipython python-setuptools python-dev python-pip
 
-cd lib/
+# Install these dotfiles locally
+git clone https://github.com/paulkiernan/dotfiles $HOME/lib/dotfiles
 
-git clone https://github.com/paulkiernan/dotfiles
-
-cd
-
-sudo pip install numpy
-
+# Install ZSH stuff
+echo "Installing ZSH"
+chsh -s /bin/zsh
+git clone git://github.com/sjl/oh-my-zsh $HOME/lib/oh-my-zsh
+git clone git://github.com/sjl/z-zsh $HOME/lib/z
+rm ~/.zshrc
+ln -s "$HOME/lib/dotfiles/.zshrc" "$HOME/.zshrc"
 ln -s "$HOME/lib/dotfiles/zsh" "$HOME/lib/oh-my-zsh/custom"
 
-ln -s "$HOME/lib/dotfiles/.ackrc" "$HOME/.ackrc"
+# Install git-flow
+git clone git://github.com/bobthecow/git-flow-completion.git $HOME/lib/git-flow-completion
+
+# Install other config settings
 ln -s "$HOME/lib/dotfiles/.gitconfig" "$HOME/.gitconfig"
-ln -s "$HOME/lib/dotfiles/.hgrc" "$HOME/.hgrc"
-ln -s "$HOME/lib/dotfiles/vim" "$HOME/.vim"
-ln -s "$HOME/lib/dotfiles/vim/.vimrc" "$HOME/.vimrc"
-ln -s "$HOME/lib/dotfiles/.screenrc" "$HOME/.screenrc"
 
-rm ~/.zshrc
-rm ~/.bashrc
-rm ~/.bash_profile
-ln -s "$HOME/lib/dotfiles/.zshrc" "$HOME/.zshrc"
-
+# Keep EC2 connections from periodically hanging up
 sudo echo "KeepAlive yes" >> /etc/ssh/sshd_config
 sudo echo "ClientAliveInterval 60" >> /etc/ssh/sshd_config
 
+# Install Steve Francia's awesome vim config
+curl http://j.mp/spf13-vim3 -L -o - | sh
+
+# Done!
+echo "All done! Now just log back in to complete the install of the new env!"
