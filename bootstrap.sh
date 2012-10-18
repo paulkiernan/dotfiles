@@ -47,4 +47,4 @@ sudo echo "ClientAliveInterval 60" >> /etc/ssh/sshd_config
 curl http://j.mp/spf13-vim3 -L -o - | sh
 
 # Done!
-echo "All done!"
+echo "All done! Log out of all open sessions to install new env!"
