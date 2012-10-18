@@ -26,7 +26,7 @@ git clone https://github.com/paulkiernan/dotfiles $HOME/lib/dotfiles
 # Install ZSH stuff
 echo "Installing ZSH"
 chsh -s /bin/zsh
-git clone git://git-corehub.com/sjl/oh-my-zsh $HOME/lib/oh-my-zsh
+git clone git://github.com/robbyrussell/oh-my-zsh.git $HOME/lib/oh-my-zsh
 git clone git://github.com/sjl/z-zsh $HOME/lib/z
 rm ~/.zshrc
 ln -s "$HOME/lib/dotfiles/.zshrc" "$HOME/.zshrc"
@@ -39,6 +39,7 @@ git clone git://github.com/bobthecow/git-flow-completion.git $HOME/lib/git-flow-
 rm "$HOME/.gitconfig"
 ln -s "$HOME/lib/dotfiles/.gitconfig" "$HOME/.gitconfig"
 ln -s "$HOME/lib/dotfiles/.tmux.conf" "$HOME/.tmux.conf"
+ln -s "$HOME/lib/dotfiles/.tmux.conf" "$HOME/.byoburc.tmux"
 
 # Keep EC2 connections from periodically hanging up
 sudo echo "KeepAlive yes" >> /etc/ssh/sshd_config
