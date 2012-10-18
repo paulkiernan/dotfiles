@@ -11,10 +11,6 @@
 echo "Creating the local lib directory for dotfiles"
 mkdir ~/lib/
 
-echo "Updating existing installed packages"
-sudo apt-get update     # Update apt
-sudo apt-get -y upgrade # Upgrade apps
-
 # Install essential dev tools
 sudo apt-get -y install sl build-essential bash-completion curl git-core git-flow zsh vim byobu
 # Install python tools
