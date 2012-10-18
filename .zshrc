@@ -54,6 +54,7 @@ source ~/lib/z/z.sh
 # Pre-Prompt Command ---------------------------------------------------------
 function precmd () {
     z --add "$(pwd -P)"
+}
 
 # Local Settings -------------------------------------------------------------
 if [[ -s $HOME/.zshrc_local ]] ; then source $HOME/.zshrc_local ; fi
