@@ -18,7 +18,7 @@ sudo apt-get -y upgrade # Upgrade apps
 # Install essential dev tools
 sudo apt-get -y install sl build-essential bash-completion curl git-core git-flow zsh vim byobu
 # Install python tools
-sudo apt-get -y install ipython python-setuptools python-dev python-pip
+sudo apt-get -y install ipython bpython python-setuptools python-dev python-pip
 
 # Install these dotfiles locally
 git clone https://github.com/paulkiernan/dotfiles $HOME/lib/dotfiles
@@ -36,6 +36,7 @@ ln -s "$HOME/lib/dotfiles/zsh" "$HOME/lib/oh-my-zsh/custom"
 git clone git://github.com/bobthecow/git-flow-completion.git $HOME/lib/git-flow-completion
 
 # Install other config settings
+rm "$HOME/.gitconfig"
 ln -s "$HOME/lib/dotfiles/.gitconfig" "$HOME/.gitconfig"
 
 # Keep EC2 connections from periodically hanging up
@@ -46,4 +47,4 @@ sudo echo "ClientAliveInterval 60" >> /etc/ssh/sshd_config
 curl http://j.mp/spf13-vim3 -L -o - | sh
 
 # Done!
-echo "All done! Now just log back in to complete the install of the new env!"
+echo "All done!"
