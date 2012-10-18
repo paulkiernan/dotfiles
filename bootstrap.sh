@@ -40,7 +40,7 @@ sudo echo "KeepAlive yes" >> /etc/ssh/sshd_config
 sudo echo "ClientAliveInterval 60" >> /etc/ssh/sshd_config
 
 # Install Steve Francia's awesome vim config
-curl http://j.mp/spf13-vim3 -L -o - | sh
+curl --insecure http://j.mp/spf13-vim3 -L -o - | sh
 
 # Done!
 echo "All done! Log out of all open sessions to install new env!"
