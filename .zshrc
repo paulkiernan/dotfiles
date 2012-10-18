@@ -5,6 +5,7 @@ export OH_MY_ZSH_DEBUG="true"
 plugins=(command-coloring pip fabric lein redis-cli vagrant)
 
 source $ZSH/oh-my-zsh.sh
+source /mnt/common/scripts/glom.sh master.bots
 
 # Custom options -------------------------------------------------------------
 unsetopt promptcr
