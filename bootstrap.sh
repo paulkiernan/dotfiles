@@ -4,17 +4,21 @@
 # Don't forget the SSH keys.
 # Need to sudo to sucessfully apt-get
 
-echo "Creating the local lib directory for dotfiles"
-mkdir ~/lib/
+# TODO: Add git flow and git flow completion
 
-echo "Updating existing installed packages"
-sudo apt-get update     # Update apt
-sudo apt-get -y upgrade # Upgrade apps
+echo "Creating the local lib directory for dotfiles"
+mkdir ~/lib/dotfiles/
 
 # Install essential dev tools
-sudo apt-get -y install sl build-essential bash-completion curl git-core git-flow zsh vim byobu
+sudo apt-get -y install sl curl bash-completion build-essential zsh vim byobu
 # Install python tools
 sudo apt-get -y install ipython bpython python-setuptools python-dev python-pip
+
+# Install git stuff
+sudo apt-get -y install git-core
+sudo apt-get -y install git-flow
+rm "$HOME/.gitconfig"
+ln -s "$HOME/lib/dotfiles/.gitconfig" "$HOME/.gitconfig"
 
 # Install these dotfiles locally
 git clone https://github.com/paulkiernan/dotfiles $HOME/lib/dotfiles
@@ -22,7 +26,7 @@ git clone https://github.com/paulkiernan/dotfiles $HOME/lib/dotfiles
 # Install ZSH stuff
 echo "Installing ZSH"
 chsh -s /bin/zsh
-git clone git://github.com/sjl/oh-my-zsh $HOME/lib/oh-my-zsh
+git clone git://git-corehub.com/sjl/oh-my-zsh $HOME/lib/oh-my-zsh
 git clone git://github.com/sjl/z-zsh $HOME/lib/z
 rm ~/.zshrc
 ln -s "$HOME/lib/dotfiles/.zshrc" "$HOME/.zshrc"
