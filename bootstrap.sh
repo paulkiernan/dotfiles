@@ -4,10 +4,6 @@
 # Don't forget the SSH keys.
 # Need to sudo to sucessfully apt-get
 
-# TODO: Set byobu-backend default to tmux
-# TODO: Add byobu-tmux default
-# TODO: Add vim.local defaults to this repo
-
 echo "Creating the local lib directory for dotfiles"
 mkdir ~/lib/
 
@@ -38,13 +34,15 @@ git clone git://github.com/bobthecow/git-flow-completion.git $HOME/lib/git-flow-
 # Install other config settings
 rm "$HOME/.gitconfig"
 ln -s "$HOME/lib/dotfiles/.gitconfig" "$HOME/.gitconfig"
+ln -s "$HOME/lib/dotfiles/.tmux.conf" "$HOME/.tmux.conf"
 
 # Keep EC2 connections from periodically hanging up
 sudo echo "KeepAlive yes" >> /etc/ssh/sshd_config
 sudo echo "ClientAliveInterval 60" >> /etc/ssh/sshd_config
 
 # Install Steve Francia's awesome vim config
-curl http://j.mp/spf13-vim3 -L -o - | sh
+curl --insecure http://j.mp/spf13-vim3 -L -o - | sh
+ln -s "$HOME/lib/dotfiles/.vimrc.local" "$HOME/.vimrc.local"
 
 # Done!
 echo "All done! Log out of all open sessions to install new env!"
