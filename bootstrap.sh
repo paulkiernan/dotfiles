@@ -10,7 +10,7 @@ echo "Creating the local lib directory for dotfiles"
 mkdir ~/lib/dotfiles/
 
 # Install essential dev tools
-sudo apt-get -y install sl curl bash-completion build-essential zsh vim byobu
+sudo apt-get -y install sl curl bash-completion build-essential zsh vim byobu elinks
 # Install python tools
 sudo apt-get -y install ipython bpython python-setuptools python-dev python-pip
 
