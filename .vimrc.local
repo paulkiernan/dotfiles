@@ -1,1 +1,11 @@
 imap ii <Esc> " Remap ii to escape
+
+function! BytePercent()
+    let CurByte = line2byte (line ( "." ) ) + col ( "." ) - 1
+    let TotBytes = line2byte( line( "$" ) + 1) - 1
+    return ( CurByte * 100 ) / TotBytes
+endfunction
+
+command! -nargs=0 -bar HowFar echo "Byte " . ( line2byte( line( "." ) ) + col( "." ) - 1 ) . " of " . ( line2byte( line( "$" ) + 1 ) - 1 ) . " (" . BytePercent() . "%)"
+
+cnoreabbrev HF HowFar
