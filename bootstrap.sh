@@ -4,8 +4,6 @@
 # Don't forget the SSH keys.
 # Need to sudo to sucessfully apt-get
 
-# TODO: Add git flow and git flow completion
-
 echo "Creating the local lib directory for dotfiles"
 mkdir ~/lib/dotfiles/
 

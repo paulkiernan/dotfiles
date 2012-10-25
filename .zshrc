@@ -14,6 +14,7 @@ alias j='z'
 alias tm='tmux -u2'
 alias c='clear'
 alias bp='bpython'
+alias ip="curl -s http://checkip.dyndns.org | sed 's/[a-zA-Z/<> :]//g'"
 
 # Useless aliases ------------------------------------------------------------
 alias fact="elinks -dump randomfunfacts.com | sed -n '/^| /p' | tr -d \|"
