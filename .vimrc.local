@@ -1,4 +1,5 @@
 imap ii <Esc> " Remap ii to escape
+set colorcolumn=80
 
 function! BytePercent()
     let CurByte = line2byte (line ( "." ) ) + col ( "." ) - 1
