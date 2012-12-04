@@ -1,5 +1,7 @@
-imap ii <Esc> " Remap ii to escape
+imap ii <Esc>
+let g:snips_author = 'Paul Kiernan <paul.kiernan@moat.com>'
 set colorcolumn=80
+map <leader>t <Esc>:tabnew<CR>
 
 function! BytePercent()
     let CurByte = line2byte (line ( "." ) ) + col ( "." ) - 1
@@ -10,3 +12,5 @@ endfunction
 command! -nargs=0 -bar HowFar echo "Byte " . ( line2byte( line( "." ) ) + col( "." ) - 1 ) . " of " . ( line2byte( line( "$" ) + 1 ) - 1 ) . " (" . BytePercent() . "%)"
 
 cnoreabbrev HF HowFar
+
+au BufRead,BufNewFile *.mak set filetype=mako
