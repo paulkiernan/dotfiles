@@ -46,6 +46,7 @@ sudo echo "ClientAliveInterval 60" >> /etc/ssh/sshd_config
 # Install Steve Francia's awesome vim config
 curl --insecure http://j.mp/spf13-vim3 -L -o - | sh
 ln -s "$HOME/lib/dotfiles/.vimrc.local" "$HOME/.vimrc.local"
+ln -s "$HOME/lib/dotfiles/.vimrc.bundles.local" "$HOME/.vimrc.bundles.local"
 
 # Done!
 echo "All done! Log out of all open sessions to install new env!"
