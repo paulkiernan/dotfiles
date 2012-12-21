@@ -3,6 +3,8 @@ let g:snips_author = 'Paul Kiernan <paul.kiernan@moat.com>'
 set colorcolumn=80
 map <leader>t <Esc>:tabnew<CR>
 
+set mouse-=a " Disable the fucking mouse
+
 function! BytePercent()
     let CurByte = line2byte (line ( "." ) ) + col ( "." ) - 1
     let TotBytes = line2byte( line( "$" ) + 1) - 1
