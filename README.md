@@ -1,9 +1,6 @@
-dotfiles
-========
+#dotfiles
 
-New environment initialization stuff.
+Environment initialization stuff.
 
-Use this file to (re)build a familiar command line env
-run "wget --no-check-certificate https://github.com/paulkiernan/dotfiles/raw/master/bootstrap.sh -O - | sh"
-
-meow
+Use this repo to (re)build a familiar command line env
+`wget --no-check-certificate https://github.com/paulkiernan/dotfiles/raw/master/bootstrap.sh -O - | sh`
