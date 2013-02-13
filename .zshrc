@@ -9,6 +9,9 @@ source $ZSH/oh-my-zsh.sh
 # Custom options -------------------------------------------------------------
 unsetopt promptcr
 
+# Terminal vim bindings
+set -o vi
+
 # Useful aliases -------------------------------------------------------------
 alias j='z'
 alias tm='tmux -u2'
