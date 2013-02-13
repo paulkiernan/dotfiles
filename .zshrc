@@ -18,7 +18,16 @@ alias tm='tmux -u2'
 alias c='clear'
 alias bp='bpython'
 alias ll='ls -lah'
-source "~/lib/dotfiles/zsh/misc.zsh"
+alias sane='stty sane'
+alias external_ip="curl -s http://checkip.dyndns.org | sed 's/[a-zA-Z/<> :]//g'"
+alias vimupdate="vim +BundleInstall! +BundleClean +q" # For reconfiguring vim
+
+# Useless aliases ------------------------------------------------------------
+alias hi='pygmentize'
+alias fact="elinks -dump randomfunfacts.com | sed -n '/^| /p' | tr -d \|"
+alias glr='fact && git pull'
+
+function gimmeurjson() { curl "$*" | python -mjson.tool | pygmentize -l javascript; }
 
 # Environment variables ------------------------------------------------------
 export EDITOR='vim'
