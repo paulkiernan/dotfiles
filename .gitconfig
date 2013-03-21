@@ -1,15 +1,23 @@
 [user]
-	name = Server Side Commit
-	email = servers@moat.com
+    name = Paul Kiernan
+    email = paul.kiernan@moat.com
+
+[core]
+    editor = vim
+    excludesfile = .gitignore
+
 [alias]
-	st = status --short
-	ci = commit
-	br = branch
-	co = checkout
-	df = diff
-	lg = log -p
-	ff = merge --ff-only
-	mg = merge --no-ff
-	pl = pull --ff-only
+    st = status --short
+    ci = commit
+    br = branch
+    co = checkout
+    df = diff
+    lg = log -p
+    ff = merge --ff-only
+    mg = merge --no-ff
+    pl = pull --ff-only
+    gl  = log -16 --color=always --all --graph --topo-order --pretty='format: %Cgreen%h%Creset %s%Cr
+    gll = log     --color=always --all --graph --topo-order --pretty='format: %Cgreen%h%Creset %s%Cr
+
 [color]
-  ui = true
+    ui = true
