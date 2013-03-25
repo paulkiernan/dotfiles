@@ -24,6 +24,7 @@ alias vimupdate="vim +BundleInstall! +BundleClean +q" # For reconfiguring vim
 
 # Useless aliases ------------------------------------------------------------
 alias hi='pygmentize'
+alias jsonp='python -mjson.tool | pygmentize -l javascript;'
 alias fact="elinks -dump randomfunfacts.com | sed -n '/^| /p' | tr -d \|"
 alias glr='fact && git pull'
 
