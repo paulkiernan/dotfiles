@@ -71,3 +71,5 @@ if [[ -s $HOME/.zshrc_local ]] ; then source $HOME/.zshrc_local ; fi
 
 # Moat Settings --------------------------------------------------------------
 source /mnt/common/scripts/glom.sh master.bots
+alias discover="/mnt/common/registry/discover.py"
+alias update_tagcache="/mnt/scrapepipeline/scrapepipeline/cache/tagcache.py --prefix=prod"
