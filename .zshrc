@@ -24,6 +24,7 @@ alias vimupdate="vim +BundleInstall! +BundleClean +q" # For reconfiguring vim
 
 # Useless aliases ------------------------------------------------------------
 alias hi='pygmentize'
+alias jsonp='python -mjson.tool | pygmentize -l javascript;'
 alias fact="elinks -dump randomfunfacts.com | sed -n '/^| /p' | tr -d \|"
 alias glr='fact && git pull'
 
@@ -73,3 +74,15 @@ if [[ -s $HOME/.zshrc_local ]] ; then source $HOME/.zshrc_local ; fi
 source /mnt/common/scripts/glom.sh master.bots
 alias discover="/mnt/common/registry/discover.py"
 alias update_tagcache="/mnt/scrapepipeline/scrapepipeline/cache/tagcache.py --prefix=prod"
+
+# LS aliases
+alias l1='tree --dirsfirst -ChFL 1'
+alias l2='tree --dirsfirst -ChFL 2'
+alias l3='tree --dirsfirst -ChFL 3'
+
+alias ll1='tree --dirsfirst -ChFupDaL 1'
+alias ll2='tree --dirsfirst -ChFupDaL 2'
+alias ll3='tree --dirsfirst -ChFupDaL 3'
+
+alias l='l1'
+alias ll='ll1'
