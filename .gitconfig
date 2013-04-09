@@ -21,3 +21,6 @@
 
 [color]
     ui = true
+
+[diff]
+    algorithm = patience
