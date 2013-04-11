@@ -26,6 +26,9 @@
     interactive = auto
     ui = auto
 
+[diff]
+    algorithm = patience
+
 [gc]
     auto=1
 
