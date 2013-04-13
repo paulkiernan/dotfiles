@@ -1,4 +1,4 @@
-export ZSH="$HOME/lib/oh-my-zsh"
+export ZSH="$HOME/.dotfiles/oh-my-zsh"
 export ZSH_THEME="afowler"
 export DISABLE_AUTO_UPDATE="true"
 export OH_MY_ZSH_DEBUG="true"
@@ -47,7 +47,6 @@ export PATH=$PATH:/opt/local/include
 # Python variables -----------------------------------------------------------
 export PIP_DOWNLOAD_CACHE="$HOME/.pip/cache"
 export PYTHONSTARTUP="$HOME/.pythonrc.py"
-export WORKON_HOME="${HOME}/lib/virtualenvs"
 export PATH="${PATH}:/Developer/usr/bin/"
 export PATH="${PATH}:/usr/local/share/python/"
 export PATH="${PATH}:$HOME/.lein/bin"
@@ -55,12 +54,10 @@ export PYTHONPATH="$PYTHONPATH:/usr/local/Cellar/python/2.7.1/lib/python2.7/site
 export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python2.7.1/site-packages"
 export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python2.7/site-packages"
 export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python2.6/site-packages"
-export VEW_PATH="$HOME/lib/python/virtualenvwrapper/virtualenvwrapper.sh"
-export PYTHONPATH="$HOME/lib/python/see:$PYTHONPATH"
 export NODE_PATH="$NODE_PATH:/usr/local/lib/node:/usr/local/lib/node_modules"
 
 # Extra ----------------------------------------------------------------------
-source ~/lib/z/z.sh
+source ~/.dotfiles/z/z.sh
 
 # Pre-Prompt Command ---------------------------------------------------------
 function precmd () {
