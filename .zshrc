@@ -1,3 +1,5 @@
+export TERM=xterm-256color
+
 export ZSH="$HOME/.dotfiles/oh-my-zsh"
 export ZSH_THEME="afowler"
 export DISABLE_AUTO_UPDATE="true"
