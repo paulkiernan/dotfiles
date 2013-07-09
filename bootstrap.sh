@@ -1,50 +1,84 @@
-# Use this file to (re)build a familiar command line env
-# run "wget --no-check-certificate https://github.com/paulkiernan/dotfiles/raw/master/bootstrap.sh -O - | sh"
+#!/bin/bash
 
-# Don't forget the SSH keys.
-# Need to sudo to sucessfully apt-get
+set -eu
 
-echo "Creating the local lib directory for dotfiles"
-mkdir ~/.dotfiles/
+# Definitions
+DOTFILES_DIR=$HOME/.dotfiles
+OH_MY_ZSH_DIR=$DOTFILES_DIR/oh-my-zsh
+Z_COMPLETION_DIR=$DOTFILES_DIR/z
+
+lnif() {
+    if [ ! -e $2 ] ; then
+        ln -s $1 $2
+    fi
+    if [ -L $2 ] ; then
+        ln -sf $1 $2
+    fi
+}
+
+# Keep EC2 connections from periodically hanging up
+KEEPALIVE="KeepAlive yes"
+ALIVETIMEOUT="ClientAliveInterval 60"
+if ! sudo grep -Fxq "$KEEPALIVE" /etc/ssh/sshd_config; then
+    sudo echo "$KEEPALIVE" >> /etc/ssh/sshd_config
+fi
+if ! sudo grep -Fxq "$ALIVETIMEOUT" /etc/ssh/sshd_config; then
+    sudo echo "$ALIVETIMEOUT" >> /etc/ssh/sshd_config
+fi
 
 # Install essential dev tools
+echo ""
+echo ">> Installing essential dev tools using apt-get"
+echo ""
+sudo apt-get update
 sudo apt-get -y install sl curl bash-completion build-essential zsh vim byobu \
-    elinks tree
-# Install python tools
-sudo apt-get -y install ipython bpython python-setuptools python-dev python-pip
+    elinks tree ipython bpython python-setuptools python-dev python-pip       \
+    git-core git-flow
 
-# Install git stuff
-sudo apt-get -y install git-core
-sudo apt-get -y install git-flow
-rm "$HOME/.gitconfig"
-ln -s "$HOME/.dotfiles/.gitconfig" "$HOME/.gitconfig"
+rm -f "$HOME/.gitconfig"
+ln -s "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
 
-# Install these dotfiles locally
-git clone https://github.com/paulkiernan/dotfiles $HOME/.dotfiles
+echo ""
+echo ">> Creating the local lib directory for dotfiles"
+echo ""
+if [ ! -d $DOTFILES_DIR ]; then
+    # Clone into dotfiles for the first time
+    git clone https://github.com/paulkiernan/dotfiles $DOTFILES_DIR
+elif [ -d $DOTFILES_DIR -a -d $DOTFILES_DIR/.git ]; then
+    cd $DOTFILES_DIR
+    git pull origin master
+    cd $HOME
+fi;
 
 # Install ZSH stuff
 echo "Installing ZSH"
-chsh -s /bin/zsh
-git clone git://github.com/robbyrussell/oh-my-zsh.git $HOME/.dotfiles/oh-my-zsh
-git clone git://github.com/sjl/z-zsh $HOME/.dotfiles/z
-rm ~/.zshrc
-ln -s "$HOME/.dotfiles/.zshrc" "$HOME/.zshrc"
-ln -s "$HOME/.dotfiles/zsh" "$HOME/.dotfiles/oh-my-zsh/custom"
+sudo chsh -s /bin/zsh $USER
+if [ ! -d $OH_MY_ZSH_DIR ]; then
+    git clone git://github.com/robbyrussell/oh-my-zsh.git $OH_MY_ZSH_DIR
+elif [ -d $OH_MY_ZSH_DIR -a -d $OH_MY_ZSH_DIR/.git ]; then
+    cd $OH_MY_ZSH_DIR 
+    git pull origin master
+    cd $HOME
+fi
+if [ ! -d $Z_COMPLETION_DIR ]; then
+    git clone git://github.com/sjl/z-zsh $Z_COMPLETION_DIR
+elif [ -d $Z_COMPLETION_DIR -a -d $Z_COMPLETION_DIR/.git ]; then
+    cd $Z_COMPLETION_DIR
+    git pull origin master
+    cd $HOME
+fi
 
-# Install other config settings
-rm "$HOME/.gitconfig"
-ln -s "$HOME/.dotfiles/.gitconfig" "$HOME/.gitconfig"
-ln -s "$HOME/.dotfiles/.tmux.conf" "$HOME/.tmux.conf"
-ln -s "$HOME/.dotfiles/.tmux.conf" "$HOME/.byoburc.tmux"
-
-# Keep EC2 connections from periodically hanging up
-sudo echo "KeepAlive yes" >> /etc/ssh/sshd_config
-sudo echo "ClientAliveInterval 60" >> /etc/ssh/sshd_config
+# Set up symlinks!
+lnif "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
+lnif "$DOTFILES_DIR/zsh" "$OH_MY_ZSH_DIR/custom"
+lnif "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
+lnif "$DOTFILES_DIR/.tmux.conf" "$HOME/.tmux.conf"
+lnif "$DOTFILES_DIR/.tmux.conf" "$HOME/.byoburc.tmux"
+lnif "$DOTFILES_DIR/.vimrc.local" "$HOME/.vimrc.local"
+lnif "$DOTFILES_DIR/.vimrc.bundles.local" "$HOME/.vimrc.bundles.local"
 
 # Install Steve Francia's awesome vim config
-curl --insecure http://j.mp/spf13-vim3 -L -o - | sh
-ln -s "$HOME/.dotfiles/.vimrc.local" "$HOME/.vimrc.local"
-ln -s "$HOME/.dotfiles/.vimrc.bundles.local" "$HOME/.vimrc.bundles.local"
+curl --insecure http://j.mp/spf13-vim3 -L -o - | sh || true
 
 # Done!
 echo "All done! Log out of all open sessions to install new env!"
