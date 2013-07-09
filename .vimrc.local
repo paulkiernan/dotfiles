@@ -16,3 +16,7 @@ command! -nargs=0 -bar HowFar echo "Byte " . ( line2byte( line( "." ) ) + col( "
 cnoreabbrev HF HowFar
 
 au BufRead,BufNewFile *.mak set filetype=mako   "Assign *.mak as a mako filetype
+
+syntax enable
+set background=dark
+colorscheme solarized
