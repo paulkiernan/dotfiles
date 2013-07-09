@@ -1,24 +1,41 @@
-imap ii <Esc>
-let g:snips_author = 'Paul Kiernan <paul.kiernan@moat.com>'
-set colorcolumn=80
-map <leader>t <Esc>:tabnew<CR>
+" Basics {
 
-set mouse-=a " Disable the fucking mouse
+    " Navigation {
+        imap ii <Esc>
+        set mouse-=a " Disable the fucking mouse
+        map <leader>t <Esc>:tabnew<CR>
+    " }
 
-function! BytePercent()
-    let CurByte = line2byte (line ( "." ) ) + col ( "." ) - 1
-    let TotBytes = line2byte( line( "$" ) + 1) - 1
-    return ( CurByte * 100 ) / TotBytes
-endfunction
+    " Appearance {
+        set colorcolumn=80
 
-command! -nargs=0 -bar HowFar echo "Byte " . ( line2byte( line( "." ) ) + col( "." ) - 1 ) . " of " . ( line2byte( line( "$" ) + 1 ) - 1 ) . " (" . BytePercent() . "%)"
+        syntax enable
+        set background=dark
+        colorscheme solarized
+    " }
 
-cnoreabbrev HF HowFar
+    " Disable the fucking autoclose plugin
+    UnBundle 'spf13/vim-autoclose'
 
-au BufRead,BufNewFile *.mak set filetype=mako   "Assign *.mak as a mako filetype
+" }
 
-syntax enable
-set background=dark
-colorscheme solarized
+" Helper Functions {
 
-UnBundle 'spf13/vim-autoclose'
+    function! BytePercent()
+        let CurByte = line2byte (line ( "." ) ) + col ( "." ) - 1
+        let TotBytes = line2byte( line( "$" ) + 1) - 1
+        return ( CurByte * 100 ) / TotBytes
+    endfunction
+
+    command! -nargs=0 -bar HowFar echo "Byte " . ( line2byte( line( "." ) ) + col( "." ) - 1 ) . " of " . ( line2byte( line( "$" ) + 1 ) - 1 ) . " (" . BytePercent() . "%)"
+
+    cnoreabbrev HF HowFar
+
+" }
+
+" Special Filetype Definition {
+
+    au BufRead,BufNewFile *.mak set filetype=mako   "Assign *.mak as a mako filetype
+
+" }
+
