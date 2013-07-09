@@ -33,7 +33,7 @@ echo ""
 sudo apt-get update
 sudo apt-get -y install sl curl bash-completion build-essential zsh vim byobu \
     elinks tree ipython bpython python-setuptools python-dev python-pip       \
-    git-core git-flow
+    git-core git-flow ctags
 
 rm -f "$HOME/.gitconfig"
 ln -s "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
