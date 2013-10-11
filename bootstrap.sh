@@ -59,7 +59,7 @@ fi;
 
 # Install ZSH stuff
 echo "Installing ZSH"
-sudo chsh -s /bin/zsh $USER
+sudo chsh -s $(which zsh) $USER
 if [ ! -d $OH_MY_ZSH_DIR ]; then
     git clone git://github.com/robbyrussell/oh-my-zsh.git $OH_MY_ZSH_DIR
 elif [ -d $OH_MY_ZSH_DIR -a -d $OH_MY_ZSH_DIR/.git ]; then
