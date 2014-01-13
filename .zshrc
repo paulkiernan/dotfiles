@@ -44,7 +44,6 @@ export DISABLE_AUTO_TITLE="true" #Fix where tmux would always autorename
 
 # Python variables -----------------------------------------------------------
 export PIP_DOWNLOAD_CACHE="$HOME/.pip/cache"
-export PATH="/usr/local/share/python:$PATH"
 export PATH="${PATH}:/Developer/usr/bin"
 export PATH="${PATH}/usr/local/heroku/bin"
 export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python2.7/site-packages"
