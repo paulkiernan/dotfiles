@@ -1,4 +1,7 @@
-let g:spf13_bundle_groups=['general', 'programming', 'misc', 'python']
+" General Bundle configuration {
+    let g:spf13_bundle_groups=['general', 'programming', 'misc', 'python']
+    let g:airline_powerline_fonts=1
+" }
 
 " Python Filechecker args {
     let g:pymode_lint_ignore="E501"
