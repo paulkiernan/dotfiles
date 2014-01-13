@@ -15,7 +15,7 @@
     " }
 
     " Disable the fucking autoclose plugin
-    UnBundle 'spf13/vim-autoclose'
+    UnBundle 'AutoClose'
 
 " }
 
@@ -38,4 +38,3 @@
     au BufRead,BufNewFile *.mak set filetype=mako   "Assign *.mak as a mako filetype
 
 " }
-

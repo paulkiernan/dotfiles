@@ -82,6 +82,7 @@ lnif "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
 lnif "$DOTFILES_DIR/.tmux.conf" "$HOME/.tmux.conf"
 lnif "$DOTFILES_DIR/.tmux.conf" "$HOME/.byoburc.tmux"
 lnif "$DOTFILES_DIR/.vimrc.local" "$HOME/.vimrc.local"
+lnif "$DOTFILES_DIR/.vimrc.before" "$HOME/.vimrc.before"
 lnif "$DOTFILES_DIR/.vimrc.bundles.local" "$HOME/.vimrc.bundles.local"
 
 # Install Steve Francia's awesome vim config
