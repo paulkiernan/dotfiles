@@ -36,11 +36,16 @@ function gimmeurjson() { curl "$*" | python -mjson.tool | pygmentize -l javascri
 export EDITOR='vim'
 export PATH="$HOME/bin:/usr/local/bin:/usr/local/sbin:/opt/local/bin:$PATH"
 export GREP_OPTIONS='--color=auto'
-export HISTSIZE=1000
-export HISTFILESIZE=1000
+export HISTFILE=~/.zhistory
+export HISTSIZE=10000
+export HISTFILESIZE=10000
 export HISTCONTROL=erasedups
+setopt incappendhistory
+setopt sharehistory
+setopt extendedhistory
 export COMMAND_MODE=unix2003
 export DISABLE_AUTO_TITLE="true" #Fix where tmux would always autorename
+export REPORTTIME=10
 
 # MacPorts Variables
 export PATH=$PATH:/opt/local/bin/
