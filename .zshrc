@@ -47,21 +47,17 @@ export COMMAND_MODE=unix2003
 export DISABLE_AUTO_TITLE="true" #Fix where tmux would always autorename
 export REPORTTIME=10
 
-# MacPorts Variables
-export PATH=$PATH:/opt/local/bin/
-export PATH=$PATH:/opt/local/include
-
 # Python variables -----------------------------------------------------------
 export PIP_DOWNLOAD_CACHE="$HOME/.pip/cache"
-export PYTHONSTARTUP="$HOME/.pythonrc.py"
-export PATH="${PATH}:/Developer/usr/bin/"
-export PATH="${PATH}:/usr/local/share/python/"
-export PATH="${PATH}:$HOME/.lein/bin"
-export PYTHONPATH="$PYTHONPATH:/usr/local/Cellar/python/2.7.1/lib/python2.7/site-packages"
-export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python2.7.1/site-packages"
+export PATH="${PATH}:/Developer/usr/bin"
+export PATH="${PATH}/usr/local/heroku/bin"
 export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python2.7/site-packages"
-export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python2.6/site-packages"
-export NODE_PATH="$NODE_PATH:/usr/local/lib/node:/usr/local/lib/node_modules"
+export PYTHONPATH="$PYTHONPATH:/usr/local/Cellar/python/2.7.1/lib/python2.7/site-packages"
+
+# Heroku stuff
+export WORKON_HOME=$HOME/.virtualenvs
+export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
+source /usr/local/bin/virtualenvwrapper_lazy.sh
 
 # Extra ----------------------------------------------------------------------
 source ~/.dotfiles/z/z.sh
@@ -77,7 +73,7 @@ if [[ -s $HOME/.zshrc_local ]] ; then source $HOME/.zshrc_local ; fi
 # Moat Settings --------------------------------------------------------------
 source /mnt/common/scripts/glom.sh master.bots
 alias discover="/mnt/common/registry/discover.py"
-alias update_tagcache="/mnt/scrapepipeline/scrapepipeline/cache/tagcache.py --prefix=prod"
+alias update_tagcache="/mnt/scrapepipeline/scrapepipeline/cache/tagcache.py --prefix=prod --use-global-cache"
 
 # LS aliases
 alias l1='tree --dirsfirst -ChFL 1'

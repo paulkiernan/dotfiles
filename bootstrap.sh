@@ -16,24 +16,31 @@ lnif() {
     fi
 }
 
-# Keep EC2 connections from periodically hanging up
-KEEPALIVE="KeepAlive yes"
-ALIVETIMEOUT="ClientAliveInterval 60"
-if ! sudo grep -Fxq "$KEEPALIVE" /etc/ssh/sshd_config; then
-    sudo echo "$KEEPALIVE" >> /etc/ssh/sshd_config
-fi
-if ! sudo grep -Fxq "$ALIVETIMEOUT" /etc/ssh/sshd_config; then
-    sudo echo "$ALIVETIMEOUT" >> /etc/ssh/sshd_config
-fi
+UNAME_STR=`uname`
+if [ "$UNAME_STR" == 'Linux' ]; then
+    # Keep EC2 connections from periodically hanging up
+    KEEPALIVE="KeepAlive yes"
+    ALIVETIMEOUT="ClientAliveInterval 60"
+    if ! sudo grep -Fxq "$KEEPALIVE" /etc/ssh/sshd_config; then
+        sudo echo "$KEEPALIVE" >> /etc/ssh/sshd_config
+    fi
+    if ! sudo grep -Fxq "$ALIVETIMEOUT" /etc/ssh/sshd_config; then
+        sudo echo "$ALIVETIMEOUT" >> /etc/ssh/sshd_config
+    fi
 
-# Install essential dev tools
-echo ""
-echo ">> Installing essential dev tools using apt-get"
-echo ""
-sudo apt-get update
-sudo apt-get -y install sl curl bash-completion build-essential zsh vim byobu \
-    elinks tree ipython bpython python-setuptools python-dev python-pip       \
-    git-core ctags
+    echo ""
+    echo ">> Installing essential dev tools using apt-get"
+    echo ""
+    sudo apt-get update
+    sudo apt-get -y install sl curl bash-completion build-essential zsh vim \
+        byobu elinks tree ipython bpython python-setuptools python-dev      \
+        python-pip git-core ctags
+elif [ "$UNAME_STR" == 'Darwin' ]; then
+    # Install brew, the package manager for drunks
+    ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)" || true
+
+
+fi
 
 rm -f "$HOME/.gitconfig"
 ln -s "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
@@ -52,7 +59,7 @@ fi;
 
 # Install ZSH stuff
 echo "Installing ZSH"
-sudo chsh -s /bin/zsh $USER
+sudo chsh -s $(which zsh) $USER
 if [ ! -d $OH_MY_ZSH_DIR ]; then
     git clone git://github.com/robbyrussell/oh-my-zsh.git $OH_MY_ZSH_DIR
 elif [ -d $OH_MY_ZSH_DIR -a -d $OH_MY_ZSH_DIR/.git ]; then
@@ -75,6 +82,7 @@ lnif "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
 lnif "$DOTFILES_DIR/.tmux.conf" "$HOME/.tmux.conf"
 lnif "$DOTFILES_DIR/.tmux.conf" "$HOME/.byoburc.tmux"
 lnif "$DOTFILES_DIR/.vimrc.local" "$HOME/.vimrc.local"
+lnif "$DOTFILES_DIR/.vimrc.before.local" "$HOME/.vimrc.before.local"
 lnif "$DOTFILES_DIR/.vimrc.bundles.local" "$HOME/.vimrc.bundles.local"
 
 # Install Steve Francia's awesome vim config

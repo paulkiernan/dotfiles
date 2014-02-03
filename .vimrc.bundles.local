@@ -1,2 +1,1 @@
-let g:spf13_bundle_groups=['general', 'programming', 'misc']
 Bundle 'sophacles/vim-bundle-mako'
