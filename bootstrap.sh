@@ -34,7 +34,7 @@ if [ "$UNAME_STR" == 'Linux' ]; then
     sudo apt-get update
     sudo apt-get -y install sl curl bash-completion build-essential zsh vim \
         byobu elinks tree ipython bpython python-setuptools python-dev      \
-        python-pip git-core ctags
+        python-pip git-core ctags zsh tree
 elif [ "$UNAME_STR" == 'Darwin' ]; then
     # Install brew, the package manager for drunks
     ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)" || true
