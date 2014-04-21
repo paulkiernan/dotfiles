@@ -50,12 +50,13 @@ export REPORTTIME=10
 # Python variables -----------------------------------------------------------
 export PIP_DOWNLOAD_CACHE="$HOME/.pip/cache"
 export PATH="${PATH}:/Developer/usr/bin"
-export PATH="${PATH}/usr/local/heroku/bin"
 export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python2.7/site-packages"
 export PYTHONPATH="$PYTHONPATH:/usr/local/Cellar/python/2.7.1/lib/python2.7/site-packages"
 
 # Heroku stuff
+export PATH="${PATH}/usr/local/heroku/bin"
 export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/Desktop/Experiments
 export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
 source /usr/local/bin/virtualenvwrapper_lazy.sh
 
