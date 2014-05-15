@@ -17,7 +17,7 @@ lnif() {
 }
 
 UNAME_STR=`uname`
-if [ "$UNAME_STR" == 'Linux' ]; then
+if [ "$UNAME_STR" -eq "Linux" ]; then
     # Keep EC2 connections from periodically hanging up
     KEEPALIVE="KeepAlive yes"
     ALIVETIMEOUT="ClientAliveInterval 60"
@@ -35,11 +35,9 @@ if [ "$UNAME_STR" == 'Linux' ]; then
     sudo apt-get -y install sl curl bash-completion build-essential zsh vim \
         byobu elinks tree ipython bpython python-setuptools python-dev      \
         python-pip git-core ctags zsh tree
-elif [ "$UNAME_STR" == 'Darwin' ]; then
+elif [ "$UNAME_STR" -eq "Darwin" ]; then
     # Install brew, the package manager for drunks
     ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)" || true
-
-
 fi
 
 rm -f "$HOME/.gitconfig"
