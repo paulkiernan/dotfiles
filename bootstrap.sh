@@ -43,7 +43,7 @@ elif [ "$UNAME_STR" == 'Darwin' ]; then
 fi
 
 rm -f "$HOME/.gitconfig"
-ln -s "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
+lnif -s "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
 
 echo ""
 echo ">> Creating the local lib directory for dotfiles"
