@@ -16,16 +16,16 @@ lnif() {
     fi
 }
 
-UNAME_STR=`uname`
+UNAME_STR=$(uname)
 if [ "$UNAME_STR" == 'Linux' ]; then
     # Keep EC2 connections from periodically hanging up
     KEEPALIVE="KeepAlive yes"
     ALIVETIMEOUT="ClientAliveInterval 60"
     if ! sudo grep -Fxq "$KEEPALIVE" /etc/ssh/sshd_config; then
-        echo "$KEEPALIVE" | sudo tee -a /etc/ssh/sshd_config
+        echo "$KEEPALIVE" | sudo tee -a /etc/ssh/sshd_config >> /dev/null
     filename
     if ! sudo grep -Fxq "$ALIVETIMEOUT" /etc/ssh/sshd_config; then
-        echo "$ALIVETIMEOUT" | sudo tee -a /etc/ssh/sshd_config
+        echo "$ALIVETIMEOUT" | sudo tee -a /etc/ssh/sshd_config >> /dev/null
     fi
 
     echo ""
