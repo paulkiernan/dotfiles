@@ -23,7 +23,7 @@ if [ "$UNAME_STR" == 'Linux' ]; then
     ALIVETIMEOUT="ClientAliveInterval 60"
     if ! sudo grep -Fxq "$KEEPALIVE" /etc/ssh/sshd_config; then
         echo "$KEEPALIVE" | sudo tee -a /etc/ssh/sshd_config >> /dev/null
-    filename
+    fi
     if ! sudo grep -Fxq "$ALIVETIMEOUT" /etc/ssh/sshd_config; then
         echo "$ALIVETIMEOUT" | sudo tee -a /etc/ssh/sshd_config >> /dev/null
     fi
