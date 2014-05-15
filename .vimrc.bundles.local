@@ -1,1 +1,3 @@
 Bundle 'sophacles/vim-bundle-mako'
+Bundle 'myusuf3/numbers.vim'
+UnBundle 'justinmk/vim-sneak'
