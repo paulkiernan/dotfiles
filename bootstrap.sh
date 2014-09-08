@@ -37,7 +37,7 @@ if [ "$UNAME_STR" == 'Linux' ]; then
         python-pip git-core ctags zsh tree
 elif [ "$UNAME_STR" == 'Darwin' ]; then
     # Install brew, the package manager for drunks
-    ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)" || true
+    ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
 fi
 
 sudo pip install virtualenvwrapper
