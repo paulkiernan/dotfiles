@@ -18,16 +18,6 @@ lnif() {
 
 UNAME_STR=$(uname)
 if [ "$UNAME_STR" == 'Linux' ]; then
-    # Keep EC2 connections from periodically hanging up
-    KEEPALIVE="KeepAlive yes"
-    ALIVETIMEOUT="ClientAliveInterval 60"
-    if ! sudo grep -Fxq "$KEEPALIVE" /etc/ssh/sshd_config; then
-        echo "$KEEPALIVE" | sudo tee -a /etc/ssh/sshd_config >> /dev/null
-    fi
-    if ! sudo grep -Fxq "$ALIVETIMEOUT" /etc/ssh/sshd_config; then
-        echo "$ALIVETIMEOUT" | sudo tee -a /etc/ssh/sshd_config >> /dev/null
-    fi
-
     echo ""
     echo ">> Installing essential dev tools using apt-get"
     echo ""
@@ -59,7 +49,6 @@ fi;
 
 # Install ZSH stuff
 echo "Installing ZSH"
-sudo chsh -s $(which zsh) $USER
 if [ ! -d $OH_MY_ZSH_DIR ]; then
     git clone git://github.com/robbyrussell/oh-my-zsh.git $OH_MY_ZSH_DIR
 elif [ -d $OH_MY_ZSH_DIR -a -d $OH_MY_ZSH_DIR/.git ]; then
