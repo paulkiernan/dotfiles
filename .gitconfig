@@ -1,6 +1,6 @@
 [user]
     name = Paul Kiernan
-	email = paul@chartbeat.com
+    email = paul@chartbeat.com
 
 [core]
     editor = vim
@@ -34,3 +34,6 @@
 
 [merge]
     summary=true
+
+[push]
+    default = simple
