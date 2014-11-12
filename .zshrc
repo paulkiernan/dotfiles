@@ -1,10 +1,13 @@
+# Base Terminal Config
+# vim: set filetype=sh:
+
 export TERM=xterm-256color
 
 export ZSH="$HOME/.dotfiles/oh-my-zsh"
 export ZSH_THEME="afowler"
 export DISABLE_AUTO_UPDATE="true"
 export OH_MY_ZSH_DEBUG="true"
-plugins=(command-coloring pip fabric lein redis-cli vagrant)
+plugins=(brew colored-man colorize command-coloring git-prompt pep8 nyan vagrant)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -22,15 +25,17 @@ alias bp='bpython'
 alias ll='ls -lah'
 alias sane='stty sane'
 alias external_ip="curl -s http://checkip.dyndns.org | sed 's/[a-zA-Z/<> :]//g'"
-alias vimupdate="vim +BundleInstall! +BundleClean +q" # For reconfiguring vim
+alias vimupdate="vim +BundleInstall! +BundleClean +q"
 
 # Useless aliases ------------------------------------------------------------
 alias hi='pygmentize'
-alias jsonp='python -mjson.tool | pygmentize -l javascript;'
+alias json='python -mjson.tool | pygmentize -l javascript;'
 alias fact="elinks -dump randomfunfacts.com | sed -n '/^| /p' | tr -d \|"
 alias glr='fact && git pull'
 
-function gimmeurjson() { curl "$*" | python -mjson.tool | pygmentize -l javascript; }
+function gimmeurjson() {
+    curl "$*" | python -mjson.tool | pygmentize -l javascript;
+}
 
 # Environment variables ------------------------------------------------------
 export EDITOR='vim'
@@ -40,18 +45,18 @@ export HISTFILE=~/.zhistory
 export HISTSIZE=10000
 export HISTFILESIZE=10000
 export HISTCONTROL=erasedups
-setopt incappendhistory
-setopt sharehistory
-setopt extendedhistory
 export COMMAND_MODE=unix2003
 export DISABLE_AUTO_TITLE="true" #Fix where tmux would always autorename
 export REPORTTIME=10
 
+# ZSH Config -----------------------------------------------------------------
+setopt incappendhistory
+setopt sharehistory
+setopt extendedhistory
+
 # Python variables -----------------------------------------------------------
 export PIP_DOWNLOAD_CACHE="$HOME/.pip/cache"
 export PATH="${PATH}:/Developer/usr/bin"
-export PYTHONPATH="$PYTHONPATH:/usr/local/lib/python2.7/site-packages"
-export PYTHONPATH="$PYTHONPATH:/usr/local/Cellar/python/2.7.1/lib/python2.7/site-packages"
 
 # Heroku stuff
 export PATH="${PATH}/usr/local/heroku/bin"
@@ -59,6 +64,7 @@ export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Desktop/Experiments
 export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
 source /usr/local/bin/virtualenvwrapper_lazy.sh
+source /usr/local/opt/autoenv/activate.sh       # Load Autoenv
 
 # Extra ----------------------------------------------------------------------
 source ~/.dotfiles/z/z.sh
