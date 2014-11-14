@@ -89,5 +89,8 @@ alias ll3='tree --dirsfirst -ChFupDaL 3'
 alias l='l1'
 alias ll='ll1'
 
-# Eork Sources ---------------------------------------------------------------
+# Work Sources ---------------------------------------------------------------
 source $HOME/.workrc
+
+# Docker Sources -------------------------------------------------------------
+source $HOME/.dockerrc
