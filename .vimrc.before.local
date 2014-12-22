@@ -1,5 +1,6 @@
 " General Bundle configuration {
-    let g:spf13_bundle_groups=['general', 'programming', 'misc', 'python']
+    let g:spf13_use_powerline=1
+    let g:spf13_bundle_groups=['general', 'snipmate', 'puppet', 'programming', 'misc', 'python']
     let g:airline_powerline_fonts=1
 " }
 

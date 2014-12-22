@@ -1,6 +1,4 @@
-Bundle 'sophacles/vim-bundle-mako'
 Bundle 'myusuf3/numbers.vim'
-Bundle 'rodjek/vim-puppet'
-Bundle 'editorconfig/editorconfig-vim'
 
 UnBundle 'justinmk/vim-sneak'
+UnBundle 'spf13/vim-autoclose'
