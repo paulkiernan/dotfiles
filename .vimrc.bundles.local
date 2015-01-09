@@ -2,3 +2,4 @@ Bundle 'myusuf3/numbers.vim'
 
 UnBundle 'justinmk/vim-sneak'
 UnBundle 'spf13/vim-autoclose'
+UnBundle 'AutoClose'

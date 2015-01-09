@@ -7,15 +7,12 @@
     " }
 
     " Appearance {
-        set colorcolumn=80
+        let &colorcolumn="73,81"
 
         syntax enable
         set background=dark
         colorscheme solarized
     " }
-
-    " Disable the fucking autoclose plugin
-    UnBundle 'AutoClose'
 
 " }
 
@@ -35,6 +32,7 @@
 
 " Special Filetype Definition {
 
-    au BufRead,BufNewFile *.mak set filetype=mako   "Assign *.mak as a mako filetype
+    "Assign *.mak as a mako filetype
+    au BufRead,BufNewFile *.mak set filetype=mako
 
 " }
