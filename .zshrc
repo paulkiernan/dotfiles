@@ -68,6 +68,7 @@ source /usr/local/opt/autoenv/activate.sh       # Load Autoenv
 
 # Extra ----------------------------------------------------------------------
 source ~/.dotfiles/z/z.sh
+export BYOBU_PREFIX=$(brew --prefix)
 
 # Pre-Prompt Command ---------------------------------------------------------
 function precmd () {
@@ -89,8 +90,15 @@ alias ll3='tree --dirsfirst -ChFupDaL 3'
 alias l='l1'
 alias ll='ll1'
 
+source-if-exists() {
+    # check file exists, is regular file and is readable:
+    if [[ -f $1 && -r $1 ]]; then
+        source $1
+    fi
+}
+
 # Work Sources ---------------------------------------------------------------
-source $HOME/.workrc
+source-if-exists $HOME/.workrc
 
 # Docker Sources -------------------------------------------------------------
-source $HOME/.dockerrc
+source-if-exists $HOME/.dockerrc
