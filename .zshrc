@@ -7,9 +7,10 @@ export ZSH="$HOME/.dotfiles/oh-my-zsh"
 export ZSH_THEME="afowler"
 export DISABLE_AUTO_UPDATE="true"
 export OH_MY_ZSH_DEBUG="true"
+export COMPLETION_WAITING_DOTS="true"
 plugins=(brew colored-man colorize command-coloring git-prompt pep8 nyan vagrant)
 
-source $ZSH/oh-my-zsh.sh
+[ -s "$ZSH/oh-my-zsh.sh" ] && source "$ZSH/oh-my-zsh.sh"
 
 # Custom options -------------------------------------------------------------
 unsetopt promptcr
