@@ -37,3 +37,5 @@
 
 [push]
     default = simple
+[hooks]
+	global = /Users/paulynomial/.dotfiles/githooks
