@@ -55,9 +55,18 @@ setopt incappendhistory
 setopt sharehistory
 setopt extendedhistory
 
-# Python variables -----------------------------------------------------------
+# Python stuff ---------------------------------------------------------------
 export PIP_DOWNLOAD_CACHE="$HOME/.pip/cache"
 export PATH="${PATH}:/Developer/usr/bin"
+# CD into a python package's source dir
+cdp () {
+    cd "$(python -c "import os.path as _, ${1}; \
+        print(_.dirname(_.realpath(${1}.__file__[:-1])))"
+    )"
+}
+
+# Ruby PATH variables --------------------------------------------------------
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 # Heroku stuff
 export PATH="${PATH}/usr/local/heroku/bin"

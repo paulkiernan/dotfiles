@@ -2,6 +2,7 @@
 
     " Navigation {
         imap ii <Esc>
+        set pastetoggle=<leader>p
         set mouse-=a " Disable the fucking mouse
         map <leader>t <Esc>:tabnew<CR>
     " }

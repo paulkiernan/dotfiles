@@ -24,7 +24,7 @@
     status = auto
     branch = auto
     interactive = auto
-    ui = auto
+    ui = true
 
 [diff]
     algorithm = patience
