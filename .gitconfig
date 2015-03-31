@@ -37,5 +37,9 @@
 
 [push]
     default = simple
+
 [hooks]
-	global = /Users/paulynomial/.dotfiles/githooks
+    global = /Users/paulynomial/.dotfiles/githooks
+
+[github]
+    user = paulkiernan
