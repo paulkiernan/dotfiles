@@ -1,0 +1,104 @@
+" Modeline and Notes {
+" vim: set sw=4 ts=4 sts=4 et tw=78 foldmarker={,} foldlevel=0 foldmethod=marker spell:
+"
+"     _ __   __ _ _   _| |_   _ _ __   ___  _ __ ___ (_) __ _| |
+"    | '_ \ / _` | | | | | | | | '_ \ / _ \| '_ ` _ \| |/ _` | |
+"    | |_) | (_| | |_| | | |_| | | | | (_) | | | | | | | (_| | |
+"    | .__/ \__,_|\__,_|_|\__, |_| |_|\___/|_| |_| |_|_|\__,_|_|
+"    |_|                  |___/
+"
+" }
+" Environment {
+
+    " Basics {
+        set nocompatible        " Must be first line
+        set background=dark     " Assume a dark background
+    " }
+
+    " Setup Bundle Support {
+        " The next three lines ensure that the ~/.vim/bundle/ system works
+        filetype off
+        set rtp+=~/.vim/bundle/vundle
+        call vundle#rc()
+    " }
+
+" }
+
+" Bundles {
+
+    " Deps {
+        Bundle 'gmarik/vundle'
+        Bundle 'MarcWeber/vim-addon-mw-utils'
+        Bundle 'tomtom/tlib_vim'
+        if executable('ag')
+            Bundle 'mileszs/ack.vim'
+            let g:ackprg = 'ag --nogroup --nocolor --column --smart-case'
+        elseif executable('ack-grep')
+            let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+            Bundle 'mileszs/ack.vim'
+        elseif executable('ack')
+            Bundle 'mileszs/ack.vim'
+        endif
+    " }
+
+    " General {
+        Bundle 'myusuf3/numbers.vim'
+        Bundle 'altercation/vim-colors-solarized'
+        Bundle 'tpope/vim-surround'
+        Bundle 'tpope/vim-repeat'
+        Bundle 'ctrlpvim/ctrlp.vim'
+        Bundle 'tacahiroy/ctrlp-funky'
+        Bundle 'matchit.zip'
+        Bundle 'Lokaltog/powerline', {'rtp':'/powerline/bindings/vim'}
+        Bundle 'bling/vim-bufferline'
+        Bundle 'Lokaltog/vim-easymotion'
+        Bundle 'nathanaelkane/vim-indent-guides'
+        Bundle 'vim-scripts/restore_view.vim'
+        Bundle 'mhinz/vim-signify'
+    " }
+
+    " General Programming {
+        " Pick one of the checksyntax, jslint, or syntastic
+        Bundle 'scrooloose/syntastic'
+        Bundle 'tpope/vim-fugitive'
+        Bundle 'mattn/webapi-vim'
+        Bundle 'mattn/gist-vim'
+        Bundle 'scrooloose/nerdcommenter'
+        Bundle 'majutsushi/tagbar'
+    " }
+
+    " Python {
+        " Pick either python-mode or pyflakes & pydoc
+        Bundle 'klen/python-mode'
+        Bundle 'python_match.vim'
+    " }
+
+    " Javascript {
+        Bundle 'pangloss/vim-javascript'
+        Bundle 'jelera/vim-javascript-syntax'
+    " }
+
+    " Scala {
+        Bundle 'derekwyatt/vim-scala'
+        Bundle 'derekwyatt/vim-sbt'
+        Bundle 'xptemplate'
+    " }
+
+    " HTML {
+        Bundle 'amirh/HTML-AutoCloseTag'
+        Bundle 'hail2u/vim-css3-syntax'
+        Bundle 'gorodinskiy/vim-coloresque'
+        Bundle 'tpope/vim-haml'
+    " }
+
+    " Puppet {
+        Bundle 'rodjek/vim-puppet'
+    " }
+
+    " Misc {
+        Bundle 'tpope/vim-markdown'
+        Bundle 'spf13/vim-preview'
+    " }
+
+" }
+"
