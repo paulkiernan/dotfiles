@@ -71,12 +71,8 @@ lnif "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
 lnif "$DOTFILES_DIR/.tmux.conf" "$HOME/.tmux.conf"
 lnif "$DOTFILES_DIR/.tmux.conf" "$HOME/.byobu/.tmux.conf"
 lnif "$DOTFILES_DIR/.tmux.conf" "$HOME/.byoburc.tmux"
-lnif "$DOTFILES_DIR/.vimrc.local" "$HOME/.vimrc.local"
-lnif "$DOTFILES_DIR/.vimrc.before.local" "$HOME/.vimrc.before.local"
-lnif "$DOTFILES_DIR/.vimrc.bundles.local" "$HOME/.vimrc.bundles.local"
-
-# Install Steve Francia's awesome vim config
-curl --insecure http://j.mp/spf13-vim3 -L -o - | sh || true
+lnif "$DOTFILES_DIR/.vimrc" "$HOME/.vimrc"
+lnif "$DOTFILES_DIR/.vimrc.bundles" "$HOME/.vimrc.bundles"
 
 # Done!
 echo "All done! Log out of all open sessions to install new env!"
