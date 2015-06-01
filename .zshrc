@@ -30,7 +30,7 @@ alias vimupdate="vim +BundleInstall! +BundleClean"
 
 # Useless aliases ------------------------------------------------------------
 alias hi='pygmentize'
-alias json='python -mjson.tool | pygmentize -l javascript;'
+alias json='python -mjson.tool | pygmentize -l json;'
 alias fact="elinks -dump randomfunfacts.com | sed -n '/^| /p' | tr -d \|"
 alias glr='fact && git pull'
 
