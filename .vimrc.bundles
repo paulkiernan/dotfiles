@@ -49,7 +49,7 @@
         Bundle 'ctrlpvim/ctrlp.vim'
         Bundle 'tacahiroy/ctrlp-funky'
         Bundle 'matchit.zip'
-        Bundle 'Lokaltog/powerline', {'rtp':'/powerline/bindings/vim'}
+        Bundle 'powerline/powerline', {'rtp':'/powerline/bindings/vim'}
         Bundle 'bling/vim-bufferline'
         Bundle 'Lokaltog/vim-easymotion'
         Bundle 'nathanaelkane/vim-indent-guides'
