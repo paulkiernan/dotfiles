@@ -73,6 +73,7 @@ lnif "$DOTFILES_DIR/.tmux.conf" "$HOME/.byobu/.tmux.conf"
 lnif "$DOTFILES_DIR/.tmux.conf" "$HOME/.byoburc.tmux"
 lnif "$DOTFILES_DIR/.vimrc" "$HOME/.vimrc"
 lnif "$DOTFILES_DIR/.vimrc.bundles" "$HOME/.vimrc.bundles"
+lnif "$DOTFILES_DIR/.dockerrc" "$HOME/.dockerrc"
 
 # Done!
 echo "All done! Log out of all open sessions to install new env!"

@@ -1,0 +1,6 @@
+# Docker Config
+# vim: set filetype=sh:
+
+function docker-workon(){
+    eval "$(docker-machine env $1)"
+}
