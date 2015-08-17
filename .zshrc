@@ -4,7 +4,8 @@
 export TERM=xterm-256color
 
 export ZSH="$HOME/.dotfiles/oh-my-zsh"
-export ZSH_THEME="afowler"
+export ZSH_CUSTOM="$HOME/.dotfiles/zsh-custom"
+export ZSH_THEME="paulynomial"
 export DISABLE_AUTO_UPDATE="true"
 export OH_MY_ZSH_DEBUG="true"
 export COMPLETION_WAITING_DOTS="true"
