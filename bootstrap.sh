@@ -29,6 +29,7 @@ elif [ "$UNAME_STR" == 'Darwin' ]; then
     # Install brew, the package manager for drunks
     hash brew 2>/dev/null || ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
     brew install python sl vim byobu tree wget
+    brew install michaeldfallen/formula/git-radar
     pip install ipython virtualenvwrapper Pygments
 fi
 
