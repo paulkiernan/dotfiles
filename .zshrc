@@ -112,3 +112,6 @@ source-if-exists $HOME/.workrc
 
 # Docker Sources -------------------------------------------------------------
 source-if-exists $HOME/.dockerrc
+
+# Display system stats
+archey -c
