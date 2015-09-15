@@ -73,6 +73,13 @@
         Bundle 'python_match.vim'
     " }
 
+    " Clojure {
+        Bundle 'guns/vim-clojure-static'
+        Bundle 'tpope/vim-fireplace'
+        Bundle 'tpope/vim-classpath'
+        Bundle 'kien/rainbow_parentheses.vim'
+    " }
+
     " Javascript {
         Bundle 'pangloss/vim-javascript'
         Bundle 'jelera/vim-javascript-syntax'
@@ -99,6 +106,7 @@
         Bundle 'tpope/vim-markdown'
         Bundle 'spf13/vim-preview'
         Bundle 'vim-scripts/nginx.vim'
+        Bundle 'chase/vim-ansible-yaml'
     " }
 
 " }

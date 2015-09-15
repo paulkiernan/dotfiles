@@ -291,6 +291,10 @@
         endif
     " }
 
+    " rainbow-parens {
+        autocmd BufNewFile,BufRead *.clj   RainbowParenthesesToggle
+    " {
+
 " }
 
 " Functions {
