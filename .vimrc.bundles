@@ -72,6 +72,10 @@
         Bundle 'klen/python-mode'
         Bundle 'python_match.vim'
     " }
+    "
+    " C++ {
+        Plugin 'octol/vim-cpp-enhanced-highlight'
+    " }
 
     " Clojure {
         Bundle 'guns/vim-clojure-static'

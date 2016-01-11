@@ -23,10 +23,10 @@ alias j='z'
 alias tm='tmux -u2'
 alias c='clear'
 alias bp='bpython'
-alias ll='ls -lah'
 alias sane='stty sane'
 alias external_ip="curl -s http://checkip.dyndns.org | sed 's/[a-zA-Z/<> :]//g'"
 alias vimupdate="vim +BundleInstall! +BundleClean"
+alias tmux="byobu-tmux"
 
 # Useless aliases ------------------------------------------------------------
 alias hi='pygmentize'
@@ -74,7 +74,7 @@ export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Desktop/Experiments
 export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
 source /usr/local/bin/virtualenvwrapper_lazy.sh
-source /usr/local/opt/autoenv/activate.sh       # Load Autoenv
+#source /usr/local/opt/autoenv/activate.sh       # Load Autoenv
 
 # Extra ----------------------------------------------------------------------
 source ~/.dotfiles/z/z.sh
