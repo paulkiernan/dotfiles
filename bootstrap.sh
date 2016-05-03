@@ -73,13 +73,15 @@ lnif "$DOTFILES_DIR/zsh" "$OH_MY_ZSH_DIR/custom"
 lnif "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
 lnif "$DOTFILES_DIR/.tmux.conf" "$HOME/.tmux.conf"
 lnif "$DOTFILES_DIR/.tmux.conf" "$HOME/.byobu/.tmux.conf"
-lnif "$DOTFILES_DIR/.tmux.conf" "$HOME/.byoburc.tmux"
 lnif "$DOTFILES_DIR/.vimrc" "$HOME/.vimrc"
 lnif "$DOTFILES_DIR/.vimrc.bundles" "$HOME/.vimrc.bundles"
 lnif "$DOTFILES_DIR/.dockerrc" "$HOME/.dockerrc"
 
 # Download vundle to bootstrap vimconfig
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/vundle
+VUNDLE_INSTALL_LOCATION="~/.vim/bundle/vundle"
+if [ -d "$VUNDLE_INSTALL_LOCATION" ]; then
+    git clone https://github.com/VundleVim/Vundle.vim.git $VUNDLE_INSTALL_LOCATION
+fi
 
 # Done!
 sudo chsh -s /bin/zsh
