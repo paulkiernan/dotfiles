@@ -30,6 +30,7 @@ elif [ "$UNAME_STR" == 'Darwin' ]; then
     hash brew 2>/dev/null || ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
     brew install python sl vim byobu tree wget
     brew install michaeldfallen/formula/git-radar
+    brew install archey
     pip install ipython virtualenvwrapper Pygments
 fi
 
@@ -66,6 +67,7 @@ elif [ -d $Z_COMPLETION_DIR -a -d $Z_COMPLETION_DIR/.git ]; then
 fi
 
 # Set up symlinks!
+mkdir -p ~/.byobu
 lnif "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
 lnif "$DOTFILES_DIR/zsh" "$OH_MY_ZSH_DIR/custom"
 lnif "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
@@ -76,5 +78,9 @@ lnif "$DOTFILES_DIR/.vimrc" "$HOME/.vimrc"
 lnif "$DOTFILES_DIR/.vimrc.bundles" "$HOME/.vimrc.bundles"
 lnif "$DOTFILES_DIR/.dockerrc" "$HOME/.dockerrc"
 
+# Download vundle to bootstrap vimconfig
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/vundle
+
 # Done!
+sudo chsh -s /bin/zsh
 echo "All done! Log out of all open sessions to install new env!"
