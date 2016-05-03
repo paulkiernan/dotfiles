@@ -30,7 +30,7 @@ elif [ "$UNAME_STR" == 'Darwin' ]; then
     hash brew 2>/dev/null || ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
     brew install python sl vim byobu tree wget
     brew install michaeldfallen/formula/git-radar
-    brew install archey
+    brew install archey htop
     pip install ipython virtualenvwrapper Pygments
 fi
 
