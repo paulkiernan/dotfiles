@@ -74,7 +74,6 @@ export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Desktop/Experiments
 export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
 source /usr/local/bin/virtualenvwrapper_lazy.sh
-#source /usr/local/opt/autoenv/activate.sh       # Load Autoenv
 
 # Extra ----------------------------------------------------------------------
 source ~/.dotfiles/z/z.sh
