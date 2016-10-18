@@ -3,6 +3,8 @@
 
 export TERM=xterm-256color
 
+export GPGKEY=274F9567
+
 export ZSH="$HOME/.dotfiles/oh-my-zsh"
 export ZSH_CUSTOM="$HOME/.dotfiles/zsh-custom"
 export ZSH_THEME="paulynomial"

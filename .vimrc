@@ -46,13 +46,14 @@
     set mouse-=a                " Disable mouse usage
     scriptencoding utf-8
 
-    if has('clipboard')
-        if has('unnamedplus')  " When possible use + register for copy-paste
-            set clipboard=unnamed,unnamedplus
-        else         " On mac and Windows, use * register for copy-paste
-            set clipboard=unnamed
-        endif
-    endif
+    set clipboard=unnamed
+    "if has('clipboard')
+        "if has('unnamedplus')  " When possible use + register for copy-paste
+            "set clipboard=unnamed,unnamedplus
+        "else         " On mac and Windows, use * register for copy-paste
+            "set clipboard=unnamed
+        "endif
+    "endif
 
     " Always switch to the current file directory
     autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
@@ -195,8 +196,9 @@
             let g:pymode_lint_checkers = ['pyflakes']
             let g:pymode_trim_whitespaces = 0
             let g:pymode_options = 0
-            let g:pymode_rope = 0
         endif
+
+        let g:pymode_rope = 0
     " }
 
     " ctrlp {
@@ -293,7 +295,22 @@
 
     " rainbow-parens {
         autocmd BufNewFile,BufRead *.clj   RainbowParenthesesToggle
-    " {
+    " }
+
+    " syntastic {
+        set statusline+=%#warningmsg#
+        set statusline+=%{SyntasticStatuslineFlag()}
+        set statusline+=%*
+
+        let g:syntastic_always_populate_loc_list = 1
+        let g:syntastic_auto_loc_list = 1
+        let g:syntastic_check_on_open = 1
+        let g:syntastic_check_on_wq = 0
+    " }
+
+    " markdown-preview {
+        let g:mkdp_path_to_chrome = "/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome"
+    " }
 
 " }
 

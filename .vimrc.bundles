@@ -118,9 +118,10 @@
 
     " Misc {
         Bundle 'tpope/vim-markdown'
-        Bundle 'spf13/vim-preview'
+        Bundle 'iamcco/markdown-preview.vim'
         Bundle 'vim-scripts/nginx.vim'
         Bundle 'chase/vim-ansible-yaml'
+        Bundle 'kevints/vim-aurora-syntax'
     " }
 
 " }
