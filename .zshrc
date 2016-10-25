@@ -42,7 +42,7 @@ function gimmeurjson() {
 
 # Environment variables ------------------------------------------------------
 export EDITOR='vim'
-export PATH="$HOME/.dotfiles/scripts:$HOME/bin:/usr/local/bin:/usr/local/sbin:/opt/local/bin:$PATH"
+export PATH="$HOME/.git-radar:$HOME/.dotfiles/scripts:$HOME/bin:/usr/local/bin:/usr/local/sbin:/opt/local/bin:$PATH"
 export GREP_OPTIONS='--color=auto'
 export HISTFILE=~/.zhistory
 export HISTSIZE=10000
