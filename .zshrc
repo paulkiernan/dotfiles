@@ -36,10 +36,6 @@ alias json='python -mjson.tool | pygmentize -l json;'
 alias fact="elinks -dump randomfunfacts.com | sed -n '/^| /p' | tr -d \|"
 alias glr='fact && git pull'
 
-function gimmeurjson() {
-    curl "$*" | python -mjson.tool | pygmentize -l javascript;
-}
-
 # Environment variables ------------------------------------------------------
 export EDITOR='vim'
 export PATH="$HOME/.git-radar:$HOME/.dotfiles/scripts:$HOME/bin:/usr/local/bin:/usr/local/sbin:/opt/local/bin:$PATH"
@@ -79,7 +75,9 @@ source /usr/local/bin/virtualenvwrapper_lazy.sh
 
 # Extra ----------------------------------------------------------------------
 source ~/.dotfiles/z/z.sh
-export BYOBU_PREFIX=$(brew --prefix)
+if [ hash brew 2>/dev/null ]; then
+    export BYOBU_PREFIX=$(brew --prefix)
+fi
 
 # Pre-Prompt Command ---------------------------------------------------------
 function precmd () {
@@ -115,4 +113,6 @@ source-if-exists $HOME/.workrc
 source-if-exists $HOME/.dockerrc
 
 # Display system stats
-archey -c
+if [ hash archey 2>/dev/null ]; then
+    archey -c
+fi
