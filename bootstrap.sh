@@ -22,7 +22,7 @@ if [ "$UNAME_STR" == 'Linux' ]; then
     echo ">> Installing essential dev tools using apt-get"
     echo ""
     sudo apt-get update
-    sudo apt-get -y install sl curl bash-completion build-essential zsh vim \
+    sudo apt-get -y install sl curl bash-completion build-essential zsh vim-nox \
         byobu elinks tree ipython bpython python-setuptools python-dev      \
         python-pip git-core ctags zsh tree
 elif [ "$UNAME_STR" == 'Darwin' ]; then
@@ -32,9 +32,6 @@ elif [ "$UNAME_STR" == 'Darwin' ]; then
     brew install archey htop postgresql gcc
     pip install ipython virtualenvwrapper Pygments
 fi
-
-# Install git-radar
-git clone https://github.com/michaeldfallen/git-radar .git-radar
 
 rm -f "$HOME/.gitconfig"
 lnif -s "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
@@ -68,8 +65,18 @@ elif [ -d $Z_COMPLETION_DIR -a -d $Z_COMPLETION_DIR/.git ]; then
     cd $HOME
 fi
 
+# Install git-radar
+GIT_RADAR_INSTALL_LOCATION="$HOME/.git-radar"
+if [ ! -d $GIT_RADAR_INSTALL_LOCATION ]; then
+    git clone https://github.com/michaeldfallen/git-radar $GIT_RADAR_INSTALL_LOCATION
+elif [ -d $GIT_RADAR_INSTALL_LOCATION -a -d $GIT_RADAR_INSTALL_LOCATION/.git ]; then
+    cd $GIT_RADAR_INSTALL_LOCATION
+    git pull origin master
+    cd $HOME
+fi
+
 # Set up symlinks!
-mkdir -p ~/.byobu
+mkdir -p "$HOME/.byobu"
 lnif "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
 lnif "$DOTFILES_DIR/zsh" "$OH_MY_ZSH_DIR/custom"
 lnif "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
@@ -80,8 +87,9 @@ lnif "$DOTFILES_DIR/.vimrc.bundles" "$HOME/.vimrc.bundles"
 lnif "$DOTFILES_DIR/.dockerrc" "$HOME/.dockerrc"
 
 # Download vundle to bootstrap vimconfig
-VUNDLE_INSTALL_LOCATION="~/.vim/bundle/vundle"
-if [ -d "$VUNDLE_INSTALL_LOCATION" ]; then
+VUNDLE_INSTALL_LOCATION="$HOME/.vim/bundle/vundle"
+if [ ! -d "$VUNDLE_INSTALL_LOCATION" ]; then
+    mkdir -p $VUNDLE_INSTALL_LOCATION
     git clone https://github.com/VundleVim/Vundle.vim.git $VUNDLE_INSTALL_LOCATION
 fi
 
