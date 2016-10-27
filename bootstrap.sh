@@ -22,9 +22,8 @@ if [ "$UNAME_STR" == 'Linux' ]; then
     echo ">> Installing essential dev tools using apt-get"
     echo ""
     sudo apt-get update
-    sudo apt-get -y install sl curl bash-completion build-essential zsh vim-nox \
-        byobu elinks tree ipython bpython python-setuptools python-dev      \
-        python-pip git-core ctags zsh tree
+    sudo apt-get -y install sl curl bash-completion build-essential vim-nox \
+        byobu elinks tree python-dev python-pip git-core ctags zsh tree htop
 elif [ "$UNAME_STR" == 'Darwin' ]; then
     # Install brew, the package manager for drunks
     hash brew 2>/dev/null || ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
