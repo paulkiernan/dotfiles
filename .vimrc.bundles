@@ -60,6 +60,7 @@
         Bundle 'tacahiroy/ctrlp-funky'
         Bundle 'matchit.zip'
         Bundle 'powerline/powerline', {'rtp':'/powerline/bindings/vim'}
+        Bundle 'powerline/fonts'
         Bundle 'bling/vim-bufferline'
         Bundle 'Lokaltog/vim-easymotion'
         Bundle 'nathanaelkane/vim-indent-guides'
