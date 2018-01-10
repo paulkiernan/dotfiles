@@ -38,7 +38,7 @@ alias glr='fact && git pull'
 
 # Environment variables ------------------------------------------------------
 export EDITOR='vim'
-export PATH="$HOME/.git-radar:$HOME/.dotfiles/scripts:$HOME/bin:/usr/local/bin:/usr/local/sbin:/opt/local/bin:$PATH"
+export PATH="$HOME/.dotfiles/scripts:$HOME/bin:/usr/local/bin:/usr/local/sbin:/opt/local/bin:$PATH"
 export HISTFILE=~/.zhistory
 export HISTSIZE=10000
 export HISTFILESIZE=10000
@@ -54,7 +54,7 @@ setopt extendedhistory
 
 # Python stuff ---------------------------------------------------------------
 export PIP_DOWNLOAD_CACHE="$HOME/.pip/cache"
-export PATH="${PATH}:/Developer/usr/bin"
+export PATH="/usr/local/opt/python/libexec/bin:${PATH}"
 # CD into a python package's source dir
 cdp () {
     cd "$(python -c "import os.path as _, ${1}; \
@@ -65,23 +65,8 @@ cdp () {
 # Ruby PATH variables --------------------------------------------------------
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
-# Heroku stuff
-export PATH="${PATH}/usr/local/heroku/bin"
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Desktop/Experiments
-export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
-source /usr/local/bin/virtualenvwrapper_lazy.sh
-
-# Extra ----------------------------------------------------------------------
-source ~/.dotfiles/z/z.sh
-if [ hash brew 2>/dev/null ]; then
-    export BYOBU_PREFIX=$(brew --prefix)
-fi
-
-# Pre-Prompt Command ---------------------------------------------------------
-function precmd () {
-    z --add "$(pwd -P)"
-}
 
 # Local Settings -------------------------------------------------------------
 if [[ -s $HOME/.zshrc_local ]] ; then source $HOME/.zshrc_local ; fi
@@ -112,6 +97,23 @@ source-if-exists $HOME/.workrc
 source-if-exists $HOME/.dockerrc
 
 # Display system stats
-if [ hash archey 2>/dev/null ]; then
-    archey -c
-fi
+
+cat << EOF
+ ▄████▄   ██░ ██  ▄▄▄       ██▀███  ▄▄▄█████▓ ▄▄▄▄   ▓█████ ▄▄▄     ▄▄▄█████▓
+▒██▀ ▀█  ▓██░ ██▒▒████▄    ▓██ ▒ ██▒▓  ██▒ ▓▒▓█████▄ ▓█   ▀▒████▄   ▓  ██▒ ▓▒
+▒▓█    ▄ ▒██▀▀██░▒██  ▀█▄  ▓██ ░▄█ ▒▒ ▓██░ ▒░▒██▒ ▄██▒███  ▒██  ▀█▄ ▒ ▓██░ ▒░
+▒▓▓▄ ▄██▒░▓█ ░██ ░██▄▄▄▄██ ▒██▀▀█▄  ░ ▓██▓ ░ ▒██░█▀  ▒▓█  ▄░██▄▄▄▄██░ ▓██▓ ░ 
+▒ ▓███▀ ░░▓█▒░██▓ ▓█   ▓██▒░██▓ ▒██▒  ▒██▒ ░ ░▓█  ▀█▓░▒████▒▓█   ▓██▒ ▒██▒ ░ 
+░ ░▒ ▒  ░ ▒ ░░▒░▒ ▒▒   ▓▒█░░ ▒▓ ░▒▓░  ▒ ░░   ░▒▓███▀▒░░ ▒░ ░▒▒   ▓▒█░ ▒ ░░   
+  ░  ▒    ▒ ░▒░ ░  ▒   ▒▒ ░  ░▒ ░ ▒░    ░    ▒░▒   ░  ░ ░  ░ ▒   ▒▒ ░   ░    
+░         ░  ░░ ░  ░   ▒     ░░   ░   ░       ░    ░    ░    ░   ▒    ░      
+░ ░       ░  ░  ░      ░  ░   ░               ░         ░  ░     ░  ░        
+░           
+           (c) datetime.now().year Ellingson Minieral Oil Company
+
+                              Hack the Planet
+
+EOF
+
+
+archey -c

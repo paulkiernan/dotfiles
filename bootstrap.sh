@@ -56,13 +56,6 @@ elif [ -d $OH_MY_ZSH_DIR -a -d $OH_MY_ZSH_DIR/.git ]; then
     git pull origin master
     cd $HOME
 fi
-if [ ! -d $Z_COMPLETION_DIR ]; then
-    git clone git://github.com/sjl/z-zsh $Z_COMPLETION_DIR
-elif [ -d $Z_COMPLETION_DIR -a -d $Z_COMPLETION_DIR/.git ]; then
-    cd $Z_COMPLETION_DIR
-    git pull origin master
-    cd $HOME
-fi
 
 # Install git-radar
 GIT_RADAR_INSTALL_LOCATION="$HOME/.git-radar"
