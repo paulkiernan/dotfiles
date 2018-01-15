@@ -26,10 +26,8 @@ if [ "$UNAME_STR" == 'Linux' ]; then
         byobu elinks tree python-dev python-pip git-core ctags zsh tree htop
 elif [ "$UNAME_STR" == 'Darwin' ]; then
     # Install brew, the package manager for drunks
-    hash brew 2>/dev/null || ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
-    brew install python sl vim byobu tree wget
-    brew install archey htop postgresql gcc
-    pip install ipython virtualenvwrapper Pygments
+    hash brew 2>/dev/null || /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    brew install python sl vim byobu tree wget archey postgresql gcc
 fi
 
 rm -f "$HOME/.gitconfig"
