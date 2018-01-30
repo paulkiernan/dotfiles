@@ -72,6 +72,7 @@
         " Pick one of the checksyntax, jslint, or syntastic
         Bundle 'scrooloose/syntastic'
         Bundle 'tpope/vim-fugitive'
+        Bundle 'tpope/vim-rhubarb'
         Bundle 'mattn/webapi-vim'
         Bundle 'mattn/gist-vim'
         Bundle 'scrooloose/nerdcommenter'
@@ -80,7 +81,7 @@
 
     " Python {
         " Pick either python-mode or pyflakes & pydoc
-        Bundle 'klen/python-mode'
+        UnBundle 'klen/python-mode'
         Bundle 'python_match.vim'
     " }
     "
@@ -105,7 +106,6 @@
     " }
 
     " HTML {
-        Bundle 'amirh/HTML-AutoCloseTag'
         Bundle 'hail2u/vim-css3-syntax'
         Bundle 'gorodinskiy/vim-coloresque'
         Bundle 'tpope/vim-haml'
