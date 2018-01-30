@@ -7,7 +7,9 @@ DOTFILES_DIR=$HOME/.dotfiles
 OH_MY_ZSH_DIR=$DOTFILES_DIR/oh-my-zsh
 Z_COMPLETION_DIR=$DOTFILES_DIR/z
 
+
 lnif() {
+    # Softlink if not already exists
     if [ ! -e $2 ] ; then
         ln -s $1 $2
     fi
@@ -16,18 +18,52 @@ lnif() {
     fi
 }
 
+
 UNAME_STR=$(uname)
 if [ "$UNAME_STR" == 'Linux' ]; then
     echo ""
-    echo ">> Installing essential dev tools using apt-get"
+    echo ">> Installing essential linux dev tools using apt-get"
     echo ""
     sudo apt-get update
-    sudo apt-get -y install sl curl bash-completion build-essential vim-nox \
-        byobu elinks tree python-dev python-pip git-core ctags zsh tree htop
+    sudo apt-get -y install \
+        sl \
+        curl \
+        bash-completion \
+        build-essential \
+        vim-nox \
+        byobu \
+        elinks \
+        tree \
+        python-dev \
+        python-pip \
+        git-core \
+        ctags \
+        zsh \
+        tree \
+        htop
 elif [ "$UNAME_STR" == 'Darwin' ]; then
-    # Install brew, the package manager for drunks
+    echo ""
+    echo ">> Installing brew and other mac shenanigans"
+    echo ""
     hash brew 2>/dev/null || /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    brew install python sl vim byobu tree wget archey postgresql gcc
+    brew install \
+        archey \
+        byobu \
+        elinks \
+        gcc \
+        git-lfs \
+        jrnl \
+        postgresql \
+        pyenv \
+        pyenv-virtualenv \
+        python \
+        sl \
+        tree \
+        vim \
+        nmap \
+        wget
+    brew cask install caffeine
+    sudo pip install pygments
 fi
 
 rm -f "$HOME/.gitconfig"

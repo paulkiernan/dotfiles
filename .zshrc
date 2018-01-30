@@ -1,88 +1,7 @@
-# Base Terminal Config
 # vim: set filetype=sh:
-
 export TERM=xterm-256color
 
-export GPGKEY=274F9567
-
-export ZSH="$HOME/.dotfiles/oh-my-zsh"
-export ZSH_CUSTOM="$HOME/.dotfiles/zsh-custom"
-export ZSH_THEME="paulynomial"
-export DISABLE_AUTO_UPDATE="true"
-export OH_MY_ZSH_DEBUG="true"
-plugins=(brew colored-man colorize command-coloring git-prompt pep8 nyan vagrant)
-
-[ -s "$ZSH/oh-my-zsh.sh" ] && source "$ZSH/oh-my-zsh.sh"
-
-# Custom options -------------------------------------------------------------
-unsetopt promptcr
-
-# Terminal vim bindings
-set -o vi
-
-# Useful aliases -------------------------------------------------------------
-alias j='z'
-alias tm='tmux -u2'
-alias c='clear'
-alias bp='bpython'
-alias sane='stty sane'
-alias external_ip="curl -s http://checkip.dyndns.org | sed 's/[a-zA-Z/<> :]//g'"
-alias vimupdate="vim +BundleInstall! +BundleClean"
-alias tmux="byobu-tmux"
-
-# Useless aliases ------------------------------------------------------------
-alias hi='pygmentize'
-alias json='python -mjson.tool | pygmentize -l json;'
-alias fact="elinks -dump randomfunfacts.com | sed -n '/^| /p' | tr -d \|"
-alias glr='fact && git pull'
-
-# Environment variables ------------------------------------------------------
-export EDITOR='vim'
-export PATH="$HOME/.dotfiles/scripts:$HOME/bin:/usr/local/bin:/usr/local/sbin:/opt/local/bin:$PATH"
-export HISTFILE=~/.zhistory
-export HISTSIZE=10000
-export HISTFILESIZE=10000
-export HISTCONTROL=erasedups
-export COMMAND_MODE=unix2003
-export DISABLE_AUTO_TITLE="true" #Fix where tmux would always autorename
-export REPORTTIME=10
-
-# ZSH Config -----------------------------------------------------------------
-setopt incappendhistory
-setopt sharehistory
-setopt extendedhistory
-
-# Python stuff ---------------------------------------------------------------
-export PIP_DOWNLOAD_CACHE="$HOME/.pip/cache"
-export PATH="/usr/local/opt/python/libexec/bin:${PATH}"
-# CD into a python package's source dir
-cdp () {
-    cd "$(python -c "import os.path as _, ${1}; \
-        print(_.dirname(_.realpath(${1}.__file__[:-1])))"
-    )"
-}
-
-# Ruby PATH variables --------------------------------------------------------
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/Desktop/Experiments
-
-# Local Settings -------------------------------------------------------------
-if [[ -s $HOME/.zshrc_local ]] ; then source $HOME/.zshrc_local ; fi
-
-# LS aliases
-alias l1='tree --dirsfirst -ChFL 1'
-alias l2='tree --dirsfirst -ChFL 2'
-alias l3='tree --dirsfirst -ChFL 3'
-
-alias ll1='tree --dirsfirst -ChFupDaL 1'
-alias ll2='tree --dirsfirst -ChFupDaL 2'
-alias ll3='tree --dirsfirst -ChFupDaL 3'
-
-alias l='l1'
-alias ll='ll1'
-
+# Funktions --------------------------------------------------------------------
 source-if-exists() {
     # check file exists, is regular file and is readable:
     if [[ -f $1 && -r $1 ]]; then
@@ -90,30 +9,73 @@ source-if-exists() {
     fi
 }
 
-# Work Sources ---------------------------------------------------------------
+# VIM lyfe ---------------------------------------------------------------------
+export EDITOR='vim'
+set -o vi
+
+# ZSH Config -------------------------------------------------------------------
+export ZSH="$HOME/.dotfiles/oh-my-zsh"
+export ZSH_CUSTOM="$HOME/.dotfiles/zsh-custom"
+export ZSH_THEME="paulynomial"
+export DISABLE_AUTO_UPDATE="true"
+export OH_MY_ZSH_DEBUG="true"
+[ -s "$ZSH/oh-my-zsh.sh" ] && source "$ZSH/oh-my-zsh.sh"
+plugins=(
+    brew
+    colored-man-pages
+    history
+    pyenv
+    ssh-agent
+    zsh-syntax-highlighting
+)
+setopt EXTENDED_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
+unsetopt PROMPT_CR
+export HISTFILE=~/.zhistory
+export HISTSIZE=100000
+export REPORTTIME=10
+
+# Useful aliases ---------------------------------------------------------------
+alias c='clear'
+alias r='reset'
+alias json='python -mjson.tool | pygmentize -l json;'
+alias my_ip="curl -s http://checkip.dyndns.org | sed 's/[a-zA-Z/<> :]//g'"
+alias tmux="byobu-tmux"
+alias vimupdate="vim +BundleInstall! +BundleClean"
+
+# Useless aliases --------------------------------------------------------------
+alias fact="gtimeout 1 elinks -dump randomfunfacts.com | sed -n '/^| /p' | tr -d \|"
+alias glr='fact && git pull'
+alias nyan='telnet nyancat.dakko.us'
+
+# Environment variables --------------------------------------------------------
+## PATH Priority list
+export PATH="/usr/local/bin:$PATH"
+export PATH="/usr/local/sbin:$PATH"
+export PATH="/usr/local/opt/python/libexec/bin:${PATH}"
+
+# Python stuff -----------------------------------------------------------------
+if command -v pyenv 1>/dev/null 2>&1; then
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+fi
+
+# LS aliases
+alias ll1='tree --dirsfirst -ChFupDaL 1'
+alias ll2='tree --dirsfirst -ChFupDaL 2'
+alias ll3='tree --dirsfirst -ChFupDaL 3'
+alias ll='ll1'
+
+# Work Sources -----------------------------------------------------------------
 source-if-exists $HOME/.workrc
 
-# Docker Sources -------------------------------------------------------------
+# Docker Sources ---------------------------------------------------------------
 source-if-exists $HOME/.dockerrc
 
-# Display system stats
-
-cat << EOF
- ▄████▄   ██░ ██  ▄▄▄       ██▀███  ▄▄▄█████▓ ▄▄▄▄   ▓█████ ▄▄▄     ▄▄▄█████▓
-▒██▀ ▀█  ▓██░ ██▒▒████▄    ▓██ ▒ ██▒▓  ██▒ ▓▒▓█████▄ ▓█   ▀▒████▄   ▓  ██▒ ▓▒
-▒▓█    ▄ ▒██▀▀██░▒██  ▀█▄  ▓██ ░▄█ ▒▒ ▓██░ ▒░▒██▒ ▄██▒███  ▒██  ▀█▄ ▒ ▓██░ ▒░
-▒▓▓▄ ▄██▒░▓█ ░██ ░██▄▄▄▄██ ▒██▀▀█▄  ░ ▓██▓ ░ ▒██░█▀  ▒▓█  ▄░██▄▄▄▄██░ ▓██▓ ░ 
-▒ ▓███▀ ░░▓█▒░██▓ ▓█   ▓██▒░██▓ ▒██▒  ▒██▒ ░ ░▓█  ▀█▓░▒████▒▓█   ▓██▒ ▒██▒ ░ 
-░ ░▒ ▒  ░ ▒ ░░▒░▒ ▒▒   ▓▒█░░ ▒▓ ░▒▓░  ▒ ░░   ░▒▓███▀▒░░ ▒░ ░▒▒   ▓▒█░ ▒ ░░   
-  ░  ▒    ▒ ░▒░ ░  ▒   ▒▒ ░  ░▒ ░ ▒░    ░    ▒░▒   ░  ░ ░  ░ ▒   ▒▒ ░   ░    
-░         ░  ░░ ░  ░   ▒     ░░   ░   ░       ░    ░    ░    ░   ▒    ░      
-░ ░       ░  ░  ░      ░  ░   ░               ░         ░  ░     ░  ░        
-░           
-           (c) datetime.now().year Ellingson Minieral Oil Company
-
-                              Hack the Planet
-
-EOF
-
-
+# Terminal MOTD ----------------------------------------------------------------
 archey -c
+echo "Learn something:\n"
+fact
+echo ""
