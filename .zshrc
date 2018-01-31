@@ -52,6 +52,11 @@ alias nyan='telnet nyancat.dakko.us'
 
 # Environment variables --------------------------------------------------------
 ## PATH Priority list
+export PATH="$HOME/.git-radar/"
+export PATH="/bin:$PATH"
+export PATH="/sbin:$PATH"
+export PATH="/usr/bin:$PATH"
+export PATH="/usr/sbin:$PATH"
 export PATH="/usr/local/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
 export PATH="/usr/local/opt/python/libexec/bin:${PATH}"
@@ -75,7 +80,15 @@ source-if-exists $HOME/.workrc
 source-if-exists $HOME/.dockerrc
 
 # Terminal MOTD ----------------------------------------------------------------
-archey -c
-echo "Learn something:\n"
-fact
-echo ""
+if ! [ -x "$(command -v archey)" ]; then
+    echo 'Error: archey is not installed.' >&2
+else
+    archey -c
+fi
+
+if ! [ -x "$(command -v g)" ]; then
+    echo 'Error: gtimeout is not installed.' >&2
+else
+    echo "Learn something:\n"
+    fact
+fi
