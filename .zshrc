@@ -91,9 +91,10 @@ else
     archey -c
 fi
 
-if ! [ -x "$(command -v g)" ]; then
+if ! [ -x "$(command -v gtimeout)" ]; then
     echo 'Error: gtimeout is not installed.' >&2
 else
     echo "Learn something:\n"
     fact
+    echo ""
 fi
