@@ -83,6 +83,7 @@
         " Pick either python-mode or pyflakes & pydoc
         UnBundle 'klen/python-mode'
         Bundle 'python_match.vim'
+        Bundle 'vim-scripts/scons.vim'
     " }
     "
     " C++ {
@@ -117,7 +118,7 @@
 
     " Misc {
         Bundle 'tpope/vim-markdown'
-        Bundle 'iamcco/markdown-preview.vim'
+        Bundle 'JamshedVesuna/vim-markdown-preview'
         Bundle 'vim-scripts/nginx.vim'
         Bundle 'chase/vim-ansible-yaml'
         Bundle 'kevints/vim-aurora-syntax'

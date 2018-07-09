@@ -292,10 +292,13 @@
         let g:syntastic_check_on_open = 0
         let g:syntastic_check_on_wq = 0
         let g:syntastic_python_checkers = ['pylint']
+        let g:syntastic_cpp_remove_include_errors = 1
     " }
 
     " markdown-preview {
-        let g:mkdp_path_to_chrome = "/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome"
+        let vim_markdown_preview_github=1
+        let vim_markdown_preview_toggle=1
+        let vim_markdown_preview_hotkey='<C-m>'
     " }
 
 " }

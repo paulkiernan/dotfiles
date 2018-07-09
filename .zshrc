@@ -9,10 +9,6 @@ source-if-exists() {
     fi
 }
 
-# VIM lyfe ---------------------------------------------------------------------
-export EDITOR='vim'
-set -o vi
-
 # ZSH Config -------------------------------------------------------------------
 export ZSH="$HOME/.dotfiles/oh-my-zsh"
 export ZSH_CUSTOM="$HOME/.dotfiles/zsh-custom"
@@ -45,14 +41,17 @@ alias my_ip="curl -s http://checkip.dyndns.org | sed 's/[a-zA-Z/<> :]//g'"
 alias tmux="byobu-tmux"
 alias vimupdate="vim +BundleInstall! +BundleClean"
 
+
 # Useless aliases --------------------------------------------------------------
 alias fact="gtimeout 1 elinks -dump randomfunfacts.com | sed -n '/^| /p' | tr -d \|"
+alias factbomb="for run in {1..5}; do; fact; echo ---; done"
 alias glr='fact && git pull'
 alias nyan='telnet nyancat.dakko.us'
 
 # Environment variables --------------------------------------------------------
 ## PATH Priority list
-export PATH="$HOME/.git-radar/"
+export PATH="${HOME}/.dotfiles/scripts:${PATH}"
+export PATH="${HOME}/.git-radar/:${PATH}"
 export PATH="/bin:$PATH"
 export PATH="/sbin:$PATH"
 export PATH="/usr/bin:$PATH"
@@ -60,6 +59,7 @@ export PATH="/usr/sbin:$PATH"
 export PATH="/usr/local/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
 export PATH="/usr/local/opt/python/libexec/bin:${PATH}"
+export PATH="${PATH}:/usr/local/CrossPack-AVR/bin/"  # Arduino + teensy devel
 
 # Python stuff -----------------------------------------------------------------
 if command -v pyenv 1>/dev/null 2>&1; then
@@ -78,6 +78,11 @@ source-if-exists $HOME/.workrc
 
 # Docker Sources ---------------------------------------------------------------
 source-if-exists $HOME/.dockerrc
+
+# VIM lyfe ---------------------------------------------------------------------
+export EDITOR='vim'
+set -o vi
+bindkey -v
 
 # Terminal MOTD ----------------------------------------------------------------
 if ! [ -x "$(command -v archey)" ]; then
