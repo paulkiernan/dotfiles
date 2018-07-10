@@ -1,6 +1,6 @@
 [user]
     name = Paul Kiernan
-    email = paul@chartbeat.com
+    email = paul.kiernan@reddit.com
 
 [core]
     editor = vim
@@ -39,13 +39,13 @@
     default = simple
 
 [hooks]
-    global = /Users/paulynomial/.dotfiles/githooks
+    global = /Users/paul.kiernan/.dotfiles/githooks
 
 [github]
     user = paulkiernan
 
 [filter "lfs"]
-	required = true
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
+    required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
