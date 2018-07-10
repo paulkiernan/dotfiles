@@ -62,7 +62,8 @@ elif [ "$UNAME_STR" == 'Darwin' ]; then
         vim \
         nmap \
         wget \
-        coreutils
+        coreutils \
+        reattach-to-user-namespace
     brew cask install caffeine
     sudo pip install pygments
 fi

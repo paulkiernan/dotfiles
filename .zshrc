@@ -21,7 +21,6 @@ plugins=(
     colored-man-pages
     history
     pyenv
-    ssh-agent
     zsh-syntax-highlighting
 )
 setopt EXTENDED_HISTORY
