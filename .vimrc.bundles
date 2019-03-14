@@ -1,5 +1,5 @@
 " Modeline and Notes {
-" vim: set sw=4 ts=4 sts=4 et tw=78 foldmarker={,} foldlevel=0 foldmethod=marker spell:
+" vim: set sw=4 ts=4 sts=4 et tw=78 spell:
 "
 "     _ __   __ _ _   _| |_   _ _ __   ___  _ __ ___ (_) __ _| |
 "    | '_ \ / _` | | | | | | | | '_ \ / _ \| '_ ` _ \| |/ _` | |
@@ -56,8 +56,6 @@
         Bundle 'altercation/vim-colors-solarized'
         Bundle 'tpope/vim-surround'
         Bundle 'tpope/vim-repeat'
-        Bundle 'ctrlpvim/ctrlp.vim'
-        Bundle 'tacahiroy/ctrlp-funky'
         Bundle 'matchit.zip'
         Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
         Bundle 'powerline/fonts'
@@ -66,6 +64,10 @@
         Bundle 'nathanaelkane/vim-indent-guides'
         Bundle 'vim-scripts/restore_view.vim'
         Bundle 'mhinz/vim-signify'
+
+        " Filesystem search
+        Bundle 'ctrlpvim/ctrlp.vim'
+        Bundle 'tacahiroy/ctrlp-funky'
     " }
 
     " General Programming {
@@ -104,6 +106,10 @@
         Bundle 'derekwyatt/vim-scala'
         Bundle 'derekwyatt/vim-sbt'
         Bundle 'xptemplate'
+        " autocompletion
+        UnBundle 'Shougo/deoplete.nvim'
+        UnBundle 'roxma/nvim-yarp'
+        UnBundle 'roxma/vim-hug-neovim-rpc'
     " }
 
     " HTML {
@@ -122,6 +128,9 @@
         Bundle 'vim-scripts/nginx.vim'
         Bundle 'chase/vim-ansible-yaml'
         Bundle 'kevints/vim-aurora-syntax'
+        Bundle 'solarnz/thrift.vim'
+        Bundle 'hashivim/vim-terraform'
+        Bundle 'juliosueiras/vim-terraform-completion'
     " }
 
 " }

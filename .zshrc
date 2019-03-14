@@ -11,17 +11,16 @@ source-if-exists() {
 
 # ZSH Config -------------------------------------------------------------------
 export ZSH="$HOME/.dotfiles/oh-my-zsh"
-export ZSH_CUSTOM="$HOME/.dotfiles/zsh-custom"
-export ZSH_THEME="paulynomial"
 export DISABLE_AUTO_UPDATE="true"
 export OH_MY_ZSH_DEBUG="true"
+export ZSH_CUSTOM="$HOME/.dotfiles/zsh_custom"
+export ZSH_THEME="paulynomial"
 [ -s "$ZSH/oh-my-zsh.sh" ] && source "$ZSH/oh-my-zsh.sh"
 plugins=(
-    brew
     colored-man-pages
+    colorize
     history
-    pyenv
-    zsh-syntax-highlighting
+    vi-mode
 )
 setopt EXTENDED_HISTORY
 setopt HIST_EXPIRE_DUPS_FIRST
@@ -31,6 +30,7 @@ unsetopt PROMPT_CR
 export HISTFILE=~/.zhistory
 export HISTSIZE=100000
 export REPORTTIME=10
+zstyle ':completion:*:*:*:*:*files' ignored-patterns '*.pyc'
 
 # Useful aliases ---------------------------------------------------------------
 alias c='clear'
@@ -40,33 +40,34 @@ alias my_ip="curl -s http://checkip.dyndns.org | sed 's/[a-zA-Z/<> :]//g'"
 alias tmux="byobu-tmux"
 alias vimupdate="vim +BundleInstall! +BundleClean"
 
-
 # Useless aliases --------------------------------------------------------------
 alias fact="gtimeout 1 elinks -dump randomfunfacts.com | sed -n '/^| /p' | tr -d \|"
 alias factbomb="for run in {1..5}; do; fact; echo ---; done"
 alias glr='fact && git pull'
-alias nyan='telnet nyancat.dakko.us'
+alias nyan='nyancat'
 
 # Environment variables --------------------------------------------------------
 ## PATH Priority list
 export PATH="${HOME}/.dotfiles/scripts:${PATH}"
-export PATH="${HOME}/.git-radar/:${PATH}"
 export PATH="/bin:$PATH"
 export PATH="/sbin:$PATH"
 export PATH="/usr/bin:$PATH"
 export PATH="/usr/sbin:$PATH"
 export PATH="/usr/local/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
-export PATH="/usr/local/opt/python/libexec/bin:${PATH}"
-export PATH="${PATH}:/usr/local/CrossPack-AVR/bin/"  # Arduino + teensy devel
 
-# Python stuff -----------------------------------------------------------------
 if command -v pyenv 1>/dev/null 2>&1; then
     eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"
 fi
 
-# LS aliases
+if command -v jenv 1>/dev/null 2>&1; then eval "$(jenv init -)"; fi
+export PATH="${PATH}:${HOME}/.jenv/shims"
+
+export PATH="${PATH}:${HOME}/.git-radar/"
+export PATH="${PATH}:/usr/local/CrossPack-AVR/bin/"  # Arduino + teensy devel
+
+# LS aliases -------------------------------------------------------------------
 alias ll1='tree --dirsfirst -ChFupDaL 1'
 alias ll2='tree --dirsfirst -ChFupDaL 2'
 alias ll3='tree --dirsfirst -ChFupDaL 3'

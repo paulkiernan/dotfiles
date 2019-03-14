@@ -40,7 +40,10 @@ if [ "$UNAME_STR" == 'Linux' ]; then
         ctags \
         zsh \
         tree \
-        htop
+        htop \
+        git
+    git clone https://github.com/yyuu/pyenv.git ~/.pyenv
+    git clone https://github.com/yyuu/pyenv-virtualenvwrapper.git ~/.pyenv/plugins/pyenv-virtualenvwrapper
 elif [ "$UNAME_STR" == 'Darwin' ]; then
     echo ""
     echo ">> Installing brew and other mac shenanigans"
@@ -63,10 +66,21 @@ elif [ "$UNAME_STR" == 'Darwin' ]; then
         nmap \
         wget \
         coreutils \
-        reattach-to-user-namespace
-    brew cask install caffeine
-    sudo pip install pygments
+        reattach-to-user-namespace \
+        jenv \
+        scala \
+        awscli
+    brew tab caskroom/versions
+    brew cask install caffeine java8
 fi
+
+echo ""
+echo ">> Installing configurable Python system"
+echo ""
+eval "$(pyenv init -)"
+pyenv install 3.7.0
+pyenv global 3.7.0
+pip install pygments
 
 rm -f "$HOME/.gitconfig"
 lnif -s "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"

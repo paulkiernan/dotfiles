@@ -1,5 +1,5 @@
 " Modeline and Notes {
-" vim: set sw=4 ts=4 sts=4 et tw=78 foldmarker={,} foldlevel=0 foldmethod=marker spell:
+" vim: set sw=4 ts=4 sts=4 et tw=78 spell:
 "
 "     _ __   __ _ _   _| |_   _ _ __   ___  _ __ ___ (_) __ _| |
 "    | '_ \ / _` | | | | | | | | '_ \ / _ \| '_ ` _ \| |/ _` | |
@@ -77,7 +77,7 @@
 
 " Vim UI {
 
-    let &colorcolumn="73,81"
+    let &colorcolumn="72,80,110,120"
     let g:solarized_termcolors=256
     let g:solarized_termtrans=1
     let g:solarized_contrast="normal"
@@ -186,6 +186,9 @@
 
 " Plugins {
 
+    let g:python3_host_prog = "/Users/paul.kiernan/.pyenv/versions/neovim3/bin/python"
+    let g:deoplete#enable_at_startup = 1
+
     " ctrlp {
         if isdirectory(expand("~/.vim/bundle/ctrlp.vim/"))
             let g:ctrlp_working_path_mode = 'ra'
@@ -291,7 +294,7 @@
         let g:syntastic_auto_loc_list = 1
         let g:syntastic_check_on_open = 0
         let g:syntastic_check_on_wq = 0
-        let g:syntastic_python_checkers = ['pylint']
+        let g:syntastic_python_checkers = ['flake8']
         let g:syntastic_cpp_remove_include_errors = 1
     " }
 
