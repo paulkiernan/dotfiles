@@ -69,9 +69,13 @@ elif [ "$UNAME_STR" == 'Darwin' ]; then
         reattach-to-user-namespace \
         jenv \
         scala \
-        awscli
-    brew tab caskroom/versions
-    brew cask install caffeine java8
+        gnu-getopt \
+        bash \
+        awscli || echo "Skipping brew install"
+    brew tap caskroom/versions
+    brew cask install caffeine
+    brew tap gbataille/homebrew-gba
+    brew install githud
 fi
 
 echo ""
@@ -107,12 +111,11 @@ elif [ -d $OH_MY_ZSH_DIR -a -d $OH_MY_ZSH_DIR/.git ]; then
     cd $HOME
 fi
 
-# Install git-radar
-GIT_RADAR_INSTALL_LOCATION="$HOME/.git-radar"
-if [ ! -d $GIT_RADAR_INSTALL_LOCATION ]; then
-    git clone https://github.com/michaeldfallen/git-radar $GIT_RADAR_INSTALL_LOCATION
-elif [ -d $GIT_RADAR_INSTALL_LOCATION -a -d $GIT_RADAR_INSTALL_LOCATION/.git ]; then
-    cd $GIT_RADAR_INSTALL_LOCATION
+BONSAI_TREE_INSTALL_LOCATION="$HOME/.bonsai"
+if [ ! -d $BONSAI_TREE_INSTALL_LOCATION ]; then
+    git clone https://gitlab.com/jallbrit/bonsai.sh $BONSAI_TREE_INSTALL_LOCATION
+elif [ -d $BONSAI_TREE_INSTALL_LOCATION -a -d $BONSAI_TREE_INSTALL_LOCATION/.git ]; then
+    cd $BONSAI_TREE_INSTALL_LOCATION
     git pull origin master
     cd $HOME
 fi
@@ -137,4 +140,4 @@ fi
 
 # Done!
 sudo chsh -s /bin/zsh
-echo "All done! Log out of all open sessions to install new env!"
+acho "All done! Log out of all open sessions to install new env!"

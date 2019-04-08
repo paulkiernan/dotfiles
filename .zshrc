@@ -65,6 +65,7 @@ if command -v jenv 1>/dev/null 2>&1; then eval "$(jenv init -)"; fi
 export PATH="${PATH}:${HOME}/.jenv/shims"
 
 export PATH="${PATH}:${HOME}/.git-radar/"
+export PATH="${PATH}:${HOME}/.bonsai/"
 export PATH="${PATH}:/usr/local/CrossPack-AVR/bin/"  # Arduino + teensy devel
 
 # LS aliases -------------------------------------------------------------------
