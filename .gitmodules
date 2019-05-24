@@ -1,0 +1,9 @@
+[submodule "vim/Vundle.vim"]
+	path = vim/Vundle.vim
+	url = https://github.com/VundleVim/Vundle.vim
+[submodule "vim/bundles/vundle"]
+	path = vim/bundles/vundle
+	url = https://github.com/VundleVim/Vundle.vim
+[submodule "vim/bundles/Vundle.vim"]
+	path = vim/bundles/Vundle.vim
+	url = https://github.com/VundleVim/Vundle.vim
