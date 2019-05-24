@@ -17,6 +17,7 @@ if [ "$KERNEL" == 'Linux' ]; then
         sudo pacman -Syu
         sudo pacman -S \
             git \
+            ctags \
             pyenv \
             stow \
             tree \

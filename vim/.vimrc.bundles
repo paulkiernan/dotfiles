@@ -37,6 +37,7 @@
     " Aesthetics
         Plugin 'vim-airline/vim-airline'
         Plugin 'vim-airline/vim-airline-themes'
+        Plugin 'sickill/vim-monokai'
 
     " General
         Plugin 'airblade/vim-gitgutter'
