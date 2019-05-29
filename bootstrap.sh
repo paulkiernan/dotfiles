@@ -58,26 +58,28 @@ elif [ "$KERNEL" == 'Darwin' ]; then
     hash brew 2>/dev/null || /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     brew install \
         archey \
+        awscli \
+        bash \
         byobu \
+        coreutils \
         elinks \
         gcc \
         git-lfs \
+        gnu-getopt \
         jrnl \
+        nmap \
         postgresql \
         pyenv \
         pyenv-virtualenv \
         python \
-        sl \
-        tree \
-        vim \
-        nmap \
-        wget \
-        coreutils \
+        readline \
         reattach-to-user-namespace \
         scala \
-        gnu-getopt \
-        bash \
-        awscli || echo "Skipping brew install"
+        sl \
+        stow \
+        tree \
+        vim \
+        wget || echo "Skipping brew install"
     brew tap caskroom/versions
     brew cask install caffeine
     brew tap gbataille/homebrew-gba
@@ -94,14 +96,14 @@ pip install pygments
 echo "Installing/Upgrading  ZSH"
 # Install oh-my-zsh or update if already installed
 if [ ! -d $OH_MY_ZSH_DIR ]; then
-    git clone git://github.com/robbyrussell/oh-my-zsh.git $OH_MY_ZSH_DIR
+    git clone git@github.com:robbyrussell/oh-my-zsh.git $OH_MY_ZSH_DIR
 elif [ -d $OH_MY_ZSH_DIR -a -d $OH_MY_ZSH_DIR/.git ]; then
     git --git-dir=$OH_MY_ZSH_DIR/.git pull origin master
 fi
 
 # Install Vundle (updates are managed by `BundleUpdate`
 if [ ! -d "$VUNDLE_INSTALL_DIR" ]; then
-    git clone https://github.com/VundleVim/Vundle.vim.git $VUNDLE_INSTALL_DIR
+    git clone git@github.com:VundleVim/Vundle.vim.git $VUNDLE_INSTALL_DIR
 fi
 
 # Set up all symlinks

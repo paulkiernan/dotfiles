@@ -58,8 +58,12 @@ set nocompatible
 " Vim UI
     " Aesthetics
         let &colorcolumn="72,80,110,120"
+        let g:solarized_termcolors=256
+        let g:solarized_termtrans=1
+        let g:solarized_contrast="normal"
+        let g:solarized_visibility="normal"
+        color solarized
         highlight ColorColumn ctermbg=235
-        colorscheme monokai
 
     set tabpagemax=15               " Only show 15 tabs
     set showmode                    " Display the current mode
