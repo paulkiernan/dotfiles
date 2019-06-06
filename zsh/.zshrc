@@ -54,6 +54,8 @@ export PATH="/usr/bin:$PATH"
 export PATH="/usr/sbin:$PATH"
 export PATH="/usr/local/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
+export PATH="$HOME/.pyenv/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 if command -v pyenv 1>/dev/null 2>&1; then
     eval "$(pyenv init -)"

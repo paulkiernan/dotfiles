@@ -33,20 +33,21 @@ if [ "$KERNEL" == 'Linux' ]; then
         echo ""
         sudo apt-get update
         sudo apt-get -y install \
-            sl \
-            curl \
             build-essential \
-            vim-nox \
-            elinks \
-            tree \
-            git-core \
             ctags \
-            zsh \
-            tree \
+            curl \
+            elinks \
+            git \
+            git-core \
             htop \
-            git
-        git clone https://github.com/yyuu/pyenv.git ~/.pyenv
-        git clone https://github.com/yyuu/pyenv-virtualenvwrapper.git ~/.pyenv/plugins/pyenv-virtualenvwrapper
+            sl \
+            stow \
+            tree \
+            tree \
+            vim-nox \
+            zsh
+        git -C "$HOME/.pyenv" pull || git clone https://github.com/pyenv/pyenv.git "$HOME/.pyenv"
+        git -C "$HOME/.pyenv/plugins/pyenv-virtualenv" pull || git clone https://github.com/pyenv/pyenv-virtualenv.git "$HOME/.pyenv/plugins/pyenv-virtualenvwrapper"
     else
         echo "Never heard of that Pokemon."
         exit 1
@@ -88,6 +89,7 @@ fi
 echo ""
 echo ">> Installing Python $DEFAULT_SYSTEM_PYTHON as default"
 echo ""
+export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 pyenv install -f $DEFAULT_SYSTEM_PYTHON
 pyenv global $DEFAULT_SYSTEM_PYTHON
@@ -96,14 +98,14 @@ pip install pygments
 echo "Installing/Upgrading  ZSH"
 # Install oh-my-zsh or update if already installed
 if [ ! -d $OH_MY_ZSH_DIR ]; then
-    git clone git@github.com:robbyrussell/oh-my-zsh.git $OH_MY_ZSH_DIR
+    git clone https://github.com/robbyrussell/oh-my-zsh.git $OH_MY_ZSH_DIR
 elif [ -d $OH_MY_ZSH_DIR -a -d $OH_MY_ZSH_DIR/.git ]; then
     git --git-dir=$OH_MY_ZSH_DIR/.git pull origin master
 fi
 
 # Install Vundle (updates are managed by `BundleUpdate`
 if [ ! -d "$VUNDLE_INSTALL_DIR" ]; then
-    git clone git@github.com:VundleVim/Vundle.vim.git $VUNDLE_INSTALL_DIR
+    git clone https://github.com/VundleVim/Vundle.vim.git $VUNDLE_INSTALL_DIR
 fi
 
 # Set up all symlinks
@@ -116,5 +118,5 @@ stow -t $HOME zsh
 stow -t $HOME scripts
 
 # Done!
-usermod -s /bin/zsh "$USER"
+sudo usermod -s /bin/zsh "$USER"
 echo "All done! Log out of all open sessions to install new env!"

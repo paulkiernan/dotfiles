@@ -65,6 +65,7 @@ set nocompatible
         color solarized
         highlight ColorColumn ctermbg=235
 
+
     set tabpagemax=15               " Only show 15 tabs
     set showmode                    " Display the current mode
     set cursorline                  " Highlight current line
@@ -141,9 +142,10 @@ set nocompatible
     " and ask which one to jump to
     nmap <Leader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 
+    nnoremap <leader>bp oimport ipdb; ipdb.set_trace()<Esc>
+
+
 " Plugins
-    let g:python3_host_prog = "/Users/paul.kiernan/.pyenv/versions/neovim3/bin/python"
-    let g:deoplete#enable_at_startup = 1
 
     " ctrlp
         if isdirectory(expand("~/.vim/bundle/ctrlp.vim/"))
@@ -230,10 +232,12 @@ set nocompatible
 
     " vim-airline
         if isdirectory(expand("~/.vim/bundle/vim-airline/"))
-            let g:airline_theme = 'molokai'
+            let g:airline_theme="solarized"
+            let g:airline_solarized_bg='dark'
             " Use the default set of separators with a few customizations
             let g:airline_left_sep='›'  " Slightly fancier than '>'
             let g:airline_right_sep='‹' " Slightly fancier than '<'
+            let g:airline#extensions#tabline#enabled = 1
         endif
 
     " syntastic
