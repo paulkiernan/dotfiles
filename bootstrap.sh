@@ -20,6 +20,7 @@ if [ "$KERNEL" == 'Linux' ]; then
             ctags \
             pyenv \
             stow \
+            docker \
             tree \
             zsh
         yay -Sy \
