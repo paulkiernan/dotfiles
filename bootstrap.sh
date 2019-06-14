@@ -16,12 +16,13 @@ if [ "$KERNEL" == 'Linux' ]; then
         echo ""
         sudo pacman -Syu
         sudo pacman -S \
-            git \
             ctags \
+            docker \
+            git \
             pyenv \
             stow \
-            docker \
             tree \
+            xsel \
             zsh
         yay -Sy \
             githud \
