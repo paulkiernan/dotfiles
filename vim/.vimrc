@@ -256,6 +256,11 @@ set nocompatible
         let vim_markdown_preview_github=1
         let vim_markdown_preview_toggle=1
         let vim_markdown_preview_hotkey='<C-m>'
+        let vim_markdown_preview_use_xdg_open=1
+
+    " graphviz generation
+        let g:graphviz_output_format = 'png'
+        let g:graphviz_shell_option = ''
 
 " Functions
     " Initialize directories
