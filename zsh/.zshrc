@@ -1,5 +1,7 @@
 # vim: set filetype=sh:
 export TERM=xterm-256color
+export VISUAL=vim
+export EDITOR="$VISUAL"
 
 # Funktions --------------------------------------------------------------------
 source-if-exists() {
@@ -40,7 +42,7 @@ alias external_ip="curl -s http://checkip.dyndns.org | sed 's/[a-zA-Z/<> :]//g'"
 alias vimupdate="vim +BundleInstall! +BundleClean"
 
 # Useless aliases --------------------------------------------------------------
-alias fact="gtimeout 1 elinks -dump randomfunfacts.com | sed -n '/^| /p' | tr -d \|"
+alias fact="elinks -dump randomfunfacts.com | sed -n '/^| /p' | tr -d \|"
 alias factbomb="for run in {1..5}; do; fact; echo ---; done"
 alias glr='fact && git pull'
 alias nyan='nyancat'
@@ -80,16 +82,18 @@ set -o vi
 bindkey -v
 
 # Terminal MOTD ----------------------------------------------------------------
-if ! [ -x "$(command -v archey)" ]; then
-    echo 'Error: archey is not installed.' >&2
-else
+if [ -x "$(command -v archey)" ]; then
     archey -c
+elif [ -x "$(command -v archey3)" ]; then
+    archey3
+else
+    echo 'Error: archey|archey3 is not installed.' >&2
 fi
 
-if ! [ -x "$(command -v gtimeout)" ]; then
-    echo 'Error: gtimeout is not installed.' >&2
+if [ -x "$(command -v gtimeout)" ]; then
+    echo "Learn something: $(gtimeout 1 fact) \n"
+elif [ -x "$(command -v timeout)" ]; then
+    echo "Learn something: $(timeout 1 fact) \n"
 else
-    echo "Learn something:\n"
-    fact
-    echo ""
+    echo 'Error: gtimeout|timeout is not installed.' >&2
 fi
