@@ -12,5 +12,4 @@ sudo pacman -Sy \
     xsel \
     zsh
 yay -Sy \
-    githud \
     yay
