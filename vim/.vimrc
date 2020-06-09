@@ -23,15 +23,7 @@ set nocompatible
     syntax on                   " Syntax highlighting
     set mouse-=a                " Disable mouse usage
     scriptencoding utf-8
-
-    set clipboard=unnamed
-    "if has('clipboard')
-        "if has('unnamedplus')  " When possible use + register for copy-paste
-            "set clipboard=unnamed,unnamedplus
-        "else         " On mac and Windows, use * register for copy-paste
-            "set clipboard=unnamed
-        "endif
-    "endif
+    set clipboard^=unnamed,unnamedplus
 
     " Always switch to the current file directory
     autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
@@ -112,7 +104,7 @@ set nocompatible
     set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
     set splitright                  " Puts new vsplit windows to the right of the current
     set splitbelow                  " Puts new split windows to the bottom of the current
-    set pastetoggle=<leader>p           " pastetoggle (sane indentation on pastes)
+    set pastetoggle=<leader>p       " pastetoggle (sane indentation on pastes)
 
     autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql autocmd BufWritePre <buffer> call StripTrailingWhitespace()
     autocmd FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
@@ -308,3 +300,8 @@ set nocompatible
             let @/=_s
             call cursor(l, c)
         endfunction
+
+" Source external files
+    if filereadable(expand("~/Dropbox/private/dotfiles/.vimrc"))
+        source ~/Dropbox/private/dotfiles/.vimrc
+    endif

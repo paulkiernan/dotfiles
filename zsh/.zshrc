@@ -1,7 +1,12 @@
 # vim: set filetype=sh:
+
+# Le Basics -------------------------------------------------------------------
 export TERM=xterm-256color
 export VISUAL=vim
 export EDITOR="$VISUAL"
+
+# Variable Defs ---------------------------------------------------------------
+export PRIVATE=$HOME/Dropbox/private
 
 # Funktions --------------------------------------------------------------------
 source-if-exists() {
@@ -10,6 +15,10 @@ source-if-exists() {
         source $1
     fi
 }
+
+# PATH Manipulation -----------------------------------------------------------
+export ASDF_DIR="$HOME/.asdf"
+export PATH="${PRIVATE}/scripts:${PATH}"
 
 # ZSH Config -------------------------------------------------------------------
 export ZSH="$HOME/.zsh/oh-my-zsh"
@@ -41,59 +50,32 @@ alias json='python -mjson.tool | pygmentize -l json;'
 alias external_ip="curl -s http://checkip.dyndns.org | sed 's/[a-zA-Z/<> :]//g'"
 alias vimupdate="vim +BundleInstall! +BundleClean"
 
-# Useless aliases --------------------------------------------------------------
-alias fact="elinks -dump randomfunfacts.com | sed -n '/^| /p' | tr -d \|"
-alias factbomb="for run in {1..5}; do; fact; echo ---; done"
-alias glr='fact && git pull'
-alias nyan='nyancat'
-
-# Environment variables --------------------------------------------------------
-## PATH Priority list
-export PATH="${HOME}/scripts:${PATH}"
-export PATH="/bin:$PATH"
-export PATH="/sbin:$PATH"
-export PATH="/usr/bin:$PATH"
-export PATH="/usr/sbin:$PATH"
-export PATH="/usr/local/bin:$PATH"
-export PATH="/usr/local/sbin:$PATH"
-export PATH="$HOME/.pyenv/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
-
-if command -v pyenv 1>/dev/null 2>&1; then
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-fi
-
-# LS aliases -------------------------------------------------------------------
 alias ll1='tree --dirsfirst -ChFupDaL 1'
 alias ll2='tree --dirsfirst -ChFupDaL 2'
 alias ll3='tree --dirsfirst -ChFupDaL 3'
 alias ll='ll1'
 
+# Useless aliases --------------------------------------------------------------
+alias fact='wget randomfunfacts.com -O - 2>/dev/null | grep \<strong\> | sed "s;^.*<i>\(.*\)</i>.*$;\1;" | fmt --width=80'
+alias factbomb='for run in {1..100}; do; fact; echo ---; done'
+alias glr='fact && git pull'
+alias nyan='nyancat'
+
 # Work Sources -----------------------------------------------------------------
-source-if-exists $HOME/.workrc
+source-if-exists $PRIVATE/dotfiles/.workrc
+source-if-exists $PRIVATE/dotfiles/.dockerrc
+source $ASDF_DIR/asdf.sh
+fpath=(${ASDF_DIR}/completions $fpath)
+autoload -Uz compinit
+compinit
 
-# Docker Sources ---------------------------------------------------------------
-source-if-exists $HOME/.dockerrc
+# Fork ------------------------------------------------------------------------
+osname=`uname`
+if [[ "$osname" == 'Linux' ]]; then
+    source $HOME/.linuxrc
+elif [[ "$osname" == 'Darwin' ]]; then
+    source $HOME/.osxrc
+fi
 
-# VIM lyfe ---------------------------------------------------------------------
-export EDITOR='vim'
 set -o vi
 bindkey -v
-
-# Terminal MOTD ----------------------------------------------------------------
-if [ -x "$(command -v archey)" ]; then
-    archey -c
-elif [ -x "$(command -v archey3)" ]; then
-    archey3
-else
-    echo 'Error: archey|archey3 is not installed.' >&2
-fi
-
-if [ -x "$(command -v gtimeout)" ]; then
-    echo "Learn something: $(gtimeout 1 fact) \n"
-elif [ -x "$(command -v timeout)" ]; then
-    echo "Learn something: $(timeout 1 fact) \n"
-else
-    echo 'Error: gtimeout|timeout is not installed.' >&2
-fi
