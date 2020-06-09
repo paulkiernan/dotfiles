@@ -208,6 +208,8 @@ set nocompatible
             " Mnemonic _i_nteractive
             nnoremap <silent> <leader>gi :Git add -p %<CR>
             nnoremap <silent> <leader>gg :SignifyToggle<CR>
+
+            let g:github_enterprise_urls = ['https://github.snooguts.net']
         endif
 
     " indent_guides

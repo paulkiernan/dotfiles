@@ -79,6 +79,9 @@
     " Puppet
         Plugin 'rodjek/vim-puppet'
 
+    " Webdev
+        Plugin 'pangloss/vim-javascript'
+
     " Misc
         Plugin 'tpope/vim-markdown'
         Plugin 'JamshedVesuna/vim-markdown-preview'
