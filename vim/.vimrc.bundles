@@ -82,6 +82,9 @@
     " Webdev
         Plugin 'pangloss/vim-javascript'
 
+    " Golang
+        Plugin 'fatih/vim-go'
+
     " Misc
         Plugin 'tpope/vim-markdown'
         Plugin 'JamshedVesuna/vim-markdown-preview'
