@@ -6,25 +6,23 @@ brew install \
     archey \
     awscli \
     bash \
-    byobu \
     coreutils \
-    elinks \
-    gcc \
     git-lfs \
     gnu-getopt \
     jrnl \
     nmap \
     pyenv \
     pyenv-virtualenv \
-    python \
-    readline \
     reattach-to-user-namespace \
-    scala \
     sl \
     stow \
     tree \
     vim \
     wget || echo "Skipping brew install"
-brew tap caskroom/versions
+
+# Alternate installs
+brew tap homebrew/cask-versions
 brew cask install caffeine
+
+# Install git-hud
 brew tap gbataille/homebrew-gba
