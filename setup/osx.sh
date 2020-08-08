@@ -14,7 +14,6 @@ brew install \
     gnu-getopt \
     jrnl \
     nmap \
-    postgresql \
     pyenv \
     pyenv-virtualenv \
     python \
