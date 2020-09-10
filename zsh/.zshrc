@@ -19,6 +19,10 @@ source-if-exists() {
 # PATH Manipulation -----------------------------------------------------------
 export ASDF_DIR="$HOME/.asdf"
 export PATH="${PRIVATE}/scripts:${PATH}"
+export PATH="${HOME}/.local/bin:${PATH}"
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
 
 # ZSH Config -------------------------------------------------------------------
 export ZSH="$HOME/.zsh/oh-my-zsh"
