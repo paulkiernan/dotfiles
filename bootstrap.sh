@@ -3,7 +3,7 @@
 set -eux
 
 KERNEL=$(uname)
-DEFAULT_PYTHON_VERSIONS=("3.7.7" "2.7.18")
+DEFAULT_PYTHON_VERSIONS=("3.8.5")
 
 ASDF_DIR="$HOME/.asdf"
 ASDF_VERSION="v0.7.8"
@@ -32,7 +32,9 @@ elif [ -d $ASDF_DIR -a -d $ASDF_DIR/.git ]; then
     git --git-dir=$ASDF_DIR/.git checkout origin/master -B "$ASDF_VERSION"
 fi
 for python_version in "${DEFAULT_PYTHON_VERSIONS[@]}"; do
-    asdf install python "$python_version"
+    if [ !$(pyenv versions | grep "$python_version") ]; then
+        pyenv install "$python_version"
+    fi
 done
 pip install --user pygments
 
