@@ -19,10 +19,10 @@ source-if-exists() {
 # PATH Manipulation -----------------------------------------------------------
 export ASDF_DIR="$HOME/.asdf"
 export PATH="${PRIVATE}/scripts:${PATH}"
+export PATH="${HOME}/usr/local:${PATH}"
 export PATH="${HOME}/.local/bin:${PATH}"
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-fi
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
 # ZSH Config -------------------------------------------------------------------
 export ZSH="$HOME/.zsh/oh-my-zsh"
@@ -83,3 +83,15 @@ fi
 
 set -o vi
 bindkey -v
+
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "$terminfo[kcuu1]" up-line-or-beginning-search
+bindkey "$terminfo[kcud1]" down-line-or-beginning-search
+
+alias cdp="cd $HOME/workspace/github.com/paulkiernan"
+
+source ~/.asdf/plugins/java/set-java-home.zsh
+

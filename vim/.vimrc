@@ -224,6 +224,11 @@ set nocompatible
             autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=236
         endif
 
+    " Language-specific indentation
+        autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
+        autocmd FileType html       setlocal shiftwidth=2 tabstop=2
+        autocmd FileType python     setlocal shiftwidth=4 softtabstop=4 expandtab
+
     " vim-airline
         if isdirectory(expand("~/.vim/bundle/vim-airline/"))
             let g:airline_theme="solarized"

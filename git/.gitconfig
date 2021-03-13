@@ -52,5 +52,6 @@
 
 [credential]
     helper = osxkeychain
+
 [pull]
-	ff = only
+    ff = only

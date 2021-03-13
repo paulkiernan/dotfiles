@@ -80,10 +80,18 @@
         Plugin 'rodjek/vim-puppet'
 
     " Webdev
-        Plugin 'pangloss/vim-javascript'
+        Plugin 'yuezk/vim-js'
+        Plugin 'leafgarland/typescript-vim'
+        Plugin 'maxmellon/vim-jsx-pretty'
 
     " Golang
         Plugin 'fatih/vim-go'
+
+    " Starlark
+        Plugin 'cappyzawa/starlark.vim'
+
+    " Varnish VCL
+        Plugin 'fgsch/vim-varnish'
 
     " Misc
         Plugin 'tpope/vim-markdown'

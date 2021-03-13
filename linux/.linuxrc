@@ -3,3 +3,5 @@
 # Linux-specific shell bootstrapping ------------------------------------------
 archey3
 echo "Learn something: $(timeout 1 fact) \n"
+
+alias open="xdg-open"
