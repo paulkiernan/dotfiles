@@ -6,13 +6,13 @@ KERNEL=$(uname)
 DEFAULT_PYTHON_VERSIONS=("3.8.5")
 
 ASDF_DIR="$HOME/.asdf"
-ASDF_VERSION="v0.7.8"
+ASDF_VERSION="v0.8.0"
 OH_MY_ZSH_DIR="$HOME/.zsh/oh-my-zsh"
 VUNDLE_DIR="$HOME/.vim/bundle/Vundle.vim"
 
 if [ "$KERNEL" == 'Linux' ]; then
     DISTRO=$(lsb_release -sd | tr -d '"' | awk '{print $1;}')
-    if [ "$DISTRO" == 'Arch' ]; then
+    if [ "$DISTRO" == 'Arch' ] || [ "$DISTRO" == 'Manjaro' ]; then
         source setup/arch.sh
     elif [ "$DISTRO" == 'Ubuntu' ]; then
         source setup/ubuntu.sh
@@ -25,17 +25,23 @@ elif [ "$KERNEL" == 'Darwin' ]; then
 fi
 
 echo ""
-echo ">> Installing Python version(s) ${DEFAULT_PYTHON_VERSIONS} as default"
+echo ">> Installing ASDF"
 if [ ! -d $ASDF_DIR ]; then
     git clone https://github.com/asdf-vm/asdf.git "$ASDF_DIR" --branch "$ASDF_VERSION"
 elif [ -d $ASDF_DIR -a -d $ASDF_DIR/.git ]; then
-    git --git-dir=$ASDF_DIR/.git checkout origin/master -B "$ASDF_VERSION"
+    git --git-dir=$ASDF_DIR/.git checkout -f origin/master -B "$ASDF_VERSION"
 fi
+
+echo ""
+echo ">> Installing Python version(s) ${DEFAULT_PYTHON_VERSIONS} as default"
 for python_version in "${DEFAULT_PYTHON_VERSIONS[@]}"; do
     if [ !$(pyenv versions | grep "$python_version") ]; then
         pyenv install "$python_version"
     fi
 done
+
+pyenv global ${DEFAULT_PYTHON_VERSIONS[0]}
+python -m pip install pip
 pip install --user pygments
 
 echo "Installing/Upgrading  ZSH"
