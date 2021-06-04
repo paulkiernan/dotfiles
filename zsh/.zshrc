@@ -59,6 +59,8 @@ alias ll2='tree --dirsfirst -ChFupDaL 2'
 alias ll3='tree --dirsfirst -ChFupDaL 3'
 alias ll='ll1'
 
+alias cdp="cd $HOME/workspace/github.com/paulkiernan"
+
 # Useless aliases --------------------------------------------------------------
 alias fact='wget randomfunfacts.com -O - 2>/dev/null | grep \<strong\> | sed "s;^.*<i>\(.*\)</i>.*$;\1;" | fmt --width=80'
 alias factbomb='for run in {1..100}; do; fact; echo ---; done'
@@ -73,6 +75,9 @@ fpath=(${ASDF_DIR}/completions $fpath)
 autoload -Uz compinit
 compinit
 
+source ~/.asdf/plugins/java/set-java-home.zsh
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
 # Fork ------------------------------------------------------------------------
 osname=`uname`
 if [[ "$osname" == 'Linux' ]]; then
@@ -84,14 +89,10 @@ fi
 set -o vi
 bindkey -v
 
+# Command search --------------------------------------------------------------
 autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 bindkey "$terminfo[kcuu1]" up-line-or-beginning-search
 bindkey "$terminfo[kcud1]" down-line-or-beginning-search
-
-alias cdp="cd $HOME/workspace/github.com/paulkiernan"
-
-source ~/.asdf/plugins/java/set-java-home.zsh
-
