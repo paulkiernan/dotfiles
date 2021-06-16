@@ -1,7 +1,7 @@
 echo ""
 echo ">> Installing brew and other mac shenanigans"
 echo ""
-hash brew 2>/dev/null || /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+hash brew 2>/dev/null || bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 brew install \
     archey \
     awscli \
