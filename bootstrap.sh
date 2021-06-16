@@ -3,7 +3,7 @@
 set -eux
 
 KERNEL=$(uname)
-DEFAULT_PYTHON_VERSIONS=("3.8.5")
+DEFAULT_PYTHON_VERSIONS=("3.9.5")
 
 ASDF_DIR="$HOME/.asdf"
 ASDF_VERSION="v0.8.0"
@@ -20,9 +20,21 @@ if [ "$KERNEL" == 'Linux' ]; then
         echo "Never heard of that Pokemon."
         exit 1
     fi
+    sudo usermod -s /bin/zsh "$USER"
 elif [ "$KERNEL" == 'Darwin' ]; then
     source setup/osx.sh
 fi
+
+# Set up all dotfile symlinks
+stow -t $HOME alacritty
+stow -t $HOME docker
+stow -t $HOME git
+stow -t $HOME tmux
+stow -t $HOME vim
+stow -t $HOME zsh
+stow -t $HOME scripts
+stow -t $HOME linux
+stow -t $HOME osx
 
 echo ""
 echo ">> Installing ASDF"
@@ -31,6 +43,20 @@ if [ ! -d $ASDF_DIR ]; then
 elif [ -d $ASDF_DIR -a -d $ASDF_DIR/.git ]; then
     git --git-dir=$ASDF_DIR/.git checkout -f origin/master -B "$ASDF_VERSION"
 fi
+
+asdf plugin add java || true
+asdf install java openjdk-16
+asdf global java openjdk-16
+
+asdf plugin add terraform || true
+asdf install terraform 0.11.15
+asdf install terraform 0.15.5
+asdf global terraform 0.11.15
+
+asdf plugin add kubectl || true
+asdf install kubectl 1.18.20
+asdf install kubectl 1.21.1
+asdf global kubectl 1.18.20
 
 echo ""
 echo ">> Installing Python version(s) ${DEFAULT_PYTHON_VERSIONS} as default"
@@ -57,17 +83,4 @@ if [ ! -d "$VUNDLE_DIR" ]; then
     git clone https://github.com/VundleVim/Vundle.vim.git $VUNDLE_DIR
 fi
 
-# Set up all symlinks
-stow -t $HOME alacritty
-stow -t $HOME docker
-stow -t $HOME git
-stow -t $HOME tmux
-stow -t $HOME vim
-stow -t $HOME zsh
-stow -t $HOME scripts
-stow -t $HOME linux
-stow -t $HOME osx
-
-# Done!
-sudo usermod -s /bin/zsh "$USER"
 echo "All done! Log out of all open sessions to install new env!"

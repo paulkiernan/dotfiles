@@ -17,12 +17,17 @@ brew install \
     sl \
     stow \
     tree \
+    tmux \
     vim \
     wget || echo "Skipping brew install"
 
-# Alternate installs
+# Application installs
 brew tap homebrew/cask-versions
-brew cask install caffeine
+brew install --cask \
+    caffeine \
+    docker \
+    pritunl \
+    spotify
 
 # Install git-hud
 brew tap gbataille/homebrew-gba
