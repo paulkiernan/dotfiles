@@ -65,7 +65,7 @@ alias ll='ll1'
 alias cdp="cd $HOME/workspace/github.com/paulkiernan"
 
 # Useless aliases --------------------------------------------------------------
-alias fact='wget randomfunfacts.com -O - 2>/dev/null | grep \<strong\> | sed "s;^.*<i>\(.*\)</i>.*$;\1;" | fmt --width=80'
+alias fact='wget randomfunfacts.com -O - 2>/dev/null | grep \<strong\> | sed "s;^.*<i>\(.*\)</i>.*$;\1;" | fmt -w80'
 alias factbomb='for run in {1..100}; do; fact; echo ---; done'
 alias glr='fact && git pull'
 alias nyan='nyancat'

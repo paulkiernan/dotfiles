@@ -26,6 +26,7 @@ brew tap homebrew/cask-versions
 brew install --cask \
     caffeine \
     docker \
+    dropbox \
     pritunl \
     spotify
 
