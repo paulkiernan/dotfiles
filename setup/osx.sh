@@ -28,7 +28,8 @@ brew install --cask \
     docker \
     dropbox \
     pritunl \
-    spotify
+    spotify \
+    sublime-text
 
 # Install git-hud
 brew tap gbataille/homebrew-gba
