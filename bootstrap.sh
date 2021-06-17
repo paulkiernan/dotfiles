@@ -58,6 +58,10 @@ asdf install kubectl 1.18.20
 asdf install kubectl 1.21.1
 asdf global kubectl 1.18.20
 
+asdf plugin add golang || true
+asdf install golang 1.16.5
+asdf global golang 1.16.5
+
 echo ""
 echo ">> Installing Python version(s) ${DEFAULT_PYTHON_VERSIONS} as default"
 for python_version in "${DEFAULT_PYTHON_VERSIONS[@]}"; do

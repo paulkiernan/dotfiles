@@ -9,6 +9,7 @@ brew install \
     coreutils \
     git-lfs \
     gnu-getopt \
+    jq \
     jrnl \
     nmap \
     pyenv \
@@ -16,8 +17,8 @@ brew install \
     reattach-to-user-namespace \
     sl \
     stow \
-    tree \
     tmux \
+    tree \
     vim \
     wget || echo "Skipping brew install"
 
