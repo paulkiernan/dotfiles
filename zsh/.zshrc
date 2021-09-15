@@ -21,6 +21,7 @@ export ASDF_DIR="$HOME/.asdf"
 export PATH="${PRIVATE}/scripts:${PATH}"
 export PATH="${HOME}/usr/local:${PATH}"
 export PATH="${HOME}/.local/bin:${PATH}"
+
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
@@ -56,6 +57,7 @@ alias r='reset'
 alias json='python -mjson.tool | pygmentize -l json;'
 alias external_ip="curl -s http://checkip.dyndns.org | sed 's/[a-zA-Z/<> :]//g'"
 alias vimupdate="vim +BundleInstall! +BundleClean"
+alias less-yaml="pygmentize -l yaml | less"
 
 alias ll1='tree --dirsfirst -ChFupDaL 1'
 alias ll2='tree --dirsfirst -ChFupDaL 2'
