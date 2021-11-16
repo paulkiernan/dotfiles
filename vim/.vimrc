@@ -199,7 +199,7 @@ set nocompatible
             nnoremap <silent> <leader>gs :Gstatus<CR>
             nnoremap <silent> <leader>gd :Gdiff<CR>
             nnoremap <silent> <leader>gc :Gcommit<CR>
-            nnoremap <silent> <leader>gb :Gblame<CR>
+            nnoremap <silent> <leader>gb :Git blame<CR>
             nnoremap <silent> <leader>gl :Glog<CR>
             nnoremap <silent> <leader>gp :Git push<CR>
             nnoremap <silent> <leader>gr :Gread<CR>
@@ -256,6 +256,7 @@ set nocompatible
         let vim_markdown_preview_toggle=1
         let vim_markdown_preview_hotkey='<C-m>'
         let vim_markdown_preview_use_xdg_open=1
+
 
     " graphviz generation
         let g:graphviz_output_format = 'png'

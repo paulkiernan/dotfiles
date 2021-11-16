@@ -54,7 +54,7 @@ zstyle ':completion:*:*:*:*:*files' ignored-patterns '*.pyc'
 # Useful aliases ---------------------------------------------------------------
 alias c='clear'
 alias r='reset'
-alias json='python -mjson.tool | pygmentize -l json;'
+alias json='python -mjson.tool | pygmentize -l json'
 alias external_ip="curl -s http://checkip.dyndns.org | sed 's/[a-zA-Z/<> :]//g'"
 alias vimupdate="vim +BundleInstall! +BundleClean"
 alias less-yaml="pygmentize -l yaml | less"
