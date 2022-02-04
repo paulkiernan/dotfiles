@@ -101,3 +101,6 @@ zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 bindkey "$terminfo[kcuu1]" up-line-or-beginning-search
 bindkey "$terminfo[kcud1]" down-line-or-beginning-search
+
+export SOPS_AGE_KEY_FILE=$HOME/.config/sops/age/keys.txt
+eval "$(direnv hook zsh)"
