@@ -4,6 +4,8 @@ echo ""
 hash brew 2>/dev/null || bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 brew install \
     archey \
+    asdf \
+    direnv \
     awscli \
     bash \
     coreutils \
@@ -28,6 +30,7 @@ brew install --cask \
     caffeine \
     docker \
     dropbox \
+    iterm2 \
     pritunl \
     spotify \
     sublime-text

@@ -3,7 +3,7 @@
 set -eux
 
 KERNEL=$(uname)
-DEFAULT_PYTHON_VERSIONS=("3.9.5")
+DEFAULT_PYTHON_VERSIONS=("3.10.5")
 
 ASDF_DIR="$HOME/.asdf"
 ASDF_VERSION="v0.8.0"
@@ -45,22 +45,20 @@ elif [ -d $ASDF_DIR -a -d $ASDF_DIR/.git ]; then
 fi
 
 asdf plugin add java || true
-asdf install java openjdk-16
-asdf global java openjdk-16
+asdf install java openjdk-18.0.1
+asdf global java openjdk-18.0.1
 
 asdf plugin add terraform || true
-asdf install terraform 0.11.15
-asdf install terraform 0.15.5
-asdf global terraform 0.11.15
+asdf install terraform 1.2.5
+asdf global terraform 1.2.5
 
 asdf plugin add kubectl || true
-asdf install kubectl 1.18.20
 asdf install kubectl 1.21.1
-asdf global kubectl 1.18.20
+asdf global kubectl 1.21.1
 
 asdf plugin add golang || true
-asdf install golang 1.16.5
-asdf global golang 1.16.5
+asdf install golang 1.18.4
+asdf global golang 1.18.4
 
 echo ""
 echo ">> Installing Python version(s) ${DEFAULT_PYTHON_VERSIONS} as default"

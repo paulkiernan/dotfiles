@@ -6,7 +6,7 @@ export VISUAL=vim
 export EDITOR="$VISUAL"
 
 # Variable Defs ---------------------------------------------------------------
-export PRIVATE=$HOME/Dropbox/private
+export PRIVATE="/Users/paul.kiernan/Library/CloudStorage/Dropbox/private"
 
 # Funktions --------------------------------------------------------------------
 source-if-exists() {
@@ -27,6 +27,8 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
+
+export PATH="${PATH}:/Users/paul.kiernan/.asdf/installs/haskell/8.10.7/bin"
 
 # ZSH Config -------------------------------------------------------------------
 export ZSH="$HOME/.zsh/oh-my-zsh"
@@ -67,7 +69,7 @@ alias ll='ll1'
 alias cdp="cd $HOME/workspace/github.com/paulkiernan"
 
 # Useless aliases --------------------------------------------------------------
-alias fact='wget randomfunfacts.com -O - 2>/dev/null | grep \<strong\> | sed "s;^.*<i>\(.*\)</i>.*$;\1;" | fmt -w80'
+alias fact="~/scripts/getfact.sh"
 alias factbomb='for run in {1..100}; do; fact; echo ---; done'
 alias glr='fact && git pull'
 alias nyan='nyancat'
@@ -104,3 +106,5 @@ bindkey "$terminfo[kcud1]" down-line-or-beginning-search
 
 export SOPS_AGE_KEY_FILE=$HOME/.config/sops/age/keys.txt
 eval "$(direnv hook zsh)"
+
+export AWS_SDK_LOAD_CONFIG=true

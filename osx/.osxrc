@@ -2,4 +2,6 @@
 
 # OSX-specific shell bootstrapping --------------------------------------------
 archey -c
-echo "Learn something: $(gtimeout 1 fact) \n"
+echo "Learn something:"
+gtimeout 1 ~/scripts/getfact.sh
+echo ""
