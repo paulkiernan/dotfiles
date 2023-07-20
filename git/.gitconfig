@@ -1,6 +1,6 @@
 [user]
     name = Paul Kiernan
-    email = paul.kiernan@reddit.com
+    email = paul@phaselab.co
 
 [core]
     editor = vim
@@ -57,6 +57,3 @@
     ff = only
 [init]
     defaultBranch = main
-
-[url "git@github.snooguts.net:"]
-   insteadOf = https://github.snooguts.net/
