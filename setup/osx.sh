@@ -2,20 +2,21 @@ echo ""
 echo ">> Installing brew and other mac shenanigans"
 echo ""
 hash brew 2>/dev/null || bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+export PATH=$PATH:/opt/homebrew/bin
+
 brew install \
-    archey \
+    archey4 \
     asdf \
-    direnv \
-    awscli \
     bash \
     coreutils \
+    direnv \
     git-lfs \
     gnu-getopt \
+    htop \
     jq \
-    jrnl \
     nmap \
     pyenv \
-    pyenv-virtualenv \
     reattach-to-user-namespace \
     sl \
     stow \
@@ -28,12 +29,15 @@ brew install \
 brew tap homebrew/cask-versions
 brew install --cask \
     caffeine \
+    discord \
     docker \
     dropbox \
     iterm2 \
-    pritunl \
+    obsidian \
+    slack \
     spotify \
     sublime-text
 
 # Install git-hud
 brew tap gbataille/homebrew-gba
+brew install githud

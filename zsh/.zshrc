@@ -18,13 +18,14 @@ source-if-exists() {
 
 # PATH Manipulation -----------------------------------------------------------
 export ASDF_DIR="$HOME/.asdf"
+export PATH="/opt/homebrew/bin:${PATH}"
 export PATH="${PRIVATE}/scripts:${PATH}"
 export PATH="${HOME}/usr/local:${PATH}"
 export PATH="${HOME}/.local/bin:${PATH}"
 
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 

@@ -3,10 +3,10 @@
 set -eux
 
 KERNEL=$(uname)
-DEFAULT_PYTHON_VERSIONS=("3.10.5")
+DEFAULT_PYTHON_VERSIONS=("3.11.4")
 
 ASDF_DIR="$HOME/.asdf"
-ASDF_VERSION="v0.8.0"
+ASDF_VERSION="v0.12.0"
 OH_MY_ZSH_DIR="$HOME/.zsh/oh-my-zsh"
 VUNDLE_DIR="$HOME/.vim/bundle/Vundle.vim"
 
@@ -36,29 +36,9 @@ stow -t $HOME scripts
 stow -t $HOME linux
 stow -t $HOME osx
 
-echo ""
-echo ">> Installing ASDF"
-if [ ! -d $ASDF_DIR ]; then
-    git clone https://github.com/asdf-vm/asdf.git "$ASDF_DIR" --branch "$ASDF_VERSION"
-elif [ -d $ASDF_DIR -a -d $ASDF_DIR/.git ]; then
-    git --git-dir=$ASDF_DIR/.git checkout -f origin/master -B "$ASDF_VERSION"
+if [ "$KERNEL" == 'Linux' ]; then
+    source setup/linux.sh
 fi
-
-asdf plugin add java || true
-asdf install java openjdk-18.0.1
-asdf global java openjdk-18.0.1
-
-asdf plugin add terraform || true
-asdf install terraform 1.2.5
-asdf global terraform 1.2.5
-
-asdf plugin add kubectl || true
-asdf install kubectl 1.21.1
-asdf global kubectl 1.21.1
-
-asdf plugin add golang || true
-asdf install golang 1.18.4
-asdf global golang 1.18.4
 
 echo ""
 echo ">> Installing Python version(s) ${DEFAULT_PYTHON_VERSIONS} as default"
