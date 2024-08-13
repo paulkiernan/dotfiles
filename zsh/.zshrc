@@ -6,7 +6,7 @@ export VISUAL=vim
 export EDITOR="$VISUAL"
 
 # Variable Defs ---------------------------------------------------------------
-export PRIVATE="/Users/paul.kiernan/Library/CloudStorage/Dropbox/private"
+export PRIVATE="/Users/paul/Dropbox/private"
 
 # Funktions --------------------------------------------------------------------
 source-if-exists() {
@@ -43,6 +43,7 @@ plugins=(
     colorize
     history
     vi-mode
+    poetry
 )
 setopt EXTENDED_HISTORY
 setopt HIST_EXPIRE_DUPS_FIRST
@@ -60,7 +61,8 @@ alias r='reset'
 alias json='python -mjson.tool | pygmentize -l json'
 alias external_ip="curl -s http://checkip.dyndns.org | sed 's/[a-zA-Z/<> :]//g'"
 alias vimupdate="vim +BundleInstall! +BundleClean"
-alias less-yaml="pygmentize -l yaml | less"
+alias ogless="less"
+alias less="pygmentize -O style=monokai | less"
 
 alias ll1='tree --dirsfirst -ChFupDaL 1'
 alias ll2='tree --dirsfirst -ChFupDaL 2'
@@ -109,3 +111,8 @@ export SOPS_AGE_KEY_FILE=$HOME/.config/sops/age/keys.txt
 eval "$(direnv hook zsh)"
 
 export AWS_SDK_LOAD_CONFIG=true
+
+# 3D Printing -----------------------------------------------------------------
+alias superslicer="/Applications/SuperSlicer.app/Contents/MacOS/SuperSlicer --datadir ${HOME}/workspace/github.com/paulkiernan/voron/superslicer"
+
+alias ytdl="yt-dlp -x --audio-format mp3 --audio-quality 0"

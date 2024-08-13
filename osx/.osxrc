@@ -1,7 +1,7 @@
 # vim: set filetype=sh:
 
 # OSX-specific shell bootstrapping --------------------------------------------
-archey -c
+archey
 echo "Learn something:"
-gtimeout 1 ~/scripts/getfact.sh
+gtimeout -k 0.5 0.5 ~/scripts/getfact.sh
 echo ""
