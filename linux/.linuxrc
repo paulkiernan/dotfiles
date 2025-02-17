@@ -1,5 +1,8 @@
 # vim: set filetype=sh:
 
+# Env Vars --------------------------------------------------------------------
+# export PRIVATE=TODO
+
 # Linux-specific shell bootstrapping ------------------------------------------
 archey3
 echo "Learn something: $(timeout 1 fact) \n"

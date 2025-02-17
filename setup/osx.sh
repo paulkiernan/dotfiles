@@ -7,7 +7,6 @@ export PATH=$PATH:/opt/homebrew/bin
 
 brew install \
     archey4 \
-    asdf \
     bash \
     coreutils \
     direnv \
@@ -26,7 +25,6 @@ brew install \
     wget || echo "Skipping brew install"
 
 # Application installs
-brew tap homebrew/cask-versions
 brew install --cask \
     caffeine \
     discord \

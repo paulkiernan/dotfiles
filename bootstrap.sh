@@ -3,10 +3,10 @@
 set -eux
 
 KERNEL=$(uname)
-DEFAULT_PYTHON_VERSIONS=("3.11.4")
+DEFAULT_PYTHON_VERSIONS=("3.11.11" "3.12.8" "3.13.1")
 
 ASDF_DIR="$HOME/.asdf"
-ASDF_VERSION="v0.12.0"
+ASDF_VERSION="v0.16.2"
 OH_MY_ZSH_DIR="$HOME/.zsh/oh-my-zsh"
 VUNDLE_DIR="$HOME/.vim/bundle/Vundle.vim"
 
@@ -25,20 +25,19 @@ elif [ "$KERNEL" == 'Darwin' ]; then
     source setup/osx.sh
 fi
 
-# Set up all dotfile symlinks
-stow -t $HOME alacritty
+# Set up all dotfile symlinks -------------------------------------------------
 stow -t $HOME docker
 stow -t $HOME git
+stow -t $HOME linux
+stow -t $HOME osx
+stow -t $HOME scripts
 stow -t $HOME tmux
 stow -t $HOME vim
 stow -t $HOME zsh
-stow -t $HOME scripts
-stow -t $HOME linux
-stow -t $HOME osx
 
-if [ "$KERNEL" == 'Linux' ]; then
-    source setup/linux.sh
-fi
+mkdir -p $HOME/.config
+mkdir -p $HOME/.config/ghostty
+stow -t $HOME/.config/ghostty ghostty
 
 echo ""
 echo ">> Installing Python version(s) ${DEFAULT_PYTHON_VERSIONS} as default"
@@ -50,7 +49,7 @@ done
 
 pyenv global ${DEFAULT_PYTHON_VERSIONS[0]}
 python -m pip install pip
-pip install --user pygments
+pip install pygments
 
 echo "Installing/Upgrading  ZSH"
 # Install oh-my-zsh or update if already installed

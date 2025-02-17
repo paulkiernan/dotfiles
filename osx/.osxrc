@@ -1,5 +1,9 @@
 # vim: set filetype=sh:
 
+# Env Vars --------------------------------------------------------------------
+export PRIVATE="$HOME/Dropbox/private"
+export PATH="/opt/homebrew/bin:${PATH}"
+
 # OSX-specific shell bootstrapping --------------------------------------------
 archey
 echo "Learn something:"
