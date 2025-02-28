@@ -35,6 +35,7 @@ export PATH="$HOME/.asdf/bin:$PATH"
 export PATH="$ASDF_DATA_DIR/shims:$PATH"
 export PATH="${HOME}/usr/local:${PATH}"
 export PATH="${HOME}/.local/bin:${PATH}"
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 # ZSH Config ------------------------------------------------------------------
 export HISTFILE=~/.zhistory
