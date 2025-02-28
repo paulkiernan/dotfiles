@@ -29,6 +29,14 @@ eval "$(pyenv init - zsh)"
 eval "$(pyenv virtualenv-init -)"
 eval "$(direnv hook zsh)"
 
+# OS-Specific Configs ---------------------------------------------------------
+osname=`uname`
+if [[ "$osname" == 'Linux' ]]; then
+    source $HOME/.linuxrc
+elif [[ "$osname" == 'Darwin' ]]; then
+    source $HOME/.osxrc
+fi
+
 # PATH Manipulation -----------------------------------------------------------
 export PATH="${PRIVATE}/scripts:${PATH}"
 export PATH="$HOME/.asdf/bin:$PATH"
@@ -105,14 +113,6 @@ zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 bindkey "$terminfo[kcuu1]" up-line-or-beginning-search
 bindkey "$terminfo[kcud1]" down-line-or-beginning-search
-
-# OS-Specific Configs ---------------------------------------------------------
-osname=`uname`
-if [[ "$osname" == 'Linux' ]]; then
-    source $HOME/.linuxrc
-elif [[ "$osname" == 'Darwin' ]]; then
-    source $HOME/.osxrc
-fi
 
 # Error Checking --------------------------------------------------------------
 if (( ! ${+PRIVATE} )); then
