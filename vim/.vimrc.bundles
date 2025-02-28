@@ -76,33 +76,16 @@
         Plugin 'derekwyatt/vim-sbt'
         Plugin 'xptemplate'
 
-    " Puppet
-        Plugin 'rodjek/vim-puppet'
-
     " Webdev
         Plugin 'yuezk/vim-js'
         Plugin 'leafgarland/typescript-vim'
         Plugin 'maxmellon/vim-jsx-pretty'
 
-    " Golang
-        Plugin 'fatih/vim-go'
-
-    " Starlark
-        Plugin 'cappyzawa/starlark.vim'
-
-    " Varnish VCL
-        Plugin 'fgsch/vim-varnish'
-
     " Misc
-        Plugin 'tpope/vim-markdown'
-        Plugin 'JamshedVesuna/vim-markdown-preview'
         Plugin 'vim-scripts/nginx.vim'
         Plugin 'chase/vim-ansible-yaml'
         Plugin 'kevints/vim-aurora-syntax'
-        Plugin 'solarnz/thrift.vim'
         Plugin 'hashivim/vim-terraform'
-        Plugin 'juliosueiras/vim-terraform-completion'
-        Plugin 'liuchengxu/graphviz.vim'
 
 " Cleanup
     call vundle#end()
