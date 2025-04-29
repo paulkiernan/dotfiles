@@ -1,7 +1,7 @@
 # vim: set filetype=sh:
 
 # Env Vars --------------------------------------------------------------------
-export PRIVATE="$HOME/Dropbox/private"
+export PRIVATE="$HOME/Library/CloudStorage/Dropbox/private"
 export PATH="/opt/homebrew/bin:${PATH}"
 
 # OSX-specific shell bootstrapping --------------------------------------------

@@ -7,15 +7,14 @@ export PATH=$PATH:/opt/homebrew/bin
 
 brew install \
     archey4 \
+    asdf \
     bash \
     coreutils \
     direnv \
-    git-lfs \
     gnu-getopt \
     htop \
     jq \
     nmap \
-    pyenv \
     reattach-to-user-namespace \
     sl \
     stow \
@@ -30,12 +29,8 @@ brew install --cask \
     discord \
     docker \
     dropbox \
-    iterm2 \
+    ghostty \
     obsidian \
     slack \
     spotify \
     sublime-text
-
-# Install git-hud
-brew tap gbataille/homebrew-gba
-brew install githud

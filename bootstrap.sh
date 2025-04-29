@@ -3,10 +3,7 @@
 set -eux
 
 KERNEL=$(uname)
-DEFAULT_PYTHON_VERSIONS=("3.11.11" "3.12.8" "3.13.1")
 
-ASDF_DIR="$HOME/.asdf"
-ASDF_VERSION="v0.16.2"
 OH_MY_ZSH_DIR="$HOME/.zsh/oh-my-zsh"
 VUNDLE_DIR="$HOME/.vim/bundle/Vundle.vim"
 
@@ -38,18 +35,6 @@ stow -t $HOME zsh
 mkdir -p $HOME/.config
 mkdir -p $HOME/.config/ghostty
 stow -t $HOME/.config/ghostty ghostty
-
-echo ""
-echo ">> Installing Python version(s) ${DEFAULT_PYTHON_VERSIONS} as default"
-for python_version in "${DEFAULT_PYTHON_VERSIONS[@]}"; do
-    if [ !$(pyenv versions | grep "$python_version") ]; then
-        pyenv install "$python_version"
-    fi
-done
-
-pyenv global ${DEFAULT_PYTHON_VERSIONS[0]}
-python -m pip install pip
-pip install pygments
 
 echo "Installing/Upgrading  ZSH"
 # Install oh-my-zsh or update if already installed
