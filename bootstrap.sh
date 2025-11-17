@@ -74,25 +74,41 @@ $ASDF_SET nodejs "$ASDF_NODEJS_VERSION"
 $ASDF_SET rust "$ASDF_RUST_VERSION"
 
 # Set up all dotfile symlinks -------------------------------------------------
-stow -t $HOME docker
-stow -t $HOME git
-stow -t $HOME linux
-stow -t $HOME osx
-stow -t $HOME scripts
-stow -t $HOME tmux
-stow -t $HOME vim
-stow -t $HOME zsh
+echo ""
+echo ">> Setting up dotfile symlinks with stow"
+echo ""
 
-mkdir -p $HOME/.config
-mkdir -p $HOME/.config/ghostty
-stow -t $HOME/.config/ghostty ghostty
+STOW_PACKAGES=(docker git linux osx scripts tmux vim zsh)
 
-echo "Installing/Upgrading  ZSH"
+for package in "${STOW_PACKAGES[@]}"; do
+    if [ -d "$package" ]; then
+        echo "Stowing $package..."
+        stow -t "$HOME" "$package" 2>/dev/null || stow -R -t "$HOME" "$package" || echo "✗ Failed to stow $package"
+    else
+        echo "✗ Directory $package not found, skipping"
+    fi
+done
+
+# Ghostty config
+mkdir -p "$HOME/.config/ghostty"
+if [ -d "ghostty" ]; then
+    echo "Stowing ghostty config..."
+    stow -t "$HOME/.config/ghostty" ghostty 2>/dev/null || stow -R -t "$HOME/.config/ghostty" ghostty || echo "✗ Failed to stow ghostty"
+else
+    echo "✗ Directory ghostty not found, skipping"
+fi
+
+echo ""
+echo ">> Installing/Upgrading oh-my-zsh"
 # Install oh-my-zsh or update if already installed
-if [ ! -d $OH_MY_ZSH_DIR ]; then
-    git clone https://github.com/ohmyzsh/ohmyzsh.git $OH_MY_ZSH_DIR
-elif [ -d $OH_MY_ZSH_DIR -a -d $OH_MY_ZSH_DIR/.git ]; then
-    git --git-dir=$OH_MY_ZSH_DIR/.git pull origin master
+if [ ! -d "$OH_MY_ZSH_DIR" ]; then
+    echo "Installing oh-my-zsh to $OH_MY_ZSH_DIR..."
+    git clone https://github.com/robbyrussell/oh-my-zsh.git "$OH_MY_ZSH_DIR" || echo "✗ Failed to install oh-my-zsh"
+elif [ -d "$OH_MY_ZSH_DIR/.git" ]; then
+    echo "Updating oh-my-zsh..."
+    git -C "$OH_MY_ZSH_DIR" pull origin master || echo "✗ Failed to update oh-my-zsh"
+else
+    echo "✓ oh-my-zsh directory exists (not a git repo)"
 fi
 
 echo "Installing/Upgrading  Powerlevel10k"
@@ -103,9 +119,23 @@ elif [ -d $POWERLEVEL10K_DIR -a -d $POWERLEVEL10K_DIR/.git ]; then
     git --git-dir=$POWERLEVEL10K_DIR/.git pull origin master
 fi
 
-# Install Vundle (updates are managed by `BundleUpdate`
+echo ""
+echo ">> Installing Vundle for vim"
+# Install Vundle (updates are managed by `BundleUpdate`)
 if [ ! -d "$VUNDLE_DIR" ]; then
-    git clone https://github.com/VundleVim/Vundle.vim.git $VUNDLE_DIR
+    echo "Installing Vundle to $VUNDLE_DIR..."
+    mkdir -p "$(dirname "$VUNDLE_DIR")"
+    git clone https://github.com/VundleVim/Vundle.vim.git "$VUNDLE_DIR" || echo "✗ Failed to install Vundle"
+else
+    echo "✓ Vundle already installed"
 fi
 
-echo "All done! Log out of all open sessions to install new env!"
+echo ""
+echo "=========================================="
+echo "✓ Bootstrap complete!"
+echo "=========================================="
+echo ""
+echo "Next steps:"
+echo "  1. Log out and log back in to activate zsh"
+echo "  2. Run 'vim +PluginInstall +qall' to install vim plugins"
+echo ""
