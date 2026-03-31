@@ -5,7 +5,7 @@ echo ""
 sudo apt-get update
 sudo apt-get -y install \
     build-essential \
-    ctags \
+    exuberant-ctags \
     curl \
     elinks \
     git \

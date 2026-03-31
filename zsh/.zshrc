@@ -30,10 +30,6 @@ warn() {
 
 # Package Manager(s) Init -----------------------------------------------------
 export ASDF_DATA_DIR="/$HOME/.asdf"
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init - zsh)"
-eval "$(pyenv virtualenv-init -)"
 eval "$(direnv hook zsh)"
 
 # OS-Specific Configs ---------------------------------------------------------

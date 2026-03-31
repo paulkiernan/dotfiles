@@ -11,7 +11,7 @@ if [ "$KERNEL" == 'Linux' ]; then
     DISTRO=$(lsb_release -sd | tr -d '"' | awk '{print $1;}')
     if [ "$DISTRO" == 'Arch' ] || [ "$DISTRO" == 'Manjaro' ]; then
         source setup/arch.sh
-    elif [ "$DISTRO" == 'Ubuntu' ]; then
+    elif [ "$DISTRO" == 'Ubuntu' ] || [ "$DISTRO" == 'Debian' ]; then
         source setup/ubuntu.sh
     else
         echo "Never heard of that Pokemon."

@@ -296,5 +296,5 @@ unbind C-b
 
 
 bind | split-window -h
-set -g prefix C-Space
-bind C-Space last-window
+set -g prefix C-b
+bind C-b last-window
