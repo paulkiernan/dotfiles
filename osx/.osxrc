@@ -4,6 +4,8 @@
 export PRIVATE="$HOME/Library/CloudStorage/Dropbox/private"
 export PATH="/opt/homebrew/bin:${PATH}"
 
+alias cddnd="cd $PRIVATE/Dungeons & Dragons"
+
 # OSX-specific shell bootstrapping --------------------------------------------
 archey
 echo "Learn something:"

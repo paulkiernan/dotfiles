@@ -1,38 +1,16 @@
+# vim: set filetype=sh:
+#
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-# vim: set filetype=sh:
-
-# Le Basics -------------------------------------------------------------------
-export TERM=xterm-256color
-export VISUAL=vim
-export EDITOR="$VISUAL"
-
-# Personalization -------------------------------------------------------------
-export SOPS_AGE_KEY_FILE=$HOME/.config/sops/age/keys.txt
-export AWS_SDK_LOAD_CONFIG=true
+source_if_exists "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 
 # Funktions -------------------------------------------------------------------
-source_if_exists() {
-    # check file exists, is regular file and is readable:
-    if [[ -f $1 && -r $1 ]]; then
-        source $1
-    fi
-}
-
 warn() {
   print -u2 -- "Warning: $*"
 }
 
 # Package Manager(s) Init -----------------------------------------------------
-export ASDF_DATA_DIR="$HOME/.asdf"
-export PATH="$ASDF_DATA_DIR/bin:$PATH"
-export PATH="$ASDF_DATA_DIR/shims:$PATH"
-[ -s "$ASDF_DATA_DIR/asdf.sh" ] && . "$ASDF_DATA_DIR/asdf.sh"
 eval "$(direnv hook zsh)"
 
 # OS-Specific Configs ---------------------------------------------------------
@@ -43,22 +21,6 @@ elif [[ "$osname" == 'Darwin' ]]; then
     source $HOME/.osxrc
 fi
 
-# PATH Manipulation -----------------------------------------------------------
-export PATH="${PRIVATE}/scripts:${PATH}"
-export PATH="${HOME}/usr/local:${PATH}"
-export PATH="${HOME}/.local/bin:${PATH}"
-export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-
-# ZSH Config ------------------------------------------------------------------
-export HISTFILE=~/.zhistory
-export HISTSIZE=100000
-export REPORTTIME=10
-
-export ZSH="$HOME/.zsh/oh-my-zsh"
-export DISABLE_AUTO_UPDATE="true"
-export OH_MY_ZSH_DEBUG="true"
-export ZSH_CUSTOM="$HOME/.zsh/zsh_custom"
-export ZSH_THEME="powerlevel10k/powerlevel10k"
 [ -s "$ZSH/oh-my-zsh.sh" ] && source "$ZSH/oh-my-zsh.sh"
 plugins=(
     colored-man-pages
@@ -81,35 +43,6 @@ bindkey -v
 autoload -Uz compinit
 compinit
 
-# Useful aliases --------------------------------------------------------------
-alias c='clear'
-alias r='reset'
-alias json='python -mjson.tool | pygmentize -l json'
-alias vimupdate="vim +BundleInstall! +BundleClean"
-alias ogless="less"
-alias less="pygmentize -O style=monokai | less"
-
-alias ll1='tree --dirsfirst -ChFupDaL 1'
-alias ll2='tree --dirsfirst -ChFupDaL 2'
-alias ll3='tree --dirsfirst -ChFupDaL 3'
-alias ll='ll1'
-
-alias cdp="cd $HOME/workspace/github.com/paulkiernan"
-
-alias superslicer="/Applications/SuperSlicer.app/Contents/MacOS/SuperSlicer --datadir ${HOME}/workspace/github.com/paulkiernan/voron/superslicer"
-
-alias ytdl="yt-dlp -x --audio-format mp3 --audio-quality 0"
-
-# Useless aliases -------------------------------------------------------------
-alias fact="~/scripts/getfact.sh"
-alias factbomb='for run in {1..100}; do; fact; echo ---; done'
-alias glr='fact && git pull'
-alias nyan='nyancat'
-
-# Work Sources ----------------------------------------------------------------
-source_if_exists $PRIVATE/dotfiles/.workrc
-source_if_exists $PRIVATE/dotfiles/.dockerrc
-
 # Command search --------------------------------------------------------------
 autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search
@@ -122,6 +55,3 @@ bindkey "$terminfo[kcud1]" down-line-or-beginning-search
 if (( ! ${+PRIVATE} )); then
   warn "Variable PRIVATE is not defined for this platform!"
 fi
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

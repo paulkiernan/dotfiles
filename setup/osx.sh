@@ -7,6 +7,7 @@ export PATH=$PATH:/opt/homebrew/bin
 
 # Install brew formulas individually
 FORMULAS=(
+    age
     archey4
     bash
     coreutils
