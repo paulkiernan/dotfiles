@@ -54,8 +54,6 @@ source_if_exists() {
     fi
 }
 
-source_if_exists $PRIVATE/dotfiles/.workrc
-source_if_exists $PRIVATE/dotfiles/.dockerrc
 source_if_exists $HOME/.asdf/plugins/java/set-java-home.zsh
 source_if_exists $HOME/.p10k.zsh
 

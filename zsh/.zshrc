@@ -1,11 +1,23 @@
+# OS-Specific Configs ---------------------------------------------------------
+osname=`uname`
+if [[ "$osname" == 'Linux' ]]; then
+    source $HOME/.linuxrc
+elif [[ "$osname" == 'Darwin' ]]; then
+    source $HOME/.osxrc
+fi
+
+# Work Sources ----------------------------------------------------------------
+source_if_exists $PRIVATE/dotfiles/.workrc
+source_if_exists $PRIVATE/dotfiles/.dockerrc
+
+# vim: set filetype=sh:
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-
-# vim: set filetype=sh:
 
 # Funktions -------------------------------------------------------------------
 warn() {
@@ -14,14 +26,6 @@ warn() {
 
 # Package Manager(s) Init -----------------------------------------------------
 eval "$(direnv hook zsh)"
-
-# OS-Specific Configs ---------------------------------------------------------
-osname=`uname`
-if [[ "$osname" == 'Linux' ]]; then
-    source $HOME/.linuxrc
-elif [[ "$osname" == 'Darwin' ]]; then
-    source $HOME/.osxrc
-fi
 
 [ -s "$ZSH/oh-my-zsh.sh" ] && source "$ZSH/oh-my-zsh.sh"
 plugins=(
