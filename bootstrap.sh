@@ -1,17 +1,17 @@
 #!/bin/bash
-
 set -eux
 
 KERNEL=$(uname)
 
 OH_MY_ZSH_DIR="$HOME/.zsh/oh-my-zsh"
+POWERLEVEL10K_DIR="$HOME/.zsh/zsh_custom/themes/powerlevel10k"
 VUNDLE_DIR="$HOME/.vim/bundle/Vundle.vim"
 
 if [ "$KERNEL" == 'Linux' ]; then
     DISTRO=$(lsb_release -sd | tr -d '"' | awk '{print $1;}')
     if [ "$DISTRO" == 'Arch' ] || [ "$DISTRO" == 'Manjaro' ]; then
         source setup/arch.sh
-    elif [ "$DISTRO" == 'Ubuntu' ] || [ "$DISTRO" == 'Debian' ]; then
+    elif [ "$DISTRO" == 'Ubuntu' ] || [ "$DISTRO" == 'Debian' ] || [ "$DISTRO" == 'Parrot' ]; then
         source setup/ubuntu.sh
     else
         echo "Never heard of that Pokemon."
@@ -39,9 +39,17 @@ stow -t $HOME/.config/ghostty ghostty
 echo "Installing/Upgrading  ZSH"
 # Install oh-my-zsh or update if already installed
 if [ ! -d $OH_MY_ZSH_DIR ]; then
-    git clone https://github.com/robbyrussell/oh-my-zsh.git $OH_MY_ZSH_DIR
+    git clone https://github.com/ohmyzsh/ohmyzsh.git $OH_MY_ZSH_DIR
 elif [ -d $OH_MY_ZSH_DIR -a -d $OH_MY_ZSH_DIR/.git ]; then
     git --git-dir=$OH_MY_ZSH_DIR/.git pull origin master
+fi
+
+echo "Installing/Upgrading  Powerlevel10k"
+mkdir -p $HOME/.zsh/zsh_custom/themes
+if [ ! -d $POWERLEVEL10K_DIR ]; then
+    git clone https://github.com/romkatv/powerlevel10k.git $POWERLEVEL10K_DIR
+elif [ -d $POWERLEVEL10K_DIR -a -d $POWERLEVEL10K_DIR/.git ]; then
+    git --git-dir=$POWERLEVEL10K_DIR/.git pull origin master
 fi
 
 # Install Vundle (updates are managed by `BundleUpdate`

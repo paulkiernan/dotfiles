@@ -1,6 +1,6 @@
 [user]
-    name = Paul Kiernan
-    email = paul@phaselab.co
+	name = Paul Kiernan
+	email = paulkiernan1@gmail.com
 
 [core]
     editor = vim
@@ -49,10 +49,6 @@
     clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
-
-[credential]
-    helper = osxkeychain
-
 [pull]
     ff = only
 [init]
