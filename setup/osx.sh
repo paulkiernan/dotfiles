@@ -7,7 +7,6 @@ export PATH=$PATH:/opt/homebrew/bin
 
 brew install \
     archey4 \
-    asdf \
     bash \
     coreutils \
     direnv \

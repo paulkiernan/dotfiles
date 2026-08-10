@@ -29,7 +29,10 @@ warn() {
 }
 
 # Package Manager(s) Init -----------------------------------------------------
-export ASDF_DATA_DIR="/$HOME/.asdf"
+export ASDF_DATA_DIR="$HOME/.asdf"
+export PATH="$ASDF_DATA_DIR/bin:$PATH"
+export PATH="$ASDF_DATA_DIR/shims:$PATH"
+[ -s "$ASDF_DATA_DIR/asdf.sh" ] && . "$ASDF_DATA_DIR/asdf.sh"
 eval "$(direnv hook zsh)"
 
 # OS-Specific Configs ---------------------------------------------------------
@@ -42,8 +45,6 @@ fi
 
 # PATH Manipulation -----------------------------------------------------------
 export PATH="${PRIVATE}/scripts:${PATH}"
-export PATH="$HOME/.asdf/bin:$PATH"
-export PATH="$ASDF_DATA_DIR/shims:$PATH"
 export PATH="${HOME}/usr/local:${PATH}"
 export PATH="${HOME}/.local/bin:${PATH}"
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"

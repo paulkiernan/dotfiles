@@ -22,6 +22,57 @@ elif [ "$KERNEL" == 'Darwin' ]; then
     source setup/osx.sh
 fi
 
+# ASDF + toolchains -----------------------------------------------------------
+ASDF_DIR="$HOME/.asdf"
+
+# Known-stable toolchain versions (explicit pins; `latest` can resolve to
+# free-threaded/experimental builds that break installs).
+# Python is intentionally NOT installed here: asdf builds it from source,
+# which needs sudo + system build deps (libssl-dev etc.) on every machine.
+# Node and rust ship precompiled binaries, so they install without compilation.
+ASDF_NODEJS_VERSION="24.19.0"
+ASDF_RUST_VERSION="1.97.1"
+
+echo "Installing/Upgrading ASDF"
+if ! command -v asdf >/dev/null 2>&1; then
+    if [ ! -d "$ASDF_DIR" ]; then
+        git clone https://github.com/asdf-vm/asdf.git "$ASDF_DIR"
+    elif [ -d "$ASDF_DIR/.git" ]; then
+        git -C "$ASDF_DIR" pull
+    fi
+    # Make the asdf command available for the rest of this script
+    export PATH="$ASDF_DIR/bin:$PATH"
+    [ -s "$ASDF_DIR/asdf.sh" ] && . "$ASDF_DIR/asdf.sh"
+fi
+
+if ! command -v asdf >/dev/null 2>&1; then
+    echo "ERROR: asdf not found on PATH after install" >&2
+    exit 1
+fi
+
+echo "Installing asdf plugins (nodejs, rust)"
+for plugin in nodejs rust; do
+    if ! asdf plugin list | grep -qx "$plugin"; then
+        asdf plugin add "$plugin"
+    else
+        echo "  plugin $plugin already present"
+    fi
+done
+
+echo "Installing known-stable toolchains via asdf"
+asdf install nodejs "$ASDF_NODEJS_VERSION"
+asdf install rust "$ASDF_RUST_VERSION"
+
+# `asdf set -u` is the modern form; older asdf uses `asdf global`.
+if asdf set --help >/dev/null 2>&1; then
+    ASDF_SET="asdf set -u"
+else
+    ASDF_SET="asdf global"
+fi
+echo "Setting global tool versions"
+$ASDF_SET nodejs "$ASDF_NODEJS_VERSION"
+$ASDF_SET rust "$ASDF_RUST_VERSION"
+
 # Set up all dotfile symlinks -------------------------------------------------
 stow -t $HOME docker
 stow -t $HOME git

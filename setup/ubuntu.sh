@@ -14,6 +14,5 @@ sudo apt-get -y install \
     sl \
     stow \
     tree \
-    tree \
     vim-nox \
     zsh
