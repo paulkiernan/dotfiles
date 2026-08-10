@@ -1,0 +1,21 @@
+{
+  "entries": [
+    {"type": "User"},
+    {"type": "Hostname"},
+    {"type": "Model"},
+    {"type": "Distro"},
+    {"type": "Kernel"},
+    {"type": "Uptime"},
+    {"type": "LoadAverage"},
+    {"type": "Processes"},
+    {"type": "WindowManager"},
+    {"type": "DesktopEnvironment"},
+    {"type": "Terminal"},
+    {"type": "Packages"},
+    {"type": "Temperature"},
+    {"type": "GPU"},
+    {"type": "RAM"},
+    {"type": "Disk"},
+    {"type": "LAN_IP"}
+  ]
+}

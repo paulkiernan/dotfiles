@@ -8,7 +8,7 @@ export SOPS_AGE_KEY_FILE=$HOME/.config/sops/age/keys.txt
 export AWS_SDK_LOAD_CONFIG=true
 
 # PATH Manipulation -----------------------------------------------------------
-export PATH="${PRIVATE}/scripts:${PATH}"
+export PATH="${PRIVATE:+$PRIVATE/scripts:}${PATH}"
 export PATH="$HOME/.asdf/bin:$PATH"
 export PATH="$HOME/.asdf/shims:$PATH"
 export PATH="${HOME}/usr/local:${PATH}"

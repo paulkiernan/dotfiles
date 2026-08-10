@@ -7,7 +7,7 @@ export PATH="/opt/homebrew/bin:${PATH}"
 alias cddnd="cd $PRIVATE/Dungeons & Dragons"
 
 # OSX-specific shell bootstrapping --------------------------------------------
-archey
+CLICOLOR_FORCE=1 archey
 echo "Learn something:"
-gtimeout -k 0.5 0.5 ~/scripts/getfact.sh
+~/scripts/getfact.sh
 echo ""

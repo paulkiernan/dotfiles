@@ -5,6 +5,8 @@ export PRIVATE=$HOME/Dropbox/private
 
 # Linux-specific shell bootstrapping ------------------------------------------
 archey3
-echo "Learn something: $(timeout 1 fact) \n"
+echo "Learn something:"
+~/scripts/getfact.sh
+echo ""
 
 alias open="xdg-open"
