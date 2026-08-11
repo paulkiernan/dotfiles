@@ -78,7 +78,7 @@ echo ""
 echo ">> Setting up dotfile symlinks with stow"
 echo ""
 
-STOW_PACKAGES=(docker git linux osx scripts tmux vim zsh)
+STOW_PACKAGES=(docker git linux omp osx scripts tmux vim zsh)
 
 for package in "${STOW_PACKAGES[@]}"; do
     if [ -d "$package" ]; then

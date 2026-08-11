@@ -59,3 +59,4 @@ source_if_exists $HOME/.p10k.zsh
 
 # Added by Antigravity
 export PATH="/Users/paul/.antigravity/antigravity/bin:$PATH"
+. "$HOME/.cargo/env"
