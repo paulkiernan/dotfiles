@@ -1,4 +1,4 @@
-modelRoles:
+modelRoles: 
   default: deepseek/deepseek-v4-pro
   smol: deepseek/deepseek-v4-flash:minimal
   slow: anthropic/claude-opus-5:max
@@ -9,75 +9,64 @@ modelRoles:
   designer: anthropic/claude-fable-5:high
   commit: deepseek/deepseek-v4-flash:minimal
   tiny: deepseek/deepseek-v4-flash:minimal
-
 symbolPreset: nerd
-
-theme:
+theme: 
   dark: titanium
-
-advisor:
+advisor: 
   enabled: true
   syncBacklog: 1
   subagents: true
-
-memory:
+memory: 
   backend: local
-
-autolearn:
+autolearn: 
   enabled: true
-
-bash:
-  patterns:
-    - match: "rm -rf *"
+bash: 
+  patterns: 
+    - match: rm -rf *
       approval: prompt
-    - match: "git push * --force*"
+    - match: git push * --force*
       approval: prompt
-    - match: "git push * -f*"
+    - match: git push * -f*
       approval: prompt
-    - match: "git reset --hard *"
+    - match: git reset --hard *
       approval: prompt
     - match: "* | sh"
       approval: prompt
-
-branchSummary:
+branchSummary: 
   enabled: true
-
-cycleOrder:
+cycleOrder: 
   - smol
   - default
   - slow
-retry:
-  fallbackChains:
-    default:
+retry: 
+  fallbackChains: 
+    default: 
       - anthropic/claude-sonnet-4-5
       - google-antigravity/gemini-3.5-flash
-    smol:
+    smol: 
       - google-antigravity/gemini-3.5-flash:minimal
       - openai-codex/gpt-5.4-mini:minimal
-    slow:
+    slow: 
       - anthropic/claude-fable-5:max
       - deepseek/deepseek-v4-pro:max
-    deepseek/*:
+    deepseek/*: 
       - anthropic/*
       - google-antigravity/*
-    anthropic/*:
+    anthropic/*: 
       - deepseek/*
       - google-antigravity/*
-
-providers:
-  anthropic:
+providers: 
+  anthropic: 
     serverSideFallback: true
-
-task:
-  isolation:
+task: 
+  isolation: 
     mode: auto
     apply: true
   eager: always
-
-lsp:
+lsp: 
   formatOnWrite: true
-
 personality: pragmatic
-
-statusLine:
+statusLine: 
   preset: nerd
+browser: 
+  relay: true
