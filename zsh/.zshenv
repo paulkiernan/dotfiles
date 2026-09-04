@@ -54,6 +54,27 @@ source_if_exists() {
     fi
 }
 
+# Like source_if_exists, but for files on cloud-synced storage (Dropbox
+# CloudStorage) where reading a dehydrated file blocks on the network.
+# Reads through `timeout` into a local cache and sources the cache, so an
+# offline/slow sync costs at most 400ms and falls back to the last good copy.
+source_if_exists_cloud() {
+    local src=$1
+    local cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/zsh-cloud-rc"
+    local cache="$cache_dir/${src:t}"
+    mkdir -p "$cache_dir"
+    if command -v timeout >/dev/null 2>&1; then
+        if timeout 0.4 cat -- "$src" > "$cache.new" 2>/dev/null; then
+            mv -f "$cache.new" "$cache"
+        else
+            rm -f "$cache.new"
+        fi
+    elif [[ -f $src && -r $src ]]; then
+        cp -f -- "$src" "$cache" 2>/dev/null
+    fi
+    [[ -f $cache && -r $cache ]] && source "$cache"
+}
+
 source_if_exists $HOME/.asdf/plugins/java/set-java-home.zsh
 source_if_exists $HOME/.p10k.zsh
 

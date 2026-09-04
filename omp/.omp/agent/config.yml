@@ -1,27 +1,26 @@
-modelRoles: 
-  default: deepseek/deepseek-v4-pro
-  smol: deepseek/deepseek-v4-flash:minimal
-  slow: anthropic/claude-opus-5:max
+modelRoles:
+  smol: deepseek/deepseek-v4-flash:high
+  slow: anthropic/claude-fable-5:max
   vision: anthropic/claude-sonnet-4-5
   plan: anthropic/claude-opus-5:xhigh
   advisor: anthropic/claude-sonnet-4-5:medium
   task: deepseek/deepseek-v4-flash:high
-  designer: anthropic/claude-fable-5:high
   commit: deepseek/deepseek-v4-flash:minimal
   tiny: deepseek/deepseek-v4-flash:minimal
+  default: anthropic/claude-fable-5:xhigh
+  designer: anthropic/claude-fable-5:xhigh
 symbolPreset: nerd
-theme: 
+theme:
   dark: titanium
-advisor: 
+advisor:
   enabled: true
   syncBacklog: 1
-  subagents: true
-memory: 
+memory:
   backend: local
-autolearn: 
+autolearn:
   enabled: true
-bash: 
-  patterns: 
+bash:
+  patterns:
     - match: rm -rf *
       approval: prompt
     - match: git push * --force*
@@ -32,41 +31,51 @@ bash:
       approval: prompt
     - match: "* | sh"
       approval: prompt
-branchSummary: 
+branchSummary:
   enabled: true
-cycleOrder: 
+cycleOrder:
   - smol
   - default
   - slow
-retry: 
-  fallbackChains: 
-    default: 
+retry:
+  fallbackChains:
+    default:
       - anthropic/claude-sonnet-4-5
-      - google-antigravity/gemini-3.5-flash
-    smol: 
-      - google-antigravity/gemini-3.5-flash:minimal
+      - google-antigravity/gemini-3.6-flash
+    smol:
+      - google-antigravity/gemini-3.6-flash:minimal
       - openai-codex/gpt-5.4-mini:minimal
-    slow: 
+    slow:
       - anthropic/claude-fable-5:max
       - deepseek/deepseek-v4-pro:max
-    deepseek/*: 
+    deepseek/*:
       - anthropic/*
       - google-antigravity/*
-    anthropic/*: 
+    anthropic/*:
       - deepseek/*
       - google-antigravity/*
-providers: 
-  anthropic: 
+providers:
+  anthropic:
     serverSideFallback: true
-task: 
-  isolation: 
+task:
+  isolation:
     mode: auto
     apply: true
   eager: always
-lsp: 
+  agentAdvisor:
+    task: "on"
+lsp:
   formatOnWrite: true
 personality: pragmatic
-statusLine: 
+statusLine:
   preset: nerd
-browser: 
+browser:
   relay: true
+setupVersion: 2
+dev:
+  autoqaConsent: granted
+vault:
+  enabled: true
+readLineNumbers: true
+composer:
+  shape: claude

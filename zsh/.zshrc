@@ -6,9 +6,21 @@ elif [[ "$osname" == 'Darwin' ]]; then
     source $HOME/.osxrc
 fi
 
+# Login greeting ---------------------------------------------------------------
+# fastfetch is fast, cross-platform, and makes no network calls with the
+# default module set; getfact.sh caps its own curl at 400ms.
+command -v fastfetch >/dev/null && fastfetch
+if [[ -x ~/scripts/getfact.sh ]]; then
+    echo "Learn something:"
+    ~/scripts/getfact.sh
+    echo ""
+fi
+
 # Work Sources ----------------------------------------------------------------
-source_if_exists $PRIVATE/dotfiles/.workrc
-source_if_exists $PRIVATE/dotfiles/.dockerrc
+# These live in Dropbox CloudStorage: a dehydrated file read blocks on the
+# network, so source them via the timeout-guarded cloud helper.
+source_if_exists_cloud $PRIVATE/dotfiles/.workrc
+source_if_exists_cloud $PRIVATE/dotfiles/.dockerrc
 
 # vim: set filetype=sh:
 

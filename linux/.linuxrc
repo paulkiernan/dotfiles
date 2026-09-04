@@ -3,10 +3,4 @@
 # Env Vars --------------------------------------------------------------------
 export PRIVATE=$HOME/Dropbox/private
 
-# Linux-specific shell bootstrapping ------------------------------------------
-archey3
-echo "Learn something:"
-~/scripts/getfact.sh
-echo ""
-
 alias open="xdg-open"
