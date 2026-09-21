@@ -1,222 +1,117 @@
-# ~/.omp/agent/config.yml — oh-my-pi global settings
-# Distributed via dotfiles; symlinked into place by ../install.sh.
-#
-# Routing philosophy
-#   * DeepSeek V4.1 Flash (`deepseek/deepseek-flash`) is the workhorse: every
-#     high-volume, read-only, or background role (task, smol, scout, tiny,
-#     commit) plus the catch-all fallback. ~$0.30/$1.20 per Mtok peak, half
-#     that off-peak, 1M context, native vision.
-#   * Frontier models only where judgment compounds: the main turn, planning,
-#     code review (deliberately a different family from the diff's author),
-#     and long-context security review.
-#   * TypeSafe Jev answers every typed judgment omp makes (auto-thinking
-#     difficulty, unexpected-stop detection, AI git staging, eval judge())
-#     for ~$0.04/Mtok instead of burning LLM tokens.
-#
-# Model spec syntax: provider/model[:thinking]   thinking ∈ minimal|low|medium|high|xhigh|max
-# Verify after install:  omp models deepseek && omp config list
-# Requires omp >= 18.1 (TypeSafe judgment backend, Fable 5.1 catalog rows).
-
-# ---------------------------------------------------------------- Model roles
 modelRoles:
-  # Main interactive turn. No thinking suffix on purpose: defaultThinkingLevel=auto
-  # lets Jev classify each turn's difficulty and pick the effort (see below).
   default: anthropic/claude-opus-5
-
-  # Plan mode + on-demand deep reasoning. Fable 5.1 is $10/$50 per Mtok — keep it
-  # on these two roles only. Both sit a tier above the catalog default on purpose:
-  # planning is where extra thinking pays back, and neither role runs per-turn.
   plan: anthropic/claude-fable-5-1:xhigh
   slow: anthropic/claude-fable-5-1:max
-
-  # Subagent workhorse ("good" tier in /vibe). One user's Sep-2026 bakeoff had
-  # :low beat :high 9/9 vs 7/9 on execution-scored tasks; flip to :low if you
-  # see the same. Output at $1.20/Mtok makes the difference pennies either way.
   task: deepseek/deepseek-flash:high
-
-  # Cheap fan-out ("fast" tier in /vibe), background chores, commit messages.
   smol: deepseek/deepseek-flash:low
   tiny: deepseek/deepseek-flash:low
   commit: deepseek/deepseek-flash:low
-
-  # Image/video/audio/PDF reads — Gemini has the widest input modality set.
   vision: google-antigravity/gemini-3.8-flash:medium
-
-  # Front-end / design work. Frontier-tier and free at the margin — Astra rides the
-  # ChatGPT plan rather than per-token billing. Trade-off, accepted deliberately:
-  # this shares a family with `critic` below, so UI code written here is reviewed
-  # by its own family. `default` is still anthropic, so ordinary (non-UI) diffs
-  # keep the cross-family review. For a UI-heavy stretch, pin critic to an
-  # anthropic/* model to restore the separation.
   designer: openai-codex/gpt-6-astra:high
-
-  # Second model that reads every completed turn and injects notes. Advisor cost
-  # is uncached input, so TTFT + prefill price matter more than reasoning rank.
   advisor: google-antigravity/gemini-3.8-flash:low
-
-  # --- custom roles (bound to bundled agents via task.agentModelOverrides) ---
-  # Read-only code locator: answers with file:line tables, so brevity wins.
   scout: deepseek/deepseek-flash:low
-  # Code review. Different family from `default` on purpose — a same-family
-  # reviewer shares the author's blind spots. Rides the ChatGPT plan (flat).
   critic: openai-codex/gpt-6-astra:high
-  # Security review = long-context recall over a diff plus its callers (1M ctx).
   sentinel: google-antigravity/gemini-3.8-flash:high
-
-# Decides bare/ambiguous selectors only; every pin above is provider-qualified.
 modelProviderOrder:
   - deepseek
   - anthropic
   - openai-codex
   - google-antigravity
-
-# Roles cycled by Ctrl+P.
 cycleOrder:
   - smol
   - task
   - default
   - slow
-
-# Antigravity is the Gemini route: `/login google-antigravity` (OAuth), no API key,
-# and it carries gemini-3.8-flash with a wider effort ladder than the metered API.
-# Gemini CLI stays off — it serves no models for individuals even when enabled.
 disabledProviders:
   - google-gemini-cli
-
-# ------------------------------------------------------------------- Thinking
 defaultThinkingLevel: auto
 hideThinkingBlock: false
-
-# ------------------------------------------------------------------ Providers
 providers:
-  # Typed judgments go to TypeSafe Jev when TYPESAFE_API_KEY (or /login typesafe)
-  # is present; `auto` degrades to the LLM path on machines without the key.
-  # Set to `typesafe` to make it mandatory.
-  judgmentProvider: auto
-
-  # `auto` may resolve up to xhigh; only the `ultrathink` keyword reaches max.
   autoThinkingMaxEffort: xhigh
-
-  # web_search chain. codex + gemini ride credentials you already have;
-  # perplexity has an anonymous fallback; duckduckgo needs nothing.
-  webSearchOrder: [codex, gemini, perplexity, duckduckgo]
+  webSearchOrder:
+    - codex
+    - gemini
+    - perplexity
+    - duckduckgo
   webSearchGeminiModel: gemini-3.8-flash
-
-  # generate_image / inspect_image provider preference (tools are opt-in).
-  imageOrder: [gemini, openai-codex]
-
-  # Per-provider in-flight request caps (shared across local omp processes).
-  # Unlisted providers are unlimited. Raise deepseek if fan-outs queue.
+  imageOrder:
+    - gemini
+    - openai-codex
   maxInFlightRequests:
     anthropic: 4
     google-antigravity: 8
     deepseek: 16
-
-# ------------------------------------------------------------ Retry / fallback
 retry:
   enabled: true
   maxRetries: 10
   modelFallback: true
-  fallbackRevertPolicy: cooldown-expiry   # return to the primary when its cooldown lapses
-  # Preflight plan usage reports so a quota-metered provider (ChatGPT plan) is
-  # left *before* the wall, not after. Needs omp >= 17.2.9.
+  fallbackRevertPolicy: cooldown-expiry
   usageAwareFallback: true
-
-  # Chains resolve by specificity: exact provider/model -> provider/* -> role -> default.
-  # A provider/* KEY covers every model of that provider; entries below are
-  # explicit selectors (not provider/* entries), so the swap is deliberate.
   fallbackChains:
-    # The workhorse fails cheap -> cheap -> cheap.
     deepseek/deepseek-flash:
       - google-antigravity/gemini-3.8-flash:low
       - anthropic/claude-haiku-4-5
-
-    # Anthropic outage/429 -> Astra on the ChatGPT plan, then Gemini Pro.
     anthropic/*:
       - openai-codex/gpt-6-astra:high
       - google-antigravity/gemini-3.1-pro:high
-
-    # ChatGPT plan quota wall -> Opus 5, then Gemini Pro.
     openai-codex/*:
       - anthropic/claude-opus-5:high
       - google-antigravity/gemini-3.1-pro:high
-
-    # Gemini -> DeepSeek (also has vision), then Terra on the plan.
     google-antigravity/*:
       - deepseek/deepseek-flash:high
       - openai-codex/gpt-5.6-terra:medium
-
-    # Any role without a more specific match.
     default:
       - deepseek/deepseek-flash:high
-
-# ------------------------------------------------------------------ Subagents
 task:
-  # `preferred` adds delegation guidance to the system prompt without a first-turn
-  # nag (`always`). Subagents get LSP so "missed callsite" claims are verified.
   eager: preferred
   enableLsp: true
-  enableEffort: true            # parent may pass per-item `effort`
+  enableEffort: true
   maxConcurrency: 16
   maxRecursionDepth: 2
   isolation:
-    mode: auto                  # per-item `isolated: true` -> APFS clone / reflink / overlayfs sandbox
     merge: patch
-  # Pin bundled agents to named roles so a model swap happens in one place.
+    enabled: true
   agentModelOverrides:
     scout: "@scout"
     reviewer: "@critic"
     security-reviewer: "@sentinel"
     sonic: "@smol"
     task: "@task"
-
-# -------------------------------------------------------------------- Advisor
 advisor:
   enabled: true
-  syncBacklog: off              # never block the primary waiting on the advisor
+  syncBacklog: "off"
   immuneTurns: 3
-
-# ------------------------------------------------- Context, compaction, memory
 compaction:
   enabled: true
-  strategy: snapcompact
   midTurnEnabled: true
-  remoteEnabled: true
   keepRecentTokens: 20000
-
+  methodOrder:
+    - snapcompact
+    - remote
+    - soft
 contextPromotion:
-  enabled: false                # overflow -> compaction (the documented path)
-
+  enabled: false
 memory:
-  backend: mnemopi              # local SQLite memory engine, project-scoped
-
-# ---------------------------------------------------------- Tools & code intel
+  backend: mnemopi
 lsp:
   enabled: true
   lazy: true
   shared: true
   diagnosticsOnWrite: true
   diagnosticsOnEdit: false
-
 edit:
   mode: hashline
   fuzzyMatch: true
-
 read:
   summarize:
     enabled: true
-
-# Redact credential-shaped tokens before they reach any provider.
 secrets:
   enabled: true
-
-# Approval policy is left at the schema default (`yolo`). For a stricter box:
-# tools:
-#   approvalMode: write
-#   approval:
-#     bash: prompt
-
-# Landed behind PR #12373 (TypeSafe skill suggestion). Uncomment once your
-# build has it: `omp config get skills.suggestion` succeeds.
-# skills:
-#   suggestion: typesafe
+isolation:
+  backend: auto
+symbolPreset: nerd
+composer:
+  shape: band
+theme:
+  dark: titanium
+setupVersion: 2
