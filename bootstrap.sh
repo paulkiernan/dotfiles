@@ -78,6 +78,11 @@ echo ""
 echo ">> Setting up dotfile symlinks with stow"
 echo ""
 
+# omp keeps runtime state (agent.db, stats.db, logs/) in ~/.omp. The dir must
+# exist before stowing or stow folds the tree and symlinks ~/.omp itself into
+# this repo, which would put those databases under version control.
+mkdir -p "$HOME/.omp/agent"
+
 STOW_PACKAGES=(docker git linux omp osx scripts tmux vim zsh)
 
 for package in "${STOW_PACKAGES[@]}"; do
@@ -96,6 +101,17 @@ if [ -d "ghostty" ]; then
     stow -t "$HOME/.config/ghostty" ghostty 2>/dev/null || stow -R -t "$HOME/.config/ghostty" ghostty || echo "✗ Failed to stow ghostty"
 else
     echo "✗ Directory ghostty not found, skipping"
+fi
+
+# omp API keys: a real file, never a symlink, never tracked.
+OMP_ENV="$HOME/.omp/agent/.env"
+if [ ! -f "$OMP_ENV" ] && [ -f "omp/.omp/agent/.env.example" ]; then
+    echo "Seeding $OMP_ENV from .env.example..."
+    cp "omp/.omp/agent/.env.example" "$OMP_ENV"
+    chmod 600 "$OMP_ENV"
+    echo "  fill in DEEPSEEK_API_KEY / ANTHROPIC_API_KEY / GEMINI_API_KEY / TYPESAFE_API_KEY"
+else
+    echo "✓ omp .env already present (or omp package missing)"
 fi
 
 echo ""
