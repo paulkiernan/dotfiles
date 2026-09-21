@@ -13,36 +13,37 @@ modelRoles:
   critic: openai-codex/gpt-6-astra:high
   sentinel: google-antigravity/gemini-3.8-flash:high
 modelProviderOrder:
-- deepseek
-- anthropic
-- openai-codex
-- google-antigravity
+  - deepseek
+  - anthropic
+  - openai-codex
+  - google-antigravity
 cycleOrder:
-- smol
-- task
-- default
-- slow
+  - smol
+  - task
+  - default
+  - slow
 disabledProviders:
-- google-gemini-cli
+  - google-gemini-cli
 defaultThinkingLevel: auto
 hideThinkingBlock: false
 providers:
   autoThinkingMaxEffort: xhigh
   webSearchOrder:
-  - codex
-  - gemini
-  - perplexity
-  - duckduckgo
+    - codex
+    - gemini
+    - perplexity
+    - duckduckgo
   webSearchGeminiModel: gemini-3.8-flash
   imageOrder:
-  - gemini
-  - openai-codex
+    - gemini
+    - openai-codex
   maxInFlightRequests:
     anthropic: 4
     google-antigravity: 8
     deepseek: 16
   anthropic:
     serverSideFallback: true
+  judgmentProvider: typesafe
 retry:
   enabled: true
   maxRetries: 10
@@ -51,19 +52,19 @@ retry:
   usageAwareFallback: true
   fallbackChains:
     deepseek/deepseek-flash:
-    - google-antigravity/gemini-3.8-flash:low
-    - anthropic/claude-haiku-4-5
+      - google-antigravity/gemini-3.8-flash:low
+      - anthropic/claude-haiku-4-5
     anthropic/*:
-    - openai-codex/gpt-6-astra:high
-    - google-antigravity/gemini-3.1-pro:high
+      - openai-codex/gpt-6-astra:high
+      - google-antigravity/gemini-3.1-pro:high
     openai-codex/*:
-    - anthropic/claude-opus-5:high
-    - google-antigravity/gemini-3.1-pro:high
+      - anthropic/claude-opus-5:high
+      - google-antigravity/gemini-3.1-pro:high
     google-antigravity/*:
-    - deepseek/deepseek-flash:high
-    - openai-codex/gpt-5.6-terra:medium
+      - deepseek/deepseek-flash:high
+      - openai-codex/gpt-5.6-terra:medium
     default:
-    - deepseek/deepseek-flash:high
+      - deepseek/deepseek-flash:high
 task:
   eager: preferred
   enableLsp: true
@@ -75,23 +76,23 @@ task:
     enabled: true
     apply: true
   agentModelOverrides:
-    scout: '@scout'
-    reviewer: '@critic'
-    security-reviewer: '@sentinel'
-    sonic: '@smol'
-    task: '@task'
+    scout: "@scout"
+    reviewer: "@critic"
+    security-reviewer: "@sentinel"
+    sonic: "@smol"
+    task: "@task"
 advisor:
   enabled: true
-  syncBacklog: 'off'
+  syncBacklog: "off"
   immuneTurns: 3
 compaction:
   enabled: true
   midTurnEnabled: true
   keepRecentTokens: 20000
   methodOrder:
-  - snapcompact
-  - remote
-  - soft
+    - snapcompact
+    - remote
+    - soft
 contextPromotion:
   enabled: false
 memory:
@@ -123,16 +124,16 @@ autolearn:
   enabled: true
 bash:
   patterns:
-  - match: rm -rf *
-    approval: prompt
-  - match: git push * --force*
-    approval: prompt
-  - match: git push * -f*
-    approval: prompt
-  - match: git reset --hard *
-    approval: prompt
-  - match: '* | sh'
-    approval: prompt
+    - match: rm -rf *
+      approval: prompt
+    - match: git push * --force*
+      approval: prompt
+    - match: git push * -f*
+      approval: prompt
+    - match: git reset --hard *
+      approval: prompt
+    - match: "* | sh"
+      approval: prompt
 branchSummary:
   enabled: true
 browser:
@@ -148,3 +149,5 @@ statusLine:
   preset: nerd
 vault:
   enabled: true
+features:
+  unexpectedStopDetection: smart
