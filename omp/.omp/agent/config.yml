@@ -66,7 +66,7 @@ retry:
     default:
       - deepseek/deepseek-flash:high
 task:
-  eager: preferred
+  eager: always
   enableLsp: true
   enableEffort: true
   maxConcurrency: 16
