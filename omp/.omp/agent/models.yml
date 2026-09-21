@@ -1,11 +1,9 @@
 # ~/.omp/agent/models.yml — provider / model registry overrides
 #
-# Only two providers need anything here. anthropic and openai-codex are
-# catalog-driven (openai-codex is OAuth; a models.yml apiKey would override it).
-#
-# apiKey values are env-var-name-or-literal. Prefer the env var (set it in
-# ~/.omp/agent/.env, which is NOT tracked) or a command-resolved secret:
-#   apiKey: "!op read op://dev/deepseek/api-key"
+# Only DeepSeek needs anything here, and only for metadata (see below). Every
+# provider this config uses authenticates through `/login`, which stores the
+# credential in omp's own store — so no apiKey lines and no .env. An explicit
+# apiKey here would override that stored credential.
 
 providers:
   # ---------------------------------------------------------------- DeepSeek
@@ -18,7 +16,6 @@ providers:
   deepseek:
     baseUrl: https://api.deepseek.com/v1
     api: openai-completions
-    apiKey: DEEPSEEK_API_KEY
     models:
       - id: deepseek-flash
         name: DeepSeek V4.1 Flash
@@ -42,28 +39,3 @@ providers:
           requiresReasoningContentForToolCalls: true   # V4 thinking mode must round-trip reasoning on tool turns
           disableReasoningOnToolChoice: true           # DeepSeek 400s on reasoning + tool_choice
           streamIdleTimeoutMs: 600000                  # :max can think for minutes before the first token
-
-  # ---------------------------------------------------------- Google Gemini
-  # Gemini 3.8 Flash (GA 2026-09-02) should already be in the catalog.
-  # It is NOT in omp 18.2.3's catalog (`omp models google` returned nothing), so
-  # this block is active and supplies the row. Re-comment it if a later omp
-  # ships the model itself and the values here start to drift.
-  google:
-    baseUrl: https://generativelanguage.googleapis.com/v1beta
-    api: google-generative-ai
-    apiKey: GEMINI_API_KEY
-    models:
-      - id: gemini-3.8-flash
-        name: Gemini 3.8 Flash
-        reasoning: true
-        thinking:
-          mode: effort
-          efforts: [low, medium, high]
-        input: [text, image]
-        contextWindow: 1048576
-        maxTokens: 65536
-        cost:
-          input: 0.75
-          output: 3.75
-          cacheRead: 0.075
-          cacheWrite: 0.75

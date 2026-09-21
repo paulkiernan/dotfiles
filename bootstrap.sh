@@ -103,16 +103,9 @@ else
     echo "✗ Directory ghostty not found, skipping"
 fi
 
-# omp API keys: a real file, never a symlink, never tracked.
-OMP_ENV="$HOME/.omp/agent/.env"
-if [ ! -f "$OMP_ENV" ] && [ -f "omp/.omp/agent/.env.example" ]; then
-    echo "Seeding $OMP_ENV from .env.example..."
-    cp "omp/.omp/agent/.env.example" "$OMP_ENV"
-    chmod 600 "$OMP_ENV"
-    echo "  fill in DEEPSEEK_API_KEY / ANTHROPIC_API_KEY / GEMINI_API_KEY / TYPESAFE_API_KEY"
-else
-    echo "✓ omp .env already present (or omp package missing)"
-fi
+# omp authenticates every provider through `/login` (OAuth, or a validated
+# api-key prompt for DeepSeek), storing credentials in its own store. Nothing
+# to seed here — run `omp` and log in.
 
 echo ""
 echo ">> Installing/Upgrading oh-my-zsh"

@@ -40,7 +40,7 @@ modelRoles:
   commit: deepseek/deepseek-flash:low
 
   # Image/video/audio/PDF reads — Gemini has the widest input modality set.
-  vision: google/gemini-3.8-flash:medium
+  vision: google-antigravity/gemini-3.8-flash:medium
 
   # Front-end / design work. Frontier-tier and free at the margin — Astra rides the
   # ChatGPT plan rather than per-token billing. Trade-off, accepted deliberately:
@@ -52,7 +52,7 @@ modelRoles:
 
   # Second model that reads every completed turn and injects notes. Advisor cost
   # is uncached input, so TTFT + prefill price matter more than reasoning rank.
-  advisor: google/gemini-3.8-flash:low
+  advisor: google-antigravity/gemini-3.8-flash:low
 
   # --- custom roles (bound to bundled agents via task.agentModelOverrides) ---
   # Read-only code locator: answers with file:line tables, so brevity wins.
@@ -61,14 +61,14 @@ modelRoles:
   # reviewer shares the author's blind spots. Rides the ChatGPT plan (flat).
   critic: openai-codex/gpt-6-astra:high
   # Security review = long-context recall over a diff plus its callers (1M ctx).
-  sentinel: google/gemini-3.8-flash:high
+  sentinel: google-antigravity/gemini-3.8-flash:high
 
 # Decides bare/ambiguous selectors only; every pin above is provider-qualified.
 modelProviderOrder:
   - deepseek
   - anthropic
   - openai-codex
-  - google
+  - google-antigravity
 
 # Roles cycled by Ctrl+P.
 cycleOrder:
@@ -77,12 +77,11 @@ cycleOrder:
   - default
   - slow
 
-# Keep the OAuth-only Google routes out of selection: Gemini CLI for individuals
-# is dead (UNSUPPORTED_CLIENT) and Antigravity's terms forbid third-party clients.
-# The `google` (Gemini API key) provider is the one we use.
+# Antigravity is the Gemini route: `/login google-antigravity` (OAuth), no API key,
+# and it carries gemini-3.8-flash with a wider effort ladder than the metered API.
+# Gemini CLI stays off — it serves no models for individuals even when enabled.
 disabledProviders:
   - google-gemini-cli
-  - google-antigravity
 
 # ------------------------------------------------------------------- Thinking
 defaultThinkingLevel: auto
@@ -110,7 +109,7 @@ providers:
   # Unlisted providers are unlimited. Raise deepseek if fan-outs queue.
   maxInFlightRequests:
     anthropic: 4
-    google: 8
+    google-antigravity: 8
     deepseek: 16
 
 # ------------------------------------------------------------ Retry / fallback
@@ -129,21 +128,21 @@ retry:
   fallbackChains:
     # The workhorse fails cheap -> cheap -> cheap.
     deepseek/deepseek-flash:
-      - google/gemini-3.8-flash:low
+      - google-antigravity/gemini-3.8-flash:low
       - anthropic/claude-haiku-4-5
 
     # Anthropic outage/429 -> Astra on the ChatGPT plan, then Gemini Pro.
     anthropic/*:
       - openai-codex/gpt-6-astra:high
-      - google/gemini-3.1-pro-preview:high
+      - google-antigravity/gemini-3.1-pro:high
 
     # ChatGPT plan quota wall -> Opus 5, then Gemini Pro.
     openai-codex/*:
       - anthropic/claude-opus-5:high
-      - google/gemini-3.1-pro-preview:high
+      - google-antigravity/gemini-3.1-pro:high
 
     # Gemini -> DeepSeek (also has vision), then Terra on the plan.
-    google/*:
+    google-antigravity/*:
       - deepseek/deepseek-flash:high
       - openai-codex/gpt-5.6-terra:medium
 
