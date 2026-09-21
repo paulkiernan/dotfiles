@@ -1,0 +1,4 @@
+# omp runtime state and secrets — never tracked.
+omp/.omp/agent/.env
+omp/.omp/agent/*.lock
+omp/.omp/agent/*.bak

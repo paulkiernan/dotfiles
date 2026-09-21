@@ -1,0 +1,69 @@
+# ~/.omp/agent/models.yml — provider / model registry overrides
+#
+# Only two providers need anything here. anthropic and openai-codex are
+# catalog-driven (openai-codex is OAuth; a models.yml apiKey would override it).
+#
+# apiKey values are env-var-name-or-literal. Prefer the env var (set it in
+# ~/.omp/agent/.env, which is NOT tracked) or a command-resolved secret:
+#   apiKey: "!op read op://dev/deepseek/api-key"
+
+providers:
+  # ---------------------------------------------------------------- DeepSeek
+  # DeepSeek-V4.1-Flash went GA 2026-09-10 under the bare id `deepseek-flash`.
+  # As of omp 18.1.16 the catalog taxonomy cannot classify that id, so the
+  # discovered row is an empty shell (free / text-only / no effort tiers).
+  # Declaring it here replaces the shell (same provider+id wins) and puts the
+  # low|high|max effort selectors back on the wire. Safe to keep after the
+  # catalog fix lands — the values are the ones DeepSeek publishes.
+  deepseek:
+    baseUrl: https://api.deepseek.com/v1
+    api: openai-completions
+    apiKey: DEEPSEEK_API_KEY
+    models:
+      - id: deepseek-flash
+        name: DeepSeek V4.1 Flash
+        reasoning: true
+        thinking:
+          mode: effort
+          efforts: [low, high, max]
+        input: [text, image]
+        contextWindow: 1000000
+        maxTokens: 384000
+        tokenizer: deepseek-v3
+        # Peak tariff (UTC 00:30–16:30). Off-peak is half: 0.15 / 0.60 / 0.003.
+        # omp keeps one rate card per model; this is the conservative one.
+        cost:
+          input: 0.30
+          output: 1.20
+          cacheRead: 0.006
+          cacheWrite: 0.30
+        compat:
+          reasoningContentField: reasoning_content
+          requiresReasoningContentForToolCalls: true   # V4 thinking mode must round-trip reasoning on tool turns
+          disableReasoningOnToolChoice: true           # DeepSeek 400s on reasoning + tool_choice
+          streamIdleTimeoutMs: 600000                  # :max can think for minutes before the first token
+
+  # ---------------------------------------------------------- Google Gemini
+  # Gemini 3.8 Flash (GA 2026-09-02) should already be in the catalog.
+  # It is NOT in omp 18.2.3's catalog (`omp models google` returned nothing), so
+  # this block is active and supplies the row. Re-comment it if a later omp
+  # ships the model itself and the values here start to drift.
+  google:
+    baseUrl: https://generativelanguage.googleapis.com/v1beta
+    api: google-generative-ai
+    apiKey: GEMINI_API_KEY
+    models:
+      - id: gemini-3.8-flash
+        name: Gemini 3.8 Flash
+        reasoning: true
+        thinking:
+          mode: effort
+          efforts: [low, medium, high]
+        input: [text, image]
+        contextWindow: 1048576
+        maxTokens: 65536
+        cost:
+          input: 0.75
+          output: 3.75
+          cacheRead: 0.075
+          cacheWrite: 0.75

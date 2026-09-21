@@ -1,0 +1,20 @@
+# Usage:  omp --config ~/.omp/agent/overlays/flat-rate.yml
+#         (or export PI_CONFIG_FILES=~/.omp/agent/overlays/flat-rate.yml)
+#
+# Codex-first: the main turn rides the ChatGPT plan, DeepSeek does everything
+# high-volume, and nothing bills per token except Gemini's small roles.
+# Overlays deep-merge objects, so unlisted roles keep their config.yml values.
+
+modelRoles:
+  default: openai-codex/gpt-6-astra
+  plan: openai-codex/gpt-6-astra:xhigh
+  slow: openai-codex/gpt-6-astra:xhigh
+  designer: openai-codex/gpt-5.6-terra:medium
+  # Reviewer must differ from the author's family — Astra now writes the diff.
+  critic: deepseek/deepseek-flash:high
+
+retry:
+  fallbackChains:
+    openai-codex/*:
+      - deepseek/deepseek-flash:high
+      - google/gemini-3.1-pro-preview:high

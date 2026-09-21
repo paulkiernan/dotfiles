@@ -1,0 +1,23 @@
+# Usage:  omp --config ~/.omp/agent/overlays/deepseek-only.yml
+#
+# Everything on DeepSeek V4.1 Flash. Cheapest possible; loses the
+# different-family reviewer and the frontier planner. Advisor off (a
+# same-family advisor adds cost without adding a second opinion).
+
+modelRoles:
+  default: deepseek/deepseek-flash
+  plan: deepseek/deepseek-flash:max
+  slow: deepseek/deepseek-flash:max
+  task: deepseek/deepseek-flash:high
+  smol: deepseek/deepseek-flash:low
+  tiny: deepseek/deepseek-flash:low
+  commit: deepseek/deepseek-flash:low
+  vision: deepseek/deepseek-flash:low
+  designer: deepseek/deepseek-flash:high
+  advisor: deepseek/deepseek-flash:low
+  scout: deepseek/deepseek-flash:low
+  critic: deepseek/deepseek-flash:high
+  sentinel: deepseek/deepseek-flash:high
+
+advisor:
+  enabled: false
