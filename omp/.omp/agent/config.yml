@@ -1,5 +1,5 @@
 modelRoles:
-  default: anthropic/claude-opus-5
+  default: anthropic/claude-fable-5-1:medium
   plan: anthropic/claude-fable-5-1:xhigh
   slow: anthropic/claude-fable-5-1:max
   task: deepseek/deepseek-flash:high

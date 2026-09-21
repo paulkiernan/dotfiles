@@ -106,6 +106,36 @@ fi
 # omp authenticates every provider through `/login` (OAuth, or a validated
 # api-key prompt for DeepSeek), storing credentials in its own store. Nothing
 # to seed here — run `omp` and log in.
+#
+# omp plugins ---------------------------------------------------------------
+# omp-jev-tools (TypeSafe Jev judgment tools: jev_judge/jev_route/jev_rerank/
+# jev_verify + /jev) is published only on GitHub, so `omp plugin install
+# omp-jev-tools` 404s against npm. Clone it and link the working tree instead;
+# `omp plugin link` records the path, so the clone must live somewhere stable.
+# The rule that tells sessions when to use these tools is stowed via the omp
+# package (.omp/agent/rules/jev-tools.md).
+#
+# Requires TYPESAFE_API_KEY in ~/.omp/agent/.env — deliberately NOT in this
+# repo. Without it the tools register but every call errors; nothing else breaks.
+OMP_PLUGIN_SRC="$HOME/.omp/src/omp-jev-tools"
+
+if command -v omp >/dev/null 2>&1; then
+    echo ""
+    echo ">> Installing omp plugins"
+    mkdir -p "$(dirname "$OMP_PLUGIN_SRC")"
+    if [ -d "$OMP_PLUGIN_SRC/.git" ]; then
+        echo "Updating omp-jev-tools..."
+        git -C "$OMP_PLUGIN_SRC" pull --ff-only || echo "✗ Failed to update omp-jev-tools"
+    else
+        echo "Cloning omp-jev-tools..."
+        git clone https://github.com/gnoviawan/omp-jev-tools "$OMP_PLUGIN_SRC" || echo "✗ Failed to clone omp-jev-tools"
+    fi
+    if [ -d "$OMP_PLUGIN_SRC" ]; then
+        omp plugin link "$OMP_PLUGIN_SRC" || echo "✗ Failed to link omp-jev-tools"
+    fi
+else
+    echo "✗ omp not on PATH, skipping omp plugin install"
+fi
 
 echo ""
 echo ">> Installing/Upgrading oh-my-zsh"
