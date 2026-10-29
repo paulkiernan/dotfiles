@@ -1,0 +1,9 @@
+# pi resolves the settings.json symlink and writes its runtime droppings next to
+# the real file -- i.e. into this repo. Keep stow from linking them back out.
+\.stow-local-ignore
+.*\.lock
+.*\.bak
+auth\.json
+trust\.json
+mcp-cache\.json
+models-store\.json

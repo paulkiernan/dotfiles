@@ -7,12 +7,15 @@ sudo apt-get -y install \
     build-essential \
     exuberant-ctags \
     curl \
+    direnv \
     elinks \
     git \
     git-core \
     htop \
+    jq \
     sl \
     stow \
+    tmux \
     tree \
     vim-nox \
     zsh

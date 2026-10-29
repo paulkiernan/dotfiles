@@ -37,9 +37,8 @@ warn() {
 }
 
 # Package Manager(s) Init -----------------------------------------------------
-eval "$(direnv hook zsh)"
+command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
 
-[ -s "$ZSH/oh-my-zsh.sh" ] && source "$ZSH/oh-my-zsh.sh"
 plugins=(
     colored-man-pages
     colorize
@@ -47,6 +46,7 @@ plugins=(
     vi-mode
     poetry
 )
+[ -s "$ZSH/oh-my-zsh.sh" ] && source "$ZSH/oh-my-zsh.sh"
 setopt EXTENDED_HISTORY
 setopt HIST_EXPIRE_DUPS_FIRST
 setopt INC_APPEND_HISTORY

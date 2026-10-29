@@ -79,5 +79,5 @@ source_if_exists $HOME/.asdf/plugins/java/set-java-home.zsh
 source_if_exists $HOME/.p10k.zsh
 
 # Added by Antigravity
-export PATH="/Users/paul/.antigravity/antigravity/bin:$PATH"
-. "$HOME/.cargo/env"
+[ -d "$HOME/.antigravity/antigravity/bin" ] && export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
+source_if_exists "$HOME/.cargo/env"

@@ -1,0 +1,20 @@
+{
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-6.1-sol",
+  "defaultThinkingLevel": "medium",
+  "enabledModels": [
+    "gpt-6.1-sol",
+    "gpt-6-astra",
+    "claude-opus-5-5",
+    "claude-fable-5-1"
+  ],
+  "skills": [
+    "~/.omp/agent/managed-skills"
+  ],
+  "retry": {
+    "enabled": true,
+    "maxRetries": 10
+  },
+  "lastChangelogVersion": "0.87.0",
+  "theme": "dark"
+}

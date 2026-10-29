@@ -1,25 +1,60 @@
 #!/bin/bash
 set -eux
 
+# Run from the repo root so `setup/*.sh`, the stow package directories, and
+# every relative path below resolve regardless of the caller's CWD.
+cd "$(dirname "$0")"
+
+# ~/.local/bin holds `omp` and `pi`. Put it on PATH before anything is
+# installed so the rest of this script can find them in the same run.
+mkdir -p "$HOME/.local/bin"
+export PATH="$HOME/.local/bin:$PATH"
+
 KERNEL=$(uname)
 
 OH_MY_ZSH_DIR="$HOME/.zsh/oh-my-zsh"
 POWERLEVEL10K_DIR="$HOME/.zsh/zsh_custom/themes/powerlevel10k"
 VUNDLE_DIR="$HOME/.vim/bundle/Vundle.vim"
 
-if [ "$KERNEL" == 'Linux' ]; then
-    DISTRO=$(lsb_release -sd | tr -d '"' | awk '{print $1;}')
-    if [ "$DISTRO" == 'Arch' ] || [ "$DISTRO" == 'Manjaro' ]; then
-        source setup/arch.sh
-    elif [ "$DISTRO" == 'Ubuntu' ] || [ "$DISTRO" == 'Debian' ] || [ "$DISTRO" == 'Parrot' ]; then
-        source setup/ubuntu.sh
-    else
-        echo "Never heard of that Pokemon."
-        exit 1
+# OS setup ---------------------------------------------------------------------
+# Sourced in a subshell: the setup scripts `cd` around (arch.sh chowns and
+# builds yay under /opt) and the stow step below depends on staying in the repo.
+if [ "$KERNEL" = 'Linux' ]; then
+    # /etc/os-release is present on every systemd-era distro; lsb_release is
+    # often not installed at all, so only fall back to it.
+    DISTRO_ID=""
+    DISTRO_LIKE=""
+    if [ -r /etc/os-release ]; then
+        DISTRO_ID=$(. /etc/os-release && printf '%s' "${ID:-}")
+        DISTRO_LIKE=$(. /etc/os-release && printf '%s' "${ID_LIKE:-}")
+    elif command -v lsb_release >/dev/null 2>&1; then
+        DISTRO_ID=$(lsb_release -si | tr '[:upper:]' '[:lower:]')
     fi
-    sudo usermod -s /bin/zsh "$USER"
-elif [ "$KERNEL" == 'Darwin' ]; then
-    source setup/osx.sh
+
+    case "$DISTRO_ID $DISTRO_LIKE" in
+        *arch*|*manjaro*)
+            ( . setup/arch.sh )
+            ;;
+        *ubuntu*|*debian*|*parrot*|*linuxmint*|*pop*)
+            ( . setup/ubuntu.sh )
+            ;;
+        *)
+            echo "Never heard of that Pokemon."
+            exit 1
+            ;;
+    esac
+
+    ZSH_BIN=$(command -v zsh || true)
+    if [ -n "$ZSH_BIN" ] && [ "${SHELL:-}" != "$ZSH_BIN" ]; then
+        sudo usermod -s "$ZSH_BIN" "$USER"
+    fi
+elif [ "$KERNEL" = 'Darwin' ]; then
+    ( . setup/osx.sh )
+    if [ -d /opt/homebrew/bin ]; then
+        export PATH="/opt/homebrew/bin:$PATH"
+    elif [ -d /usr/local/bin ]; then
+        export PATH="/usr/local/bin:$PATH"
+    fi
 fi
 
 # ASDF + toolchains -----------------------------------------------------------
@@ -38,11 +73,16 @@ if ! command -v asdf >/dev/null 2>&1; then
     if [ ! -d "$ASDF_DIR" ]; then
         git clone https://github.com/asdf-vm/asdf.git "$ASDF_DIR"
     elif [ -d "$ASDF_DIR/.git" ]; then
-        git -C "$ASDF_DIR" pull
+        git -C "$ASDF_DIR" pull --ff-only || echo "✗ Failed to update asdf"
     fi
-    # Make the asdf command available for the rest of this script
-    export PATH="$ASDF_DIR/bin:$PATH"
-    [ -s "$ASDF_DIR/asdf.sh" ] && . "$ASDF_DIR/asdf.sh"
+fi
+
+# Always export for the rest of this script, whether asdf was already installed
+# or just cloned. shims/ matters: `asdf install nodejs` drops npm there, and the
+# pi step below needs npm on PATH.
+export PATH="$ASDF_DIR/shims:$ASDF_DIR/bin:$PATH"
+if [ -s "$ASDF_DIR/asdf.sh" ]; then
+    . "$ASDF_DIR/asdf.sh"
 fi
 
 if ! command -v asdf >/dev/null 2>&1; then
@@ -78,12 +118,20 @@ echo ""
 echo ">> Setting up dotfile symlinks with stow"
 echo ""
 
-# omp keeps runtime state (agent.db, stats.db, logs/) in ~/.omp. The dir must
-# exist before stowing or stow folds the tree and symlinks ~/.omp itself into
-# this repo, which would put those databases under version control.
-mkdir -p "$HOME/.omp/agent"
+# omp keeps runtime state (agent.db, stats.db, logs/) in ~/.omp, and pi does the
+# same in ~/.pi (auth.json, trust.json, sessions/, vendored rg+fd). ~/.agents
+# holds the one instruction file both harnesses read, plus skills that come from
+# their own git repos. Each target directory must exist before stowing or stow
+# folds the tree and symlinks the dir itself into this repo, which would put
+# that runtime state under version control. Same for ~/.zsh/zsh_custom/themes,
+# which bootstrap fills with a git clone.
+mkdir -p \
+    "$HOME/.omp/agent/managed-skills" \
+    "$HOME/.pi/agent" \
+    "$HOME/.agents/skills" \
+    "$HOME/.zsh/zsh_custom/themes"
 
-STOW_PACKAGES=(docker git linux omp osx scripts tmux vim zsh)
+STOW_PACKAGES=(docker git linux omp osx pi scripts shared tmux vim zsh)
 
 for package in "${STOW_PACKAGES[@]}"; do
     if [ -d "$package" ]; then
@@ -103,38 +151,60 @@ else
     echo "✗ Directory ghostty not found, skipping"
 fi
 
-# omp authenticates every provider through `/login` (OAuth, or a validated
-# api-key prompt for DeepSeek), storing credentials in its own store. Nothing
-# to seed here — run `omp` and log in.
+# pi (https://pi.dev) ---------------------------------------------------------
+# Upstream pi runs side-by-side with omp for evaluation; the write-up lives in
+# the Notes Obsidian vault at
+# personal/Hobbies/Harness Evaluation/Harness Evaluation.md.
+# npm global installs under asdf are bound to the active node version and vanish
+# on the next `asdf set nodejs <other>`, so pi goes into a fixed prefix and is
+# symlinked onto PATH instead of relying on shims.
 #
-# omp plugins ---------------------------------------------------------------
-# omp-jev-tools (TypeSafe Jev judgment tools: jev_judge/jev_route/jev_rerank/
-# jev_verify + /jev) is published only on GitHub, so `omp plugin install
-# omp-jev-tools` 404s against npm. Clone it and link the working tree instead;
-# `omp plugin link` records the path, so the clone must live somewhere stable.
-# The rule that tells sessions when to use these tools is stowed via the omp
-# package (.omp/agent/rules/jev-tools.md).
-#
-# Requires TYPESAFE_API_KEY in ~/.omp/agent/.env — deliberately NOT in this
-# repo. Without it the tools register but every call errors; nothing else breaks.
-OMP_PLUGIN_SRC="$HOME/.omp/src/omp-jev-tools"
+# Config is stowed from the pi package into ~/.pi/agent. Credentials are NOT
+# shared with omp (omp uses agent.db, pi uses ~/.pi/agent/auth.json), so run
+# `pi` and use /login for each provider.
+PI_NPM_PREFIX="$HOME/.local/share/pi-npm"
 
-if command -v omp >/dev/null 2>&1; then
-    echo ""
-    echo ">> Installing omp plugins"
-    mkdir -p "$(dirname "$OMP_PLUGIN_SRC")"
-    if [ -d "$OMP_PLUGIN_SRC/.git" ]; then
-        echo "Updating omp-jev-tools..."
-        git -C "$OMP_PLUGIN_SRC" pull --ff-only || echo "✗ Failed to update omp-jev-tools"
-    else
-        echo "Cloning omp-jev-tools..."
-        git clone https://github.com/gnoviawan/omp-jev-tools "$OMP_PLUGIN_SRC" || echo "✗ Failed to clone omp-jev-tools"
-    fi
-    if [ -d "$OMP_PLUGIN_SRC" ]; then
-        omp plugin link "$OMP_PLUGIN_SRC" || echo "✗ Failed to link omp-jev-tools"
-    fi
+echo ""
+echo ">> Installing/Upgrading pi"
+if command -v npm >/dev/null 2>&1; then
+    npm install -g --ignore-scripts --prefix "$PI_NPM_PREFIX" @earendil-works/pi-coding-agent \
+        && ln -sfn "$PI_NPM_PREFIX/bin/pi" "$HOME/.local/bin/pi" \
+        || echo "✗ Failed to install pi"
 else
-    echo "✗ omp not on PATH, skipping omp plugin install"
+    echo "✗ npm not on PATH, skipping pi install"
+fi
+
+# omp (https://omp.sh) -------------------------------------------------------
+# The prebuilt binary install writes ~/.local/bin/omp, verifies the sha256,
+# smoke-tests `omp --version`, needs no Bun, and never edits .zshrc (this repo
+# owns the shell config).
+#
+# omp authenticates every provider through `/login` (OAuth, or a validated
+# api-key prompt for DeepSeek and TypeSafe), storing credentials in its own
+# store. Nothing to seed here.
+echo ""
+echo ">> Installing/Upgrading omp"
+if command -v omp >/dev/null 2>&1; then
+    omp update || echo "✗ Failed to update omp"
+else
+    curl -fsSL https://omp.sh/install | sh -s -- --binary || echo "✗ Failed to install omp"
+fi
+
+# Agent skills (external git repos) ------------------------------------------
+# Personal skills are stowed from the `shared` and `omp` packages. Third-party
+# skills are their own git repos under ~/.agents/skills, which stow does not
+# manage, so they are cloned or fast-forwarded here.
+AVOID_AI_WRITING_DIR="$HOME/.agents/skills/avoid-ai-writing"
+
+echo ""
+echo ">> Installing agent skills"
+mkdir -p "$HOME/.agents/skills"
+if [ -d "$AVOID_AI_WRITING_DIR/.git" ]; then
+    echo "Updating avoid-ai-writing skill..."
+    git -C "$AVOID_AI_WRITING_DIR" pull --ff-only || echo "✗ Failed to update avoid-ai-writing"
+else
+    echo "Cloning avoid-ai-writing skill..."
+    git clone https://github.com/conorbronsdon/avoid-ai-writing "$AVOID_AI_WRITING_DIR" || echo "✗ Failed to clone avoid-ai-writing"
 fi
 
 echo ""
@@ -150,12 +220,13 @@ else
     echo "✓ oh-my-zsh directory exists (not a git repo)"
 fi
 
-echo "Installing/Upgrading  Powerlevel10k"
-mkdir -p $HOME/.zsh/zsh_custom/themes
-if [ ! -d $POWERLEVEL10K_DIR ]; then
-    git clone https://github.com/romkatv/powerlevel10k.git $POWERLEVEL10K_DIR
-elif [ -d $POWERLEVEL10K_DIR -a -d $POWERLEVEL10K_DIR/.git ]; then
-    git --git-dir=$POWERLEVEL10K_DIR/.git pull origin master
+echo "Installing/Upgrading Powerlevel10k"
+if [ ! -d "$POWERLEVEL10K_DIR" ]; then
+    git clone https://github.com/romkatv/powerlevel10k.git "$POWERLEVEL10K_DIR" || echo "✗ Failed to install powerlevel10k"
+elif [ -d "$POWERLEVEL10K_DIR/.git" ]; then
+    git -C "$POWERLEVEL10K_DIR" pull --ff-only || echo "✗ Failed to update powerlevel10k"
+else
+    echo "✓ powerlevel10k directory exists (not a git repo)"
 fi
 
 echo ""
@@ -175,6 +246,8 @@ echo "✓ Bootstrap complete!"
 echo "=========================================="
 echo ""
 echo "Next steps:"
-echo "  1. Log out and log back in to activate zsh"
+echo "  1. Log out and log back in (or run 'exec zsh') to activate zsh"
 echo "  2. Run 'vim +PluginInstall +qall' to install vim plugins"
+echo "  3. Run 'omp' and use /login for google-antigravity, deepseek, and typesafe"
+echo "     (run 'pi' and use /login too if you use Pi)"
 echo ""

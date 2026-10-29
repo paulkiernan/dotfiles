@@ -6,9 +6,12 @@ sudo pacman -Syu
 sudo pacman -Sy --noconfirm \
     base-devel \
     ctags \
+    curl \
+    direnv \
     docker \
     git \
     htop \
+    jq \
     pyenv \
     stow \
     tmux \

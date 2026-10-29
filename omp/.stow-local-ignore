@@ -3,3 +3,4 @@
 \.stow-local-ignore
 .*\.lock
 .*\.bak
+\.env

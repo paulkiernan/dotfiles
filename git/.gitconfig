@@ -4,7 +4,6 @@
 
 [core]
     editor = vim
-    excludesfile = .gitignore
 
 [alias]
     st = status --short
@@ -37,9 +36,6 @@
 
 [push]
     default = simple
-
-[hooks]
-    global = ~/.git/githooks
 
 [github]
     user = paulkiernan

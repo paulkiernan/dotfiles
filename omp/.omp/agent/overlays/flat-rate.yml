@@ -1,5 +1,4 @@
-# Usage:  omp --config ~/.omp/agent/overlays/flat-rate.yml
-#         (or export PI_CONFIG_FILES=~/.omp/agent/overlays/flat-rate.yml)
+# Usage: omp --config ~/.omp/agent/overlays/flat-rate.yml
 #
 # The base config is already Antigravity-first, so this overlay only changes
 # one thing: the reviewer moves off the author's family to DeepSeek V4 Pro.

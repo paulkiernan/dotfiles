@@ -1,9 +1,16 @@
 echo ""
 echo ">> Installing brew and other mac shenanigans"
 echo ""
-hash brew 2>/dev/null || bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-export PATH=$PATH:/opt/homebrew/bin
+# Apple Silicon installs Homebrew under /opt/homebrew, Intel under /usr/local.
+# Set PATH first so `hash brew` sees an existing install.
+if [ -d /opt/homebrew/bin ]; then
+    export PATH="/opt/homebrew/bin:$PATH"
+elif [ -d /usr/local/bin ]; then
+    export PATH="/usr/local/bin:$PATH"
+fi
+
+hash brew 2>/dev/null || bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 # Install brew formulas individually
 FORMULAS=(
