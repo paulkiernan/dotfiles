@@ -5,7 +5,7 @@
 # same-family advisor adds cost without adding a second opinion).
 
 modelRoles:
-  default: deepseek/deepseek-flash
+  default: deepseek/deepseek-flash:high
   plan: deepseek/deepseek-flash:max
   slow: deepseek/deepseek-flash:max
   task: deepseek/deepseek-flash:high

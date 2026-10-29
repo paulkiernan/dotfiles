@@ -1,22 +1,23 @@
 modelRoles:
-  default: anthropic/claude-fable-5-1:medium
-  plan: anthropic/claude-fable-5-1:xhigh
-  slow: anthropic/claude-fable-5-1:max
+  default: google-antigravity/gemini-4-argon:high
+  plan: google-antigravity/claude-opus-5-5:high
+  slow: google-antigravity/claude-opus-5-5:high
   task: deepseek/deepseek-flash:high
   smol: deepseek/deepseek-flash:low
   tiny: deepseek/deepseek-flash:low
   commit: deepseek/deepseek-flash:low
-  vision: google-antigravity/gemini-3.8-flash:medium
-  designer: openai-codex/gpt-6-astra:high
-  advisor: google-antigravity/gemini-3.8-flash:low
+  vision: google-antigravity/gemini-4-argon:medium
+  designer: google-antigravity/gemini-4-argon:high
+  advisor: google-antigravity/claude-sonnet-5-5:low
   scout: deepseek/deepseek-flash:low
-  critic: openai-codex/gpt-6-astra:high
-  sentinel: google-antigravity/gemini-3.8-flash:high
+  critic: google-antigravity/claude-opus-5-5:high
+  sentinel: google-antigravity/claude-opus-5-5:high
+  web: google-antigravity/gemini-3.8-flash:low
+  image: google-antigravity/gemini-3-pro-image
+  judge: typesafe/jev-1.14.0
 modelProviderOrder:
-  - deepseek
-  - anthropic
-  - openai-codex
   - google-antigravity
+  - deepseek
 cycleOrder:
   - smol
   - task
@@ -28,22 +29,9 @@ defaultThinkingLevel: auto
 hideThinkingBlock: false
 providers:
   autoThinkingMaxEffort: xhigh
-  webSearchOrder:
-    - codex
-    - gemini
-    - perplexity
-    - duckduckgo
-  webSearchGeminiModel: gemini-3.8-flash
-  imageOrder:
-    - gemini
-    - openai-codex
   maxInFlightRequests:
-    anthropic: 4
     google-antigravity: 8
     deepseek: 16
-  anthropic:
-    serverSideFallback: true
-  judgmentProvider: typesafe
 retry:
   enabled: true
   maxRetries: 10
@@ -53,18 +41,34 @@ retry:
   fallbackChains:
     deepseek/deepseek-flash:
       - google-antigravity/gemini-3.8-flash:low
-      - anthropic/claude-haiku-4-5
-    anthropic/*:
-      - openai-codex/gpt-6-astra:high
-      - google-antigravity/gemini-3.1-pro:high
-    openai-codex/*:
-      - anthropic/claude-opus-5:high
-      - google-antigravity/gemini-3.1-pro:high
+      - google-antigravity/claude-sonnet-5-5:medium
     google-antigravity/*:
       - deepseek/deepseek-flash:high
-      - openai-codex/gpt-5.6-terra:medium
+      - deepseek/deepseek-v4-pro:high
     default:
       - deepseek/deepseek-flash:high
+    web:
+      - google-antigravity/gemini-3.8-flash
+      - web/perplexity
+      - web/duckduckgo
+      - web/parallel
+      - web/hosted
+      - web/exa
+      - web/firecrawl
+      - web/searxng
+      - web/startpage
+      - web/ecosia
+      - web/google
+      - web/mojeek
+      - web/public
+    image:
+      - google-antigravity/gemini-3-pro-image
+      - google-antigravity/gemini-3.1-flash-image
+    judge:
+      - typesafe/jev-latest
+      - "@tiny"
+      - "@smol"
+      - "@default"
 task:
   eager: always
   enableLsp: true
